@@ -1,0 +1,76 @@
+# -*- coding: utf-8 -*-
+"""
+Lawrence McDaniel https://lawrencemcdaniel.com.
+
+Masks the values of sensitive keys in a Dict
+"""
+
+# python stuff
+import json
+from unittest.mock import MagicMock
+
+# our stuff
+DEFAULT_SENSITIVE_KEYS = [
+    "password",
+    "token",
+    "client_id",
+    "client_secret",
+    "Authorization",
+    "secret",
+    "aws_access_key_id",
+    "aws_secret_access_key",
+]
+
+
+class ApploggerJSONEncoder(json.JSONEncoder):
+    """encode json object for serialization."""
+
+    def default(self, obj):
+        """Handle unit test, unicode, and anything else that might throw a wrench in things."""
+        if isinstance(obj, bytes):
+            return str(obj, encoding="utf-8")
+        if isinstance(obj, MagicMock):
+            return ""
+        try:
+            return json.JSONEncoder.default(self, obj)
+        except Exception:  # noqa: B902
+            # obj probably is not json serializable.
+            return ""
+
+
+def masked_dict(obj: dict, sensitive_keys: list = DEFAULT_SENSITIVE_KEYS) -> dict:
+    """
+    Mask sensitive key / value in log entries.
+
+    Masks the value of specified key.
+    obj: a dict or a string representation of a dict, or None
+    """
+    to_mask = {}
+    for key in obj:
+        value = obj[key]
+        if type(value) == dict:
+            value = masked_dict(value, sensitive_keys)
+        to_mask[key] = value
+
+    def redact(key: str, obj: dict) -> dict:
+        if key in obj:
+            obj[key] = "*** -- REDACTED -- ***"
+        return obj
+
+    obj = to_mask
+    obj = dict(obj)
+    for key in sensitive_keys:
+        obj = redact(key, obj)
+    return obj
+
+
+def serialized_masked_dict(obj: dict, sensitive_keys: list = DEFAULT_SENSITIVE_KEYS, indent: int = 4) -> str:
+    """Return a JSON encoded string representation of a masked dict."""
+    to_serialize = {}
+    for key in obj:
+        value = obj[key]
+        if type(value) == dict:
+            value = masked_dict(value, sensitive_keys)
+        to_serialize[key] = value
+
+    return json.dumps(masked_dict(to_serialize, sensitive_keys=sensitive_keys), cls=ApploggerJSONEncoder, indent=indent)
