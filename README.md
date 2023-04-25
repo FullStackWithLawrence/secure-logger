@@ -1,8 +1,6 @@
 # Secure Logger
 
 [![Source code](https://img.shields.io/static/v1?logo=github&label=Git&style=flat-square&color=brightgreen&message=Source%20code)](https://github.com/lpm0073/secure-logger)
-[![Forums](https://img.shields.io/static/v1?logo=discourse&label=Forums&style=flat-square&color=000000&message=discuss.openedx.org)](https://discuss.openedx.org/tag/cookiecutter)
-[![Documentation](https://img.shields.io/static/v1?&label=Documentation&style=flat-square&color=000000&message=Documentation)](https://github.com/lpm0073/secure-logger)
 [![PyPI releases](https://img.shields.io/pypi/v/secure-logger?logo=python&logoColor=white)](https://pypi.org/project/secure-logger)
 [![AGPL License](https://img.shields.io/github/license/overhangio/tutor.svg?style=flat-square)](https://www.gnu.org/licenses/agpl-3.0.en.html)
 [![hack.d Lawrence McDaniel](https://img.shields.io/badge/hack.d-Lawrence%20McDaniel-orange.svg)](https://lawrencemcdaniel.com)
@@ -24,11 +22,13 @@ DEFAULT_SENSITIVE_KEYS = [
 ]
 ```
 
-## Usage
+## Installation
 
 ```bash
 pip install secure-logger
 ```
+
+## Usage
 
 ```python
 from secure_logger.decorators import app_logger
@@ -51,7 +51,9 @@ o = TestClass()
 o.test_2(test_dict=test_dict, test_list=test_list)
 ```
 
-LOG OUTPUT
+Output
+
+```log
 INFO:app_logger: __main__.TestClass().test_2()  keyword args: {
     "test_dict": {
         "insensitive_key": "you-can-see-me",
@@ -63,12 +65,11 @@ INFO:app_logger: __main__.TestClass().test_2()  keyword args: {
         "bar"
     ]
 }
+```
 
-### Documentation
+### Contributing
 
-Documentation is available here: [Documentation](https://github.com/lpm0073/secure-logger)
-
-We welcome contributions! secure-logger is part of the [lpm0073](https://github.com/lpm0073) project. Pull requests are welcome in all repos belonging to this organization. You can also contact [Lawrence McDaniel](https://lawrencemcdaniel.com/contact) directly.
+Pull requests are welcome, and you can also contact [Lawrence McDaniel](https://lawrencemcdaniel.com/contact) directly.
 
 ### Getting Started With Local development
 
@@ -95,12 +96,3 @@ pre-commit install
 - run `flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics`
 - run `pre-commit run --all-files` before pushing. see: <https://pre-commit.com/>
 
-#### edx-platform dependencies
-
-To avoid freaky version conflicts in prod it's a good idea to install all of the edx-platform requirements to your local dev virtual environment.
-
-- requirements/edx/base.txt
-- requirements/edx/develop.txt,
-- requirements/edx/testing.txt
-
-At a minimum this will give you the full benefit of your IDE's linter.
