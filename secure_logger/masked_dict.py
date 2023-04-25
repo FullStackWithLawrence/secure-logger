@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Lawrence McDaniel https://lawrencemcdaniel.com.
-
-Masks the values of sensitive keys in a Dict
-"""
+"""Recursively masks the values of sensitive keys in a Dict."""
 
 # python stuff
 import json

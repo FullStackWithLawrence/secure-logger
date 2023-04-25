@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Lawrence McDaniel https://lawrencemcdaniel.com.
-
-Python Secure Logger
-"""
+"""Python Secure Logger."""
 # python stuff
 import inspect
 from functools import wraps
