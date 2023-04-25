@@ -7,7 +7,7 @@ Python Secure Logger
 
 # Increment this version number to trigger a new release. See
 # CHANGELOG.md for information on the versioning scheme.
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 # The app name will be used to define the name of the default plugin root and
 # plugin directory. To avoid conflicts between multiple locally-installed
