@@ -1,11 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Lawrence McDaniel https://lawrencemcdaniel.com.
-
-The style and organizational scheme for this setup.py is largely copied from
-this project:
-        django_extensions: https://github.com/django-extensions/django-extensions/blob/main/setup.py
-"""
+"""Lawrence McDaniel https://lawrencemcdaniel.com."""
 # pylint: disable=open-builtin
 import io
 import os
@@ -100,15 +94,11 @@ setup(
     include_package_data=True,
     cmdclass=cmdclasses,
     python_requires=">=3.6",
-    install_requires=["Django>=3.2"],
+    install_requires=[],
     extras_require={},
     classifiers=[  # https://pypi.org/classifiers/
         "Development Status :: 4 - Beta",
         "Environment :: Web Environment",
-        "Framework :: Django",
-        "Framework :: Django :: 3.2",
-        "Framework :: Django :: 4.0",
-        "Framework :: Django :: 4.1",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",

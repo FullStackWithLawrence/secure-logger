@@ -33,11 +33,6 @@ readme = "README.md"
 requires-python = ">=3.8"
 classifiers = [
     "Development Status :: 3 - Alpha",
-    "Framework :: Django",
-    "Framework :: Django :: 2.2",
-    "Framework :: Django :: 3.0",
-    "Framework :: Django :: 3.1",
-    "Framework :: Django :: 3.2",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
     "Natural Language :: English",
@@ -49,12 +44,10 @@ classifiers = [
     "Topic :: Education :: Computer Aided Instruction (CAI)",
 ]
 dependencies = [
-  "Django>=3.2,<=3.3",
   "validators",
-  "django-environ"
 ]
 
-keywords = ["Python", "Django", "Logger"]
+keywords = ["Python", "Logger"]
 
 [project.urls]
 Homepage = "https://github.com/lpm0073/secure-logger"
@@ -73,11 +66,3 @@ local = [
     "flake8",
     "ipython"
 ]
-
-#------------------------------------------------------------------------------
-# see: https://setuptools.pypa.io/en/latest/userguide/entry_point.html
-#------------------------------------------------------------------------------
-[project.entry-points."lms.djangoapp"]
-secure_logger = "secure_logger.apps:DjangoAppLoggerConfig"
-
-[project.entry-points."cms.djangoapp"]
