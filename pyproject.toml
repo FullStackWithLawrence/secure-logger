@@ -40,8 +40,6 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
-    "Topic :: Education",
-    "Topic :: Education :: Computer Aided Instruction (CAI)",
 ]
 dependencies = [
   "validators",
