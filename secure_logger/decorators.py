@@ -12,7 +12,7 @@ from .masked_dict import serialized_masked_dict, DEFAULT_SENSITIVE_KEYS
 logger = logging.getLogger(__name__)
 
 
-def app_logger(sensitive_keys: list = DEFAULT_SENSITIVE_KEYS, indent: int = 4):
+def secure_logger(sensitive_keys: list = DEFAULT_SENSITIVE_KEYS, indent: int = 4):
     """Top level decorator, for defining input parameters."""
 
     def decorate(func):
@@ -23,7 +23,7 @@ def app_logger(sensitive_keys: list = DEFAULT_SENSITIVE_KEYS, indent: int = 4):
         its positional arguments, and keyword pairs presented as a formatted dict.
 
         Sample output:
-            2022-07-08 19:40:51,085 INFO app_logger: courses.views.CourseListingView().get_queryset()
+            2022-07-08 19:40:51,085 INFO secure_logger: courses.views.CourseListingView().get_queryset()
         """
 
         @wraps(func)
@@ -65,7 +65,7 @@ def app_logger(sensitive_keys: list = DEFAULT_SENSITIVE_KEYS, indent: int = 4):
                 kwargs_dict_repr += serialized_masked_dict(kwargs, sensitive_keys=sensitive_keys, indent=indent)
 
             logger.info(
-                "app_logger: {name_spec} {args} {kwargs}".format(
+                "secure_logger: {name_spec} {args} {kwargs}".format(
                     name_spec=name_spec,
                     args=positional_args if len(positional_args) > 0 else "",
                     kwargs=kwargs_dict_repr,

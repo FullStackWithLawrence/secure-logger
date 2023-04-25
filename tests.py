@@ -6,7 +6,7 @@ Test the three use cases that we care about.
 """
 import logging
 
-from secure_logger.decorators import app_logger
+from secure_logger.decorators import secure_logger
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -18,7 +18,7 @@ MY_SENSITIVE_KEYS = [
 ]
 
 
-@app_logger(sensitive_keys=MY_SENSITIVE_KEYS, indent=4)
+@secure_logger(sensitive_keys=MY_SENSITIVE_KEYS, indent=4)
 def test_1(msg):
     """Test 1: a simple module function."""
     print("test 1: " + msg)  # noqa: T201
@@ -27,13 +27,13 @@ def test_1(msg):
 class TestClass(object):
     """Test class method logging."""
 
-    @app_logger()
+    @secure_logger()
     def test_2(self, test_dict, test_list):
         """Test class input parameter as objects."""
         pass
 
 
-@app_logger()
+@secure_logger()
 class Test3:
     """Test 3: decorate a class."""
 

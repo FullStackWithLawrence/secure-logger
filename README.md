@@ -31,13 +31,13 @@ pip install secure-logger
 ## Usage
 
 ```python
-from secure_logger.decorators import app_logger
+from secure_logger.decorators import secure_logger
 
 MY_SENSITIVE_KEYS = ["top-secret-password", "equally-secret-value",]
 
 class TestClass(object):
 
-    @app_logger(sensitive_keys=MY_SENSITIVE_KEYS, indent=4)
+    @secure_logger(sensitive_keys=MY_SENSITIVE_KEYS, indent=4)
     def test_2(self, test_dict, test_list):
         pass
 
@@ -51,10 +51,10 @@ o = TestClass()
 o.test_2(test_dict=test_dict, test_list=test_list)
 ```
 
-Output
+Generates log entries of this style and form:
 
 ```log
-INFO:app_logger: __main__.TestClass().test_2()  keyword args: {
+INFO:secure_logger: __main__.TestClass().test_2()  keyword args: {
     "test_dict": {
         "insensitive_key": "you-can-see-me",
         "top-secret-password": "*** -- REDACTED -- ***",

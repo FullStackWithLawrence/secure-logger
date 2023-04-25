@@ -3,16 +3,6 @@
 # -------------------------------------------------------------------------
 .PHONY: build requirements deps-update deps-init
 
-django-server:
-	./manage.py runserver 0.0.0.0:8000
-
-django-shell:
-	./manage.py shell_plus
-
-
-django-test:
-	./manage.py test
-
 requirements:
 	pre-commit autoupdate
 	python -m pip install --upgrade pip wheel
