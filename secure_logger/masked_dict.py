@@ -18,7 +18,7 @@ DEFAULT_SENSITIVE_KEYS = [
 ]
 
 
-class ApploggerJSONEncoder(json.JSONEncoder):
+class _JSONEncoder(json.JSONEncoder):
     """encode json object for serialization."""
 
     def default(self, obj):
@@ -34,13 +34,19 @@ class ApploggerJSONEncoder(json.JSONEncoder):
             return ""
 
 
-def masked_dict(obj: dict, sensitive_keys: list = DEFAULT_SENSITIVE_KEYS) -> dict:
+def masked_dict(obj, sensitive_keys: list = DEFAULT_SENSITIVE_KEYS) -> dict:
     """
     Mask sensitive key / value in log entries.
 
     Masks the value of specified key.
     obj: a dict or a string representation of a dict, or None
     """
+    if type(obj) == str:
+        obj = json.loads(obj)
+
+    if type(obj) != dict:
+        raise TypeError("obj must be a dict or a json serializable string")
+
     to_mask = {}
     for key in obj:
         value = obj[key]
@@ -53,11 +59,9 @@ def masked_dict(obj: dict, sensitive_keys: list = DEFAULT_SENSITIVE_KEYS) -> dic
             obj[key] = "*** -- REDACTED -- ***"
         return obj
 
-    obj = to_mask
-    obj = dict(obj)
     for key in sensitive_keys:
-        obj = redact(key, obj)
-    return obj
+        to_mask = redact(key, to_mask)
+    return to_mask
 
 
 def serialized_masked_dict(obj: dict, sensitive_keys: list = DEFAULT_SENSITIVE_KEYS, indent: int = 4) -> str:
@@ -69,4 +73,4 @@ def serialized_masked_dict(obj: dict, sensitive_keys: list = DEFAULT_SENSITIVE_K
             value = masked_dict(value, sensitive_keys)
         to_serialize[key] = value
 
-    return json.dumps(masked_dict(to_serialize, sensitive_keys=sensitive_keys), cls=ApploggerJSONEncoder, indent=indent)
+    return json.dumps(masked_dict(to_serialize, sensitive_keys=sensitive_keys), cls=_JSONEncoder, indent=indent)
