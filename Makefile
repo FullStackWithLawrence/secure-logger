@@ -9,7 +9,7 @@ pre-commit:
 requirements:
 	pre-commit autoupdate
 	python -m pip install --upgrade pip wheel
-	pip-compile requirements/local.in
+	python -m piptools compile --extra local --upgrade --resolver backtracking -o ./requirements/local.txt pyproject.toml
 	pip install -r requirements/local.txt
 
 deps-init:
@@ -17,11 +17,6 @@ deps-init:
 	python -m pip install --upgrade pip wheel
 	python -m pip install --upgrade -r requirements/local.txt -e .
 	python -m pip check
-
-deps-update:
-	python -m pip install --upgrade pip-tools pip wheel
-	python -m piptools compile --extra dev --upgrade --resolver backtracking -o ./requirements/local.txt pyproject.toml
-
 
 report:
 	cloc $(git ls-files)

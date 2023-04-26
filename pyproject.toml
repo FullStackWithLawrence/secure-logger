@@ -47,9 +47,7 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Topic :: Utilities",
 ]
-dependencies = [
-  "validators",
-]
+dependencies = []
 
 keywords = ["Python", "Logger"]
 
@@ -68,5 +66,4 @@ local = [
     "pre-commit",
     "black",
     "flake8",
-    "ipython"
 ]
