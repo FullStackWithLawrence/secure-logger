@@ -28,7 +28,7 @@ version = "0.1.4"
 authors = [
   { name="Lawrence McDaniel", email="lpm0073@gmail.com" }
 ]
-description = "A function decorator for beautiful and complete logging"
+description = "A decorator to generate secure, well-formatted log entries"
 readme = "README.md"
 requires-python = ">=3.8"
 classifiers = [
