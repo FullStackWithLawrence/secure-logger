@@ -30,7 +30,7 @@ authors = [
 ]
 description = "A decorator to generate secure, well-formatted log entries"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.6"
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -38,8 +38,14 @@ classifiers = [
     "Natural Language :: English",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Utilities",
 ]
 dependencies = [
   "validators",
@@ -48,8 +54,8 @@ dependencies = [
 keywords = ["Python", "Logger"]
 
 [project.urls]
-Homepage = "https://github.com/lpm0073/secure-logger"
-Documentation = "https://github.com/lpm0073/secure-logger"
+Homepage = "https://pypi.org/project/secure-logger/"
+Documentation = "https://pypi.org/project/secure-logger/"
 Repository = "https://github.com/lpm0073/secure-logger"
 Changelog = "https://github.com/lpm0073/secure-logger/blob/main/CHANGELOG.md"
 "Bug Tracker" = "https://github.com/lpm0073/secure-logger/issues"
