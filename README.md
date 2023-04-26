@@ -7,8 +7,6 @@
 
 A Python decorator to generate redacted and nicely formatted log entries. Works on all callables: class, class methods, Python module functions. Recursively redacts Python dictionary key values based on a customizable list of keys.
 
-Redacts the following values by default:
-
 ## Usage
 
 ### As a decorator
