@@ -79,7 +79,7 @@ ABOUT = load_about()
 setup(
     name="secure-logger",
     version=ABOUT["__package_version__"],
-    description="A function decorator for beautiful and complete logging",
+    description="A decorator to generate redacted and nicely formatted log entries",
     long_description=load_readme(),
     author="Lawrence McDaniel",
     author_email="lpm0073@gmail.com",

@@ -3,6 +3,9 @@
 # -------------------------------------------------------------------------
 .PHONY: build requirements deps-update deps-init
 
+pre-commit:
+	pre-commit run --all-files
+
 requirements:
 	pre-commit autoupdate
 	python -m pip install --upgrade pip wheel
