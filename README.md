@@ -94,7 +94,7 @@ class MyClass():
 ## Configuration Defaults
 
 ```python
-DEFAULT_REDACTION_MESSAGE = "*** -- REDACTED -- ***"
+DEFAULT_REDACTION_MESSAGE = "*** -- secure_logger() -- ***"
 DEFAULT_INDENT = 4
 DEFAULT_SENSITIVE_KEYS = [
     "password",

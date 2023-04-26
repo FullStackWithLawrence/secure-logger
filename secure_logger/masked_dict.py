@@ -22,7 +22,7 @@ DEFAULT_SENSITIVE_KEYS = [
     "aws-access-key-id",
     "aws-secret-access-key",
 ]
-DEFAULT_REDACTION_MESSAGE = "*** -- REDACTED -- ***"
+DEFAULT_REDACTION_MESSAGE = "*** -- secure_logger() -- ***"
 DEFAULT_INDENT = 4
 
 
