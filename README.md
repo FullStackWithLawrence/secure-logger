@@ -5,21 +5,69 @@
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 [![hack.d Lawrence McDaniel](https://img.shields.io/badge/hack.d-Lawrence%20McDaniel-orange.svg)](https://lawrencemcdaniel.com)
 
-A Python decorator to generate redacted and nicely formatted log entries of class instantiations, class method calls and standard Python function calls. Redacts function parameter values and dict values based on a customizable list.
+A Python decorator to generate redacted and nicely formatted log entries. Works on all callables: class, class methods, Python module functions. Recursively redacts Python dictionary key values based on a customizable list of keys.
 
 Redacts the following values by default:
 
+## Usage
+
+### As a decorator
+
 ```python
-DEFAULT_SENSITIVE_KEYS = [
-    "password",
-    "token",
-    "client_id",
-    "client_secret",
-    "Authorization",
-    "secret",
-    "aws_access_key_id",
-    "aws_secret_access_key",
-]
+from secure_logger.decorators import secure_logger
+
+class TestClass(object):
+
+    @secure_logger()
+    def test_2(self, test_dict, test_list):
+        pass
+
+# call your method, passing some sensitive data
+test_dict = {
+    'not_a_sensitive_key': 'you-can-see-me',
+    'aws-access-key_id': conf.AWS_ACCESS_KEY_ID,
+    'aws-secret-access-key': conf.AWS_SECRET_ACCESS_KEY
+}
+test_list = ['foo', 'bar']
+o = TestClass()
+o.test_2(test_dict=test_dict, test_list=test_list)
+```
+
+Log output:
+
+```log
+INFO:secure_logger: __main__.TestClass().test_2()  keyword args: {
+    "test_dict": {
+        "not_a_sensitive_key": "you-can-see-me",
+        "aws-access-key-id": "*** -- REDACTED -- ***",
+        "aws-secret-access-key": "*** -- REDACTED -- ***"
+    },
+    "test_list": [
+        "foo",
+        "bar"
+    ]
+}
+```
+
+### As library functions
+
+```python
+from secure_logger.masked_dict import masked_dict, masked_dict2str
+
+test_dict = {
+    'not_a_sensitive_key': 'you-can-see-me',
+    'aws-access-key_id': conf.AWS_ACCESS_KEY_ID,
+    'aws-secret-access-key': conf.AWS_SECRET_ACCESS_KEY
+}
+print(masked_dict2str(test_dict))
+```
+
+```bash
+>>> {
+        "not_a_sensitive_key": "you-can-see-me",
+        "aws-access-key-id": "*** -- REDACTED -- ***",
+        "aws-secret-access-key": "*** -- REDACTED -- ***"
+    }
 ```
 
 ## Installation
@@ -28,44 +76,44 @@ DEFAULT_SENSITIVE_KEYS = [
 pip install secure-logger
 ```
 
-## Usage
+## Configuration
+
+secure_logger accepts optional parameters.
+
+- sensitive_keys: a Python list of dictionary keys. Not case sensitive.
+- message: a string value that will replace the sensitive key values
+- indent: number of characters to indent JSON string output when logging output
 
 ```python
-from secure_logger.decorators import secure_logger
+class MyClass():
 
-MY_SENSITIVE_KEYS = ["top-secret-password", "equally-secret-value",]
-
-class TestClass(object):
-
-    @secure_logger(sensitive_keys=MY_SENSITIVE_KEYS, indent=4)
-    def test_2(self, test_dict, test_list):
-        pass
-
-test_dict = {
-    'insensitive_key': 'you-can-see-me',
-    'top-secret-password': 'i-am-hidden',
-    'equally-secret-value': 'so-am-i'
-}
-test_list = ['foo', 'bar']
-o = TestClass()
-o.test_2(test_dict=test_dict, test_list=test_list)
+    @secure_logger(sensitive_keys=["password", "token", "crown_jewels"], message="***", indent=4)
+    def another_def(self):
 ```
 
-Generates log entries of this style and form:
+## Configuration Defaults
 
-```log
-INFO:secure_logger: __main__.TestClass().test_2()  keyword args: {
-    "test_dict": {
-        "insensitive_key": "you-can-see-me",
-        "top-secret-password": "*** -- REDACTED -- ***",
-        "equally-secret-value": "*** -- REDACTED -- ***"
-    },
-    "test_list": [
-        "foo",
-        "bar"
-    ]
-}
+```python
+DEFAULT_REDACTION_MESSAGE = "*** -- REDACTED -- ***"
+DEFAULT_INDENT = 4
+DEFAULT_SENSITIVE_KEYS = [
+    "password",
+    "token",
+    "client_id",
+    "client_secret",
+    "Authorization",
+    "secret",
+    "access_key_id",
+    "secret_access_key",
+    "access-key-id",
+    "secret-access-key",
+    "aws_access_key_id",
+    "aws_secret_access_key",
+    "aws-access-key-id",
+    "aws-secret-access-key",
+]
 ```
+
 
 ### Contributing
 
