@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.1.4] (2023-04-26)
+
+- bug fix: make dict key evaluation case insensitive
+
 ## [0.1.3] (2023-04-26)
 
 - rename serialized_masked_dict() to masked_dict2str() with backward compatibility
