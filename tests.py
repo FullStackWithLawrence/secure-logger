@@ -76,7 +76,7 @@ if __name__ == "__main__":
 
     # test 6
     print("test 6 - masked_dict() with custom parameters")  # noqa: T201
-    print(masked_dict(test_dict, sensitive_keys=["insensitive_key"], message=" -- SHAME ON YOU -- "))  # noqa: T201
+    print(masked_dict(test_dict, sensitive_keys=["insensitive_key"], message=" -- TEST 6 MESSAGE -- "))  # noqa: T201
 
     # test 7
     print("test 7 - masked_dict2str() w defaults")  # noqa: T201
@@ -84,5 +84,16 @@ if __name__ == "__main__":
 
     # test 8
     print("test 8 - masked_dict2str() w custom parameters")  # noqa: T201
-    md = masked_dict2str(test_dict, sensitive_keys=["insensitive_key"], message=" -- SHAME ON YOU -- ", indent=2)
+    md = masked_dict2str(test_dict, sensitive_keys=["insensitive_key"], message=" -- TEST 8 MESSAGE -- ", indent=2)
     print(md)  # noqa: T201
+
+    # test 9
+    print("test 9 - masked_dict2str() upper case keys")  # noqa: T201
+    test_dict = {
+        "insensitive_key": "you-can-see-me",
+        "AWS_ACCESS_KEY_ID": "i-am-hidden",
+        "AWS_Secret_Access_Key": "so-am-i",
+    }
+    print(test_dict)  # noqa: T201
+    print(masked_dict(test_dict))  # noqa: T201
+    print(masked_dict2str(test_dict))  # noqa: T201
