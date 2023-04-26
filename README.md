@@ -60,12 +60,14 @@ test_dict = {
 print(masked_dict2str(test_dict))
 ```
 
+Output:
+
 ```bash
->>> {
-        "not_a_sensitive_key": "you-can-see-me",
-        "aws-access-key-id": "*** -- REDACTED -- ***",
-        "aws-secret-access-key": "*** -- REDACTED -- ***"
-    }
+{
+    "not_a_sensitive_key": "you-can-see-me",
+    "aws-access-key-id": "*** -- REDACTED -- ***",
+    "aws-secret-access-key": "*** -- REDACTED -- ***"
+}
 ```
 
 ## Installation
