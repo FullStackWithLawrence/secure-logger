@@ -42,34 +42,34 @@ class _JSONEncoder(json.JSONEncoder):
             return ""
 
 
-def masked_dict(obj, sensitive_keys: list = DEFAULT_SENSITIVE_KEYS, message: str = DEFAULT_REDACTION_MESSAGE) -> dict:
+def masked_dict(
+    source_dict, sensitive_keys: list = DEFAULT_SENSITIVE_KEYS, message: str = DEFAULT_REDACTION_MESSAGE
+) -> dict:
     """
     Mask sensitive key / value in log entries.
 
     Masks the value of specified key.
     obj: a dict or a string representation of a dict, or None
     """
-    if type(obj) == str:
-        obj = json.loads(obj)
+    if type(source_dict) == str:
+        source_dict = json.loads(source_dict)
 
-    if type(obj) != dict:
-        raise TypeError("obj must be a dict or a json serializable string")
+    if type(source_dict) != dict:
+        raise TypeError("source_dict must be a dict or a json serializable string")
 
-    to_mask = {}
-    for key in obj:
-        value = obj[key]
+    recursed_dict = {}
+    for key in source_dict:
+        value = source_dict[key]
         if type(value) == dict:
-            value = masked_dict(obj=value, sensitive_keys=sensitive_keys, message=message)
-        to_mask[key] = value
+            value = masked_dict(source_dict=value, sensitive_keys=sensitive_keys, message=message)
+        recursed_dict[key] = value
 
-    def redact(key: str, obj: dict) -> dict:
-        if key in obj:
-            obj[key] = message
-        return obj
-
-    for key in sensitive_keys:
-        to_mask = redact(key=key, obj=to_mask)
-    return to_mask
+    for lower_case_sensitive_key in [x.lower() for x in sensitive_keys]:
+        if lower_case_sensitive_key in [x.lower() for x in recursed_dict.keys()]:
+            for original_key in recursed_dict:
+                if original_key.lower() == lower_case_sensitive_key:
+                    recursed_dict[original_key] = message
+    return recursed_dict
 
 
 def masked_dict2str(
@@ -79,14 +79,7 @@ def masked_dict2str(
     message: str = DEFAULT_REDACTION_MESSAGE,
 ) -> str:
     """Return a JSON encoded string representation of a masked dict."""
-    to_serialize = {}
-    for key in obj:
-        value = obj[key]
-        if type(value) == dict:
-            value = masked_dict(value, sensitive_keys, message=message)
-        to_serialize[key] = value
-
-    return json.dumps(masked_dict(to_serialize, sensitive_keys, message=message), cls=_JSONEncoder, indent=indent)
+    return json.dumps(masked_dict(obj, sensitive_keys, message=message), cls=_JSONEncoder, indent=indent)
 
 
 def serialized_masked_dict(
