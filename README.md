@@ -14,33 +14,33 @@ A Python decorator to generate redacted and nicely formatted log entries. Works 
 ```python
 from secure_logger.decorators import secure_logger
 
-class TestClass(object):
+class Foo(object):
 
     @secure_logger()
-    def test_2(self, test_dict, test_list):
+    def bar(self, dict_data, list_data):
         pass
 
 # call your method, passing some sensitive data
-test_dict = {
+dict_data = {
     'not_a_sensitive_key': 'you-can-see-me',
     'aws-access-key_id': conf.AWS_ACCESS_KEY_ID,
     'aws-secret-access-key': conf.AWS_SECRET_ACCESS_KEY
 }
-test_list = ['foo', 'bar']
-o = TestClass()
-o.test_2(test_dict=test_dict, test_list=test_list)
+list_data = ['foo', 'bar']
+foo = Foo()
+foo.bar(dict_data=dict_data, list_data=list_data)
 ```
 
 Log output:
 
 ```log
-INFO:secure_logger: __main__.TestClass().test_2()  keyword args: {
-    "test_dict": {
+INFO:secure_logger: __main__.Foo().bar()  keyword args: {
+    "dict_data": {
         "not_a_sensitive_key": "you-can-see-me",
-        "aws-access-key-id": "*** -- REDACTED -- ***",
-        "aws-secret-access-key": "*** -- REDACTED -- ***"
+        "aws-access-key-id": "*** -- secure_logger() -- ***",
+        "aws-secret-access-key": "*** -- secure_logger() -- ***"
     },
-    "test_list": [
+    "list_data": [
         "foo",
         "bar"
     ]
@@ -52,12 +52,12 @@ INFO:secure_logger: __main__.TestClass().test_2()  keyword args: {
 ```python
 from secure_logger.masked_dict import masked_dict, masked_dict2str
 
-test_dict = {
+dict_data = {
     'not_a_sensitive_key': 'you-can-see-me',
     'aws-access-key_id': conf.AWS_ACCESS_KEY_ID,
     'aws-secret-access-key': conf.AWS_SECRET_ACCESS_KEY
 }
-print(masked_dict2str(test_dict))
+print(masked_dict2str(dict_data))
 ```
 
 Output:
@@ -65,8 +65,8 @@ Output:
 ```bash
 {
     "not_a_sensitive_key": "you-can-see-me",
-    "aws-access-key-id": "*** -- REDACTED -- ***",
-    "aws-secret-access-key": "*** -- REDACTED -- ***"
+    "aws-access-key-id": "*** -- secure_logger() -- ***",
+    "aws-secret-access-key": "*** -- secure_logger() -- ***"
 }
 ```
 
