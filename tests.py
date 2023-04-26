@@ -1,99 +1,156 @@
 # -*- coding: utf-8 -*-
+# flake8: noqa
 """
 Simple test bank.
 
 Test the three use cases that we care about.
 """
+import unittest
 import logging
+import json
 
 from secure_logger.decorators import secure_logger
-from secure_logger.masked_dict import masked_dict, masked_dict2str
-
-logging.basicConfig(level=logging.DEBUG)
-
-MY_SENSITIVE_KEYS = [
-    "client_id",
-    "client_secret",
-    "aws_access_key_id",
-    "aws_secret_access_key",
-]
+from secure_logger.masked_dict import (
+    masked_dict,
+    masked_dict2str,
+    DEFAULT_REDACTION_MESSAGE,
+)
 
 
-@secure_logger()
-def test_1(msg):
-    """Test 1: a simple module function."""
-    print("test 1: " + msg)  # noqa: T201
+###############################################################################
+#                                 TEST BANK
+###############################################################################
+class TestMaskedDict(unittest.TestCase):
+    test_dict = {
+        "insensitive_key": "you-can-see-me",
+        "aws_access_key_id": "i-am-hidden",
+        "aws_secret_access_key": "so-am-i",
+    }
+    expected_dict = {
+        "insensitive_key": "you-can-see-me",
+        "aws_access_key_id": DEFAULT_REDACTION_MESSAGE,
+        "aws_secret_access_key": DEFAULT_REDACTION_MESSAGE,
+    }
+
+    def test_masked_dict(self):
+        md = masked_dict(self.test_dict)
+        self.assertDictEqual(md, self.expected_dict)
+
+    def test_masked_dict2str(self):
+        md2s = masked_dict2str(self.test_dict)
+        md2s_to_json = json.loads(md2s)
+        self.assertDictEqual(md2s_to_json, self.expected_dict)
 
 
-class TestClass(object):
-    """Test class method logging."""
+class TestMaskedDictCaseSensitivity(unittest.TestCase):
+    test_dict = {
+        "insensitive_key": "you-can-see-me",
+        "AWs_AcCEss_KeY_iD": "i-am-very-hidden",
+        "AWS_SECRET_ACCESS_KEY": "so-am-i",
+    }
+    expected_dict = {
+        "insensitive_key": "you-can-see-me",
+        "AWs_AcCEss_KeY_iD": DEFAULT_REDACTION_MESSAGE,
+        "AWS_SECRET_ACCESS_KEY": DEFAULT_REDACTION_MESSAGE,
+    }
 
+    def test_masked_dict(self):
+        md = masked_dict(self.test_dict)
+        self.assertDictEqual(md, self.expected_dict)
+
+    def test_masked_dict2str(self):
+        md2s = masked_dict2str(self.test_dict)
+        md2s_to_json = json.loads(md2s)
+        self.assertDictEqual(md2s_to_json, self.expected_dict)
+
+
+class TestCustomParams(unittest.TestCase):
+    visible_value = "i should be visible"
+    custom_keys = ["foo", "bar"]
+    custom_message = "--REDACTED--"
+    test_dict = {"foo": "i should be hidden", "bar": "me too", "visible_key": visible_value}
+
+    def test_custom_keys(self):
+        expected_result = {
+            "foo": DEFAULT_REDACTION_MESSAGE,
+            "bar": DEFAULT_REDACTION_MESSAGE,
+            "visible_key": self.visible_value,
+        }
+        masked_test_dict = masked_dict(self.test_dict, self.custom_keys)
+        self.assertDictEqual(masked_test_dict, expected_result)
+
+    def test_custom_keys_and_message(self):
+        expected_result = {"foo": self.custom_message, "bar": self.custom_message, "visible_key": self.visible_value}
+        masked_test_dict = masked_dict(self.test_dict, self.custom_keys, self.custom_message)
+        self.assertDictEqual(masked_test_dict, expected_result)
+
+
+class TestModuleDefDecorator(unittest.TestCase):
     @secure_logger()
-    def test_2(self, test_dict, test_list):
-        """Test class input parameter as objects."""
+    def mock_decorated_def(self, msg):
+        """Test 1: a simple module function."""
         pass
 
-    @secure_logger(sensitive_keys=["aws_secret_access_key"], indent=10, message="-- Forbidden! --")
-    def test_4(self, test_dict, test_list):
-        """Test class input parameter as objects."""
-        pass
+    def test_decorator_output(self):
+        hello_world = json.dumps(["'hello world'"])
+        hello_world = "'hello world'"
+
+        expected_output = (
+            "INFO:secure_logger.decorators:secure_logger: __main__.mock_decorated_def() ['<__main__.TestModuleDefDecorator testMethod=test_decorator_output>', "
+            + hello_world
+        )
+        with self.assertLogs(level=logging.DEBUG) as cm:
+            self.mock_decorated_def("hello world")
+
+        self.assertEqual(cm.output[0][0:100], expected_output[0:100])
 
 
-@secure_logger()
-class Test3:
-    """Test 3: decorate a class."""
+class TestClassMethodDecorator(unittest.TestCase):
+    class MockClass(object):
+        """Test class method logging."""
 
-    pass
+        @secure_logger()
+        def decorator_with_defaults(self, test_dict, test_list):
+            """Test class input parameter as objects."""
+            pass
 
+        @secure_logger(sensitive_keys=["aws_secret_access_key"], indent=10, message="-- Forbidden! --")
+        def decorator_with_custom_params(self, test_dict, test_list):
+            """Test class input parameter as objects."""
+            pass
 
-if __name__ == "__main__":
-    # test 1
-    print("test 1 - default parameters on module function")  # noqa: T201
-    test_1("hello world")
-
-    # test 2
-    print("test 2 - default parameters on class method")  # noqa: T201
     test_dict = {
         "insensitive_key": "you-can-see-me",
         "aws_access_key_id": "i-am-hidden",
         "aws_secret_access_key": "so-am-i",
     }
     test_list = ["foo", "bar"]
-    o = TestClass()
-    o.test_2(test_dict=test_dict, test_list=test_list)
+    mock_class = MockClass()
 
-    # test 3
-    print("test 3 - default parameters on class definition")  # noqa: T201
-    test3 = Test3()
+    def test_class_method_with_default_params(self):
+        expected_output = "INFO:secure_logger.decorators:secure_logger: __main__.decorator_with_defaults() ['<__main__.TestClassMethodDecorator.MockClass"
 
-    # test 4
-    print("test 4 - custom parameters")  # noqa: T201
-    o.test_4(test_dict=test_dict, test_list=test_list)
+        with self.assertLogs(level=logging.DEBUG) as cm:
+            self.mock_class.decorator_with_defaults(self.test_dict, self.test_list)
 
-    # test 5
-    print("test 5 - masked_dict() w defaults")  # noqa: T201
-    print(masked_dict(test_dict))  # noqa: T201
+        self.assertEqual(cm.output[0][0:100], expected_output[0:100])
 
-    # test 6
-    print("test 6 - masked_dict() with custom parameters")  # noqa: T201
-    print(masked_dict(test_dict, sensitive_keys=["insensitive_key"], message=" -- TEST 6 MESSAGE -- "))  # noqa: T201
 
-    # test 7
-    print("test 7 - masked_dict2str() w defaults")  # noqa: T201
-    print(masked_dict2str(test_dict))  # noqa: T201
+class TestClassDecorator(unittest.TestCase):
+    def test_class_with_default_params(self):
+        @secure_logger()
+        class MockDecoratedClass(object):
+            """Test 3: decorate a class."""
 
-    # test 8
-    print("test 8 - masked_dict2str() w custom parameters")  # noqa: T201
-    md = masked_dict2str(test_dict, sensitive_keys=["insensitive_key"], message=" -- TEST 8 MESSAGE -- ", indent=2)
-    print(md)  # noqa: T201
+            pass
 
-    # test 9
-    print("test 9 - masked_dict2str() upper case keys")  # noqa: T201
-    test_dict = {
-        "insensitive_key": "you-can-see-me",
-        "AWS_ACCESS_KEY_ID": "i-am-hidden",
-        "AWS_Secret_Access_Key": "so-am-i",
-    }
-    print(test_dict)  # noqa: T201
-    print(masked_dict(test_dict))  # noqa: T201
-    print(masked_dict2str(test_dict))  # noqa: T201
+        expected_output = "INFO:secure_logger.decorators:secure_logger: __main__.MockDecoratedClass.  "
+
+        with self.assertLogs(level=logging.DEBUG) as cm:
+            mock_decoratorated_class = MockDecoratedClass()
+
+        self.assertEqual(cm.output[0][0:100], expected_output[0:100])
+
+
+if __name__ == "__main__":
+    unittest.main()
