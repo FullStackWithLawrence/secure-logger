@@ -1,6 +1,6 @@
 # Secure Logger
 
-![Tests](https://github.com/github/docs/actions/workflows/tests.yml/badge.svg?branch=main)
+![Tests](https://github.com/lpm0073/secure-logger/actions/workflows/tests/badge.svg)
 [![Source code](https://img.shields.io/static/v1?logo=github&label=Git&style=flat-square&color=brightgreen&message=Source%20code)](https://github.com/lpm0073/secure-logger)
 [![PyPI releases](https://img.shields.io/pypi/v/secure-logger?logo=python&logoColor=white)](https://pypi.org/project/secure-logger)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
