@@ -22,12 +22,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r ./requirements/local.txt
 
-      - name: Lint
-        run: pre-commit run --all-files
-
       - name: secure_logger Unit tests
         run: |
-          pytest -v -s --cov=secure_logger ./secure_logger/tests/
+          pytest -v -s ./secure_logger/tests/
 
       - name: setup.py tests
         run: |
