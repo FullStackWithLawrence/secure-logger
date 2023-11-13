@@ -21,6 +21,33 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '16'
+
+      - name: Get current version
+        id: current_version
+        run: |
+          echo "::set-output name=version::$(python -c 'from __version__ import __version__; print(__version__)')"
+
+      - name: Get next version
+        id: next_version
+        run: |
+          echo "::set-output name=version::$(npx semantic-release --dry-run | grep 'The next release version is' | cut -d ' ' -f6)"
+
+      - name: Update __version__
+        if: steps.current_version.outputs.version != steps.next_version.outputs.version
+        run: |
+          echo "__version__ = '${{ steps.next_version.outputs.version }}'" > __version__.py
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add __version__.py
+          git commit -m "chore: [gh] Update __version__.py to ${{ steps.next_version.outputs.version }}"
+          git push https://${{ secrets.PAT }}@github.com/${{ github.repository }}.git HEAD:main
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
       - name: Semantic Release
         uses: cycjimmy/semantic-release-action@v4
         id: semantic
