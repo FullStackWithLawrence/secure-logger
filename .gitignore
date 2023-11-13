@@ -13,6 +13,7 @@ requirements/private.txt
 
 ### Python artifacts
 *.pyc
+__pycache__/
 
 ### Editor and IDE artifacts
 *~
