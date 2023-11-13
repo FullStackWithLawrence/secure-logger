@@ -4,6 +4,8 @@
 #
 #    pip-compile --extra=local --output-file=./requirements/local.txt --resolver=backtracking pyproject.toml
 #
+
+# dev dependencies
 black==23.3.0
     # via secure-logger (pyproject.toml)
 cfgv==3.3.1
