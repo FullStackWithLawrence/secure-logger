@@ -43,7 +43,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add __version__.py
-          git commit -m "chore: [gh] Update __version__.py to ${{ steps.next_version.outputs.version }}"
+          git commit -m "chore: [gh] Update __version__.py to ${{ steps.next_version.outputs.version }} [skip ci]"
           git push https://${{ secrets.PAT }}@github.com/${{ github.repository }}.git HEAD:main
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
