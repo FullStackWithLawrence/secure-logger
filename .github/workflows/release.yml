@@ -26,6 +26,9 @@ jobs:
         with:
           node-version: '20.9.0'
 
+      - name: Install npm dev dependencies
+        run: npm install --only=dev
+
       - name: Get current version
         id: current_version
         run: |
