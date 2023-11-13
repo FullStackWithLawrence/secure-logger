@@ -1,4 +1,5 @@
 .env
+venv
 # .gitignore for edx-platform.
 # There's a lot here, please try to keep it organized.
 
@@ -12,6 +13,7 @@ requirements/private.txt
 
 ### Python artifacts
 *.pyc
+__pycache__/
 
 ### Editor and IDE artifacts
 *~

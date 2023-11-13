@@ -123,7 +123,7 @@ Pull requests are welcome, and you can also contact [Lawrence McDaniel](https://
 ### Getting Started With Local development
 
 - Use the same virtual environment that you use for edx-platform
-- Ensure that your Python interpreter to 3.8x
+- Ensure that your Python interpreter to 3.11
 - install black: <https://pypi.org/project/black/>
 - install flake8: <https://flake8.pycqa.org/en/latest/>
 - install flake8-coding: <https://pypi.org/project/flake8-coding/>

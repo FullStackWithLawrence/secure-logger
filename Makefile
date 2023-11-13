@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------------
 # build a package for PyPi
 # -------------------------------------------------------------------------
-.PHONY: build requirements deps-update deps-init
+.PHONY: build requirements deps-update init
 
 pre-commit:
 	pre-commit run --all-files
@@ -12,10 +12,12 @@ requirements:
 	python -m piptools compile --extra local --upgrade --resolver backtracking -o ./requirements/local.txt pyproject.toml
 	pip install -r requirements/local.txt
 
-deps-init:
-	rm -rf .tox
-	python -m pip install --upgrade pip wheel
-	python -m pip install --upgrade -r requirements/local.txt -e .
+init:
+	python3.11 -m venv venv && \
+	source venv/bin/activate && \
+	rm -rf .tox && \
+	python -m pip install --upgrade pip wheel && \
+	python -m pip install --upgrade -r requirements/local.txt -e . && \
 	python -m pip check
 
 report:
