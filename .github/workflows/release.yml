@@ -30,11 +30,15 @@ jobs:
         id: current_version
         run: |
           echo "::set-output name=version::$(python -c 'from __version__ import __version__; print(__version__)')"
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
 
       - name: Get next version
         id: next_version
         run: |
-          echo "::set-output name=version::$(npx semantic-release --dry-run | grep 'The next release version is' | cut -d ' ' -f6)"
+          echo "::set-output name=version::$(npx semantic-release --dry-run  | awk '/The next release version is/{print $NF}')"
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
 
       - name: Update __version__
         if: steps.current_version.outputs.version != steps.next_version.outputs.version
