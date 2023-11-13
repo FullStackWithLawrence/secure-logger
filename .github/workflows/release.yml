@@ -43,8 +43,19 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
+      - name: Debug current version
+        id: debug_current_version
+        run: echo "Current version is '${{ steps.current_version.outputs.version }}'"
+
+      - name: Debug next version
+        id: debug_next_version
+        run: echo "Next version is $(npx semantic-release --dry-run  | awk '/The next release version is/{print $NF}')"
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
       - name: Update __version__
         if: steps.current_version.outputs.version != steps.next_version.outputs.version
+        id: update_version
         run: |
           echo "__version__ = '${{ steps.next_version.outputs.version }}'" > __version__.py
           git config --local user.email "action@github.com"
