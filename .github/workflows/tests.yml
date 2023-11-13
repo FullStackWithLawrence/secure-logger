@@ -24,6 +24,7 @@ jobs:
 
       - name: secure_logger Unit tests
         run: |
+          export PYTHONPATH=$PYTHONPATH:$(pwd)
           cd ./secure_logger/tests/
           python -m tests
 
