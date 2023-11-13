@@ -1,3 +1,15 @@
+## [0.1.7](https://github.com/lpm0073/secure-logger/compare/v0.1.6...v0.1.7) (2023-11-13)
+
+
+### Bug Fixes
+
+* add missing package descriptors ([72bc5b3](https://github.com/lpm0073/secure-logger/commit/72bc5b3c296e3f5d809ecad894c8b25aa1e0e0fa))
+* correct path to python requirements ([cdc0557](https://github.com/lpm0073/secure-logger/commit/cdc05577f5b6e5c1bb46b141ff61ff00a0eca899))
+* fix calls to unit tests ([9b98d18](https://github.com/lpm0073/secure-logger/commit/9b98d18016cfe99b38298bd910831c1de3988db0))
+* fix path to secure_logger ([1d6a1d9](https://github.com/lpm0073/secure-logger/commit/1d6a1d90c233464746a85dcb0add3ba6e0f8297a))
+* move __version__.py to the root ([da0beac](https://github.com/lpm0073/secure-logger/commit/da0beac04ec3144936aa92fb5deca8b97945b439))
+* remove reference to django migrations ([e0a62be](https://github.com/lpm0073/secure-logger/commit/e0a62be13deb323f683d39134f42b203e413ff49))
+
 # CHANGE LOG
 
 All notable changes to this project will be documented in this file.
