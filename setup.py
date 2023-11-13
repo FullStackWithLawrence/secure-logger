@@ -72,13 +72,22 @@ def load_about() -> Dict[str, str]:
     return about
 
 
+def load_version() -> Dict[str, str]:
+    """Stringify the __about__ mobule."""
+    version: Dict[str, str] = {}
+    with io.open(os.path.join(HERE, "__version__.py"), "rt", encoding="utf-8") as f:
+        exec(f.read(), version)  # pylint: disable=exec-used
+    return version
+
+
 README = open(os.path.join(os.path.dirname(__file__), "README.md")).read()
 CHANGELOG = open(os.path.join(os.path.dirname(__file__), "CHANGELOG.md")).read()
 ABOUT = load_about()
+VERSION = load_version()
 
 setup(
     name="secure-logger",
-    version=ABOUT["__package_version__"],
+    version=VERSION["__version__"],
     description="A decorator to generate redacted and nicely formatted log entries",
     long_description=load_readme(),
     author="Lawrence McDaniel",
