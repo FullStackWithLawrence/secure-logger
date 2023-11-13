@@ -25,10 +25,12 @@ build-backend = "setuptools.build_meta:__legacy__"
 [project]
 name = "secure-logger"
 version = "0.1.6"
+license = { file = "LICENSE.txt" }
 authors = [
   { name="Lawrence McDaniel", email="lpm0073@gmail.com" }
 ]
 description = "A decorator to generate secure, well-formatted log entries"
+dynamic = ["maintainers"]
 readme = "README.md"
 requires-python = ">=3.6"
 classifiers = [
