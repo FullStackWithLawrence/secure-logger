@@ -6,6 +6,7 @@
 #
 
 # dev dependencies
+pytest==7.4.3
 black==23.3.0
     # via secure-logger (pyproject.toml)
 cfgv==3.3.1

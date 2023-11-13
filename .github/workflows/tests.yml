@@ -10,14 +10,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4
+
       - name: Set up Python 3.x
         uses: actions/setup-python@v4
         with:
-          python-version: "3.8"
+          python-version: "3.11"
+
       - name: Install requirements
-        run: python -m pip install -r requirements/local.txt
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r ./requirements.txt
+
       - name: Lint
         run: pre-commit run --all-files
-      - name: Unit tests
-        run: python -m tests
+
+      - name: secure_logger Unit tests
+        run: |
+          cd .secure_logger
+          pytest -v -s tests/
+
+      - name: setup.py tests
+        run: |
+          pytest -v -s setup_test.py
