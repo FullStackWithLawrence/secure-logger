@@ -25,8 +25,8 @@ jobs:
       - name: secure_logger Unit tests
         run: |
           cd ./secure_logger/tests/
-          python -m tests.py
+          python -m tests
 
       - name: setup.py tests
         run: |
-          pytest -v -s setup_test.py
+          python -m setup_test
