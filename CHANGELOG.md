@@ -1,3 +1,11 @@
+## [0.1.9](https://github.com/lpm0073/secure-logger/compare/v0.1.8...v0.1.9) (2023-11-13)
+
+
+### Bug Fixes
+
+* have to skip CI automated unit tests when commit __version__.py ([0e939c8](https://github.com/lpm0073/secure-logger/commit/0e939c87eb3ab0aafe6475691f1380127ea1860b))
+* refactor call to npx semantic-release ([2c7d768](https://github.com/lpm0073/secure-logger/commit/2c7d768c8875a11f68ff47700e4c8a107a98c89b))
+
 ## [0.1.8](https://github.com/lpm0073/secure-logger/compare/v0.1.7...v0.1.8) (2023-11-13)
 
 
