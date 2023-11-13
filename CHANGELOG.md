@@ -1,3 +1,11 @@
+## [0.1.8](https://github.com/lpm0073/secure-logger/compare/v0.1.7...v0.1.8) (2023-11-13)
+
+
+### Bug Fixes
+
+* required upgrade to node 20.9.0 ([756ea63](https://github.com/lpm0073/secure-logger/commit/756ea6366bfe828783be17f4d581e8b4cd7f6574))
+* required upgrade to node 20.9.0 ([9bc8871](https://github.com/lpm0073/secure-logger/commit/9bc88718b3ffbfdd002d9156dcbad3db974b723f))
+
 ## [0.1.7](https://github.com/lpm0073/secure-logger/compare/v0.1.6...v0.1.7) (2023-11-13)
 
 
