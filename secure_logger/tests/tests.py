@@ -96,7 +96,7 @@ class TestModuleDefDecorator(unittest.TestCase):
         hello_world = "'hello world'"
 
         expected_output = (
-            "INFO:secure_logger.decorators:secure_logger: tests.mock_decorated_def() ['<tests.TestModuleDefDecorator testMethod=test_decorator_output>', "
+            "INFO:secure_logger.decorators:secure_logger: secure_logger.tests.tests.mock_decorated_def() ['<tests.TestModuleDefDecorator testMethod=test_decorator_output>', "
             + hello_world
         )
         with self.assertLogs(level=logging.DEBUG) as cm:
@@ -128,7 +128,7 @@ class TestClassMethodDecorator(unittest.TestCase):
     mock_class = MockClass()
 
     def test_class_method_with_default_params(self):
-        expected_output = "INFO:secure_logger.decorators:secure_logger: tests.decorator_with_defaults() ['<tests.TestClassMethodDecorator.MockClass"
+        expected_output = "INFO:secure_logger.decorators:secure_logger: secure_logger.tests.tests.decorator_with_defaults() ['<tests.TestClassMethodDecorator.MockClass"
 
         with self.assertLogs(level=logging.DEBUG) as cm:
             self.mock_class.decorator_with_defaults(self.test_dict, self.test_list)
@@ -144,7 +144,7 @@ class TestClassDecorator(unittest.TestCase):
 
             pass
 
-        expected_output = "INFO:secure_logger.decorators:secure_logger: tests.MockDecoratedClass.  "
+        expected_output = "INFO:secure_logger.decorators:secure_logger: secure_logger.tests.tests.MockDecoratedClass."
 
         with self.assertLogs(level=logging.DEBUG) as cm:
             mock_decoratorated_class = MockDecoratedClass()
