@@ -7,7 +7,7 @@
 # If they are different, it will update __version__.py and push the changes
 # to the main branch.
 #------------------------------------------------------------------------------
-name: Bump version
+name: Bump version in next branch
 
 on:
   workflow_dispatch:
