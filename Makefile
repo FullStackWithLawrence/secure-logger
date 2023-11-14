@@ -1,41 +1,43 @@
-# -------------------------------------------------------------------------
-# build a package for PyPi
-# -------------------------------------------------------------------------
-.PHONY: build requirements deps-update init
+PYTHON = python3
+PIP = $(PYTHON) -m pip
+.PHONY: pre-commit requirements init clean report build release-test release-prod
 
 pre-commit:
+	pre-commit install
 	pre-commit run --all-files
 
 requirements:
 	pre-commit autoupdate
-	python -m pip install --upgrade pip wheel
+	$(PIP)  install --upgrade pip wheel
 	python -m piptools compile --extra local --upgrade --resolver backtracking -o ./requirements/local.txt pyproject.toml
-	pip install -r requirements/local.txt
+	$(PIP)  -r requirements/local.txt
 
 init:
 	python3.11 -m venv venv && \
-	source venv/bin/activate && \
+	. venv/bin/activate && \
 	rm -rf .tox && \
-	python -m pip install --upgrade pip wheel && \
-	python -m pip install --upgrade -r requirements/local.txt -e . && \
-	python -m pip check
+	$(PIP) install  --upgrade pip wheel && \
+	$(PIP) install  --upgrade -r requirements/local.txt -e . && \
+	python -m pip check && \
+	npm install
+
+clean:
+	rm -rf build dist secure_logger.egg-info
 
 report:
-	cloc $(git ls-files)
+	cloc . --exclude-ext=svg,json,zip --vcs=git
 
 
 build:
-	python3 -m pip install --upgrade setuptools wheel twine
-	python -m pip install --upgrade build
+	$(PIP) install  --upgrade setuptools wheel twine
+	$(PIP) install  --upgrade build
 
-	if [ -d "./build" ]; then sudo rm -r build; fi
-	if [ -d "./dist" ]; then sudo rm -r dist; fi
-	if [ -d "./secure_logger.egg-info" ]; then sudo rm -r secure_logger.egg-info; fi
+	make clean
 
-	python3 -m build --sdist ./
-	python3 -m build --wheel ./
+	$(PYTHON) -m build --sdist ./
+	$(PYTHON) -m build --wheel ./
 
-	python3 -m pip install --upgrade twine
+	$(PYTHON) -m pip install --upgrade twine
 	twine check dist/*
 
 
