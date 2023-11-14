@@ -43,20 +43,8 @@
           env:
             GITHUB_TOKEN: ${{ secrets.PAT }}
 
-        - name: Check versions
-          id: check_versions
-          run: |
-            if [ "$CURRENT_VERSION" != "$NEXT_VERSION" ]; then
-              echo "::set-output name=version_changed::true"
-            else
-              echo "::set-output name=version_changed::false"
-            fi
-          env:
-            CURRENT_VERSION: ${{ env.CURRENT_VERSION }}
-            NEXT_VERSION: ${{ env.NEXT_VERSION }}
-
         - name: Update __version__
-          if: steps.check_versions.outputs.version_changed == 'true'
+          if: env.CURRENT_VERSION != env.NEXT_VERSION
           id: update_version
           run: |
             echo "__version__ = '${{ env.NEXT_VERSION }}'" > __version__.py
