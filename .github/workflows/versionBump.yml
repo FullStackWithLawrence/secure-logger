@@ -21,7 +21,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # required antecedent
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
@@ -40,6 +39,8 @@ jobs:
         run: npm install
 
       - name: Get current version
+        #  step 1
+        # the current version persisted to __version__.py
         id: current_version
         run: |
           echo "CURRENT_VERSION=$(python -c 'from __version__ import __version__; print(__version__)')" >> $GITHUB_ENV
@@ -51,6 +52,10 @@ jobs:
         run: echo "i ensure that CURRENT_VERSION is set."
 
       - name: Get next version
+        # step 2
+        # calculate the next version based on semantic-release rules
+        # this will return a null string is there in fact is no version bump.
+        # so set NEXT_VERSION to CURRENT_VERSION if there is no version bump.
         id: next_version
         run: |
           NEXT_VERSION=$(python -c 'from setup_utils import get_semantic_version; print(get_semantic_version())')
@@ -64,6 +69,9 @@ jobs:
         run: echo "i ensure that NEXT_VERSION is set."
 
       - name: Check versions
+        # step 3
+        # compare the current version to the next version.
+        # if they are different, set VERSION_CHANGED to true
         id: check_versions
         run: |
           if [ "$CURRENT_VERSION" != "$NEXT_VERSION" ]; then
@@ -81,6 +89,9 @@ jobs:
 
 
       - name: Update __version__.py
+        # step 4
+        # if VERSION_CHANGED is true, update __version__.py and push the changes to the
+        # branch that triggered this workflow.
         if: env.VERSION_CHANGED == 'true'
         id: update_version
         run: |
