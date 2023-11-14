@@ -1,3 +1,10 @@
+## [0.1.15](https://github.com/lpm0073/secure-logger/compare/v0.1.14...v0.1.15) (2023-11-14)
+
+
+### Bug Fixes
+
+* add npx semantic-release --dry-run --no-ci ([d0133ab](https://github.com/lpm0073/secure-logger/commit/d0133ab6d966370b5eabf44e3543c81d3fe6b850))
+
 ## [0.1.14](https://github.com/lpm0073/secure-logger/compare/v0.1.13...v0.1.14) (2023-11-14)
 
 
