@@ -1,27 +1,27 @@
 PYTHON = python3
 PIP = $(PYTHON) -m pip
-.PHONY: pre-commit requirements init clean report build release-test release-prod
+.PHONY: pre-commit requirements init clean report build release-test release-prod help
+
+# Default target executed when no arguments are given to make.
+all: help
 
 pre-commit:
 	pre-commit install
 	pre-commit run --all-files
 
 requirements:
-	pre-commit autoupdate
-	$(PIP)  install --upgrade pip wheel
-	python -m piptools compile --extra local --upgrade --resolver backtracking -o ./requirements/local.txt pyproject.toml
-	$(PIP)  -r requirements/local.txt
-
-init:
-	python3.11 -m venv venv && \
-	. venv/bin/activate && \
-	rm -rf .tox && \
-	$(PIP) install  --upgrade pip wheel && \
-	$(PIP) install  --upgrade -r requirements/local.txt -e . && \
-	python -m pip check && \
+	rm -rf venv .tox node_modules
+	$(PIP) install --upgrade pip wheel
+	$(PIP) install -r requirements/local.txt && \
 	npm install && \
 	pre-commit install && \
 	pre-commit autoupdate
+
+init:
+	rm -rf .pytest_cache __pycache__ .pytest_cache
+	python3.11 -m venv venv && \
+	. venv/bin/activate && \
+	make requirements
 
 
 clean:
@@ -34,8 +34,8 @@ report:
 build:
 	npx semantic-release --doctor --dry-run
 
-	$(PIP) install  --upgrade setuptools wheel twine
-	$(PIP) install  --upgrade build
+	$(PIP) install --upgrade setuptools wheel twine
+	$(PIP) install --upgrade build
 
 	make clean
 
@@ -51,7 +51,7 @@ build:
 # https://test.pypi.org/project/secure-logger/
 # -------------------------------------------------------------------------
 release-test:
-    git rev-parse --abbrev-ref HEAD | grep '^main$' || (echo 'Not on main branch, aborting' && exit 1)
+	git rev-parse --abbrev-ref HEAD | grep '^main$' || (echo 'Not on main branch, aborting' && exit 1)
 	make build
 	twine upload --verbose --skip-existing --repository testpypi dist/*
 
@@ -60,6 +60,21 @@ release-test:
 # https://pypi.org/project/secure-logger/
 # -------------------------------------------------------------------------
 release-prod:
-    git rev-parse --abbrev-ref HEAD | grep '^main$' || (echo 'Not on main branch, aborting' && exit 1)
+	git rev-parse --abbrev-ref HEAD | grep '^main$' || (echo 'Not on main branch, aborting' && exit 1)
 	make build
 	twine upload --verbose --skip-existing dist/*
+
+######################
+# HELP
+######################
+
+help:
+	@echo '===================================================================='
+	@echo 'pre-commit		- install and configure pre-commit hooks'
+	@echo 'requirements		- install Python, npm and pre-commit requirements'
+	@echo 'init			- build virtual environment and install requirements'
+	@echo 'clean			- destroy all build artifacts'
+	@echo 'repository		- runs cloc report'
+	@echo 'build			- build the project'
+	@echo 'release-test		- test deployment to PyPi'
+	@echo 'release-prod		- production deployment to PyPi'

@@ -1,0 +1,43 @@
+#------------------------------------------------------------------------------
+# Lawrence McDaniel - https://lawrencemcdaniel.com
+# Version Bump Workflow
+#
+# Used mostly to propagate Dependabot pushed to main to the next branch. Use
+# cases:
+# - Dependabot pushes to main
+# - Manual push to main
+# - back propagation of modifications to __version__.py
+#------------------------------------------------------------------------------
+name: Merge main into next
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Configure Git
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
+      - name: Merge main into next
+        run: |
+          git checkout main
+          git pull
+          git checkout next
+          git merge main
+          git push origin next
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
