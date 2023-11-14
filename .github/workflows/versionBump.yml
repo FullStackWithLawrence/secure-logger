@@ -27,31 +27,45 @@
             node-version: '20.9.0'
 
         - name: Install npm dev dependencies
-          run: npm install --only=dev
+          run: npm install
 
         - name: Get current version
           id: current_version
           run: |
-            echo "::set-output name=version::$(python -c 'from __version__ import __version__; print(__version__)')"
+            echo "CURRENT_VERSION=$(python -c 'from __version__ import __version__; print(__version__)')" >> $GITHUB_ENV
           env:
             GITHUB_TOKEN: ${{ secrets.PAT }}
 
         - name: Get next version
           id: next_version
           run: |
-            echo "::set-output name=version::$(npx semantic-release --dry-run  | awk '/The next release version is/{print $NF}')"
+            echo "NEXT_VERSION=$(npx semantic-release --dry-run  | awk '/The next release version is/{print $NF}')" >> $GITHUB_ENV
           env:
             GITHUB_TOKEN: ${{ secrets.PAT }}
 
+        - name: Check versions
+          id: check_versions
+          run: |
+            if [ "$CURRENT_VERSION" != "$NEXT_VERSION" ]; then
+              echo "::set-output name=version_changed::true"
+            else
+              echo "::set-output name=version_changed::false"
+            fi
+          env:
+            CURRENT_VERSION: ${{ env.CURRENT_VERSION }}
+            NEXT_VERSION: ${{ env.NEXT_VERSION }}
+
         - name: Update __version__
-          if: steps.current_version.outputs.version != steps.next_version.outputs.version
+          if: steps.check_versions.outputs.version_changed == 'true'
           id: update_version
           run: |
-            echo "__version__ = '${{ steps.next_version.outputs.version }}'" > __version__.py
+            echo "__version__ = '${{ env.NEXT_VERSION }}'" > __version__.py
             git config --local user.email "action@github.com"
             git config --local user.name "GitHub Action"
             git add __version__.py
-            git commit -m "chore: [gh] Update __version__.py to ${{ steps.next_version.outputs.version }} [skip ci]"
+            git commit -m "chore: [gh] Update __version__.py to ${{ env.NEXT_VERSION }} [skip ci]"
             git push https://${{ secrets.PAT }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref }}
           env:
             GITHUB_TOKEN: ${{ secrets.PAT }}
+            CURRENT_VERSION: ${{ env.CURRENT_VERSION }}
+            NEXT_VERSION: ${{ env.NEXT_VERSION }}
