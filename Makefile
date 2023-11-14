@@ -1,6 +1,6 @@
 PYTHON = python3
 PIP = $(PYTHON) -m pip
-.PHONY: pre-commit requirements init clean report build release-test release-prod
+.PHONY: pre-commit requirements init clean report build release-test release-prod help
 
 pre-commit:
 	pre-commit install
@@ -59,3 +59,18 @@ release-prod:
 	git rev-parse --abbrev-ref HEAD | grep '^main$' || (echo 'Not on main branch, aborting' && exit 1)
 	make build
 	twine upload --verbose --skip-existing dist/*
+
+######################
+# HELP
+######################
+
+help:
+	@echo '===================================================================='
+	@echo 'pre-commit             - install and configure pre-commit hooks'
+	@echo 'requirements           - install Python, npm and pre-commit requirements'
+	@echo 'init             	  - build virtual environment and install requirements'
+	@echo 'clean             	  - destroy all build artifacts'
+	@echo 'report             	  - runs cloc report'
+	@echo 'build             	  - build the project'
+	@echo 'release-test           - test deployment to PyPi'
+	@echo 'release-prod           - production deployment to PyPi'
