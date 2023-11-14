@@ -1,3 +1,12 @@
+## [0.1.16](https://github.com/lpm0073/secure-logger/compare/v0.1.15...v0.1.16) (2023-11-14)
+
+
+### Bug Fixes
+
+* convert prerelease version to strict semantic equivalent ([f463db5](https://github.com/lpm0073/secure-logger/commit/f463db5d53499166968fe0d9a36a36e3327d36d4))
+* remove pre-commit ([12c3da0](https://github.com/lpm0073/secure-logger/commit/12c3da0042cd7ff03783c278fddf1c3bb6b4f69a))
+* set prerelease to true for next and nexst-major ([b830102](https://github.com/lpm0073/secure-logger/commit/b8301020b57a5e1bc09517100d3d2724e9c7d716))
+
 ## [0.1.15](https://github.com/lpm0073/secure-logger/compare/v0.1.14...v0.1.15) (2023-11-14)
 
 
