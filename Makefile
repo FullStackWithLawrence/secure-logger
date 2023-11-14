@@ -51,6 +51,7 @@ build:
 # https://test.pypi.org/project/secure-logger/
 # -------------------------------------------------------------------------
 release-test:
+    git rev-parse --abbrev-ref HEAD | grep '^main$' || (echo 'Not on main branch, aborting' && exit 1)
 	make build
 	twine upload --verbose --skip-existing --repository testpypi dist/*
 
@@ -59,5 +60,6 @@ release-test:
 # https://pypi.org/project/secure-logger/
 # -------------------------------------------------------------------------
 release-prod:
+    git rev-parse --abbrev-ref HEAD | grep '^main$' || (echo 'Not on main branch, aborting' && exit 1)
 	make build
 	twine upload --verbose --skip-existing dist/*
