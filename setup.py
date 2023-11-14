@@ -55,7 +55,7 @@ for scheme in INSTALL_SCHEMES.values():
 
 def load_readme() -> str:
     """Stringify the README."""
-    with io.open(os.path.join(HERE, "README.md"), "rt", encoding="utf8") as f:
+    with io.open(os.path.join(HERE, "README.rst"), "rt", encoding="utf8") as f:
         readme = f.read()
     # Replace img src for publication on pypi
     return readme.replace(
@@ -90,6 +90,7 @@ setup(
     version=VERSION["__version__"],
     description="A decorator to generate redacted and nicely formatted log entries",
     long_description=load_readme(),
+    long_description_content_type="text/markdown",
     author="Lawrence McDaniel",
     author_email="lpm0073@gmail.com",
     maintainer="Lawrence McDaniel",
