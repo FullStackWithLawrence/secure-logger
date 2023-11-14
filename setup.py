@@ -80,7 +80,6 @@ def load_version() -> Dict[str, str]:
     return version
 
 
-README = open(os.path.join(os.path.dirname(__file__), "README.md")).read()
 CHANGELOG = open(os.path.join(os.path.dirname(__file__), "CHANGELOG.md")).read()
 ABOUT = load_about()
 VERSION = load_version()
