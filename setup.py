@@ -9,6 +9,8 @@ from distutils.command.install import INSTALL_SCHEMES
 from distutils.command.install_data import install_data
 from typing import Dict
 
+from setup_utils import get_semantic_version
+
 HERE = os.path.abspath(os.path.dirname(__file__))
 
 # allow setup.py to be run from any path
@@ -72,29 +74,8 @@ def load_about() -> Dict[str, str]:
     return about
 
 
-def load_version() -> Dict[str, str]:
-    """Stringify the __about__ module."""
-    version: Dict[str, str] = {}
-    with io.open(os.path.join(HERE, "__version__.py"), "rt", encoding="utf-8") as f:
-        exec(f.read(), version)  # pylint: disable=exec-used
-    return version
-
-
-def get_semantic_version() -> str:
-    """
-    Return the semantic version number.
-
-    Note:
-    - pypi does not allow semantic version numbers to contain a dash.
-    - pypi does not allow semantic version numbers to contain a 'v' prefix.
-    - pypi does not allow semantic version numbers to contain a 'next' suffix.
-    """
-    return VERSION["__version__"].replace("-next.", "a")
-
-
 CHANGELOG = open(os.path.join(os.path.dirname(__file__), "CHANGELOG.md")).read()
 ABOUT = load_about()
-VERSION = load_version()
 
 setup(
     name="secure-logger",
