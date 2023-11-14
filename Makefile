@@ -10,7 +10,7 @@ pre-commit:
 	pre-commit run --all-files
 
 requirements:
-	rm -rf venv .tox node_modules
+	rm -rf .tox
 	$(PIP) install --upgrade pip wheel
 	$(PIP) install -r requirements/local.txt && \
 	npm install && \
@@ -18,7 +18,7 @@ requirements:
 	pre-commit autoupdate
 
 init:
-	rm -rf .pytest_cache __pycache__ .pytest_cache
+	rm -rf venv .pytest_cache __pycache__ .pytest_cache node_modules
 	python3.11 -m venv venv && \
 	. venv/bin/activate && \
 	make requirements
