@@ -43,20 +43,29 @@
           env:
             GITHUB_TOKEN: ${{ secrets.PAT }}
 
+        - name: null step
+          id: null_step
+          run: echo "i ensure that NEXT_VERSION is set."
+
         - name: Check versions
           id: check_versions
           run: |
             if [ "$CURRENT_VERSION" != "$NEXT_VERSION" ]; then
-              echo "::set-output name=version_changed::true"
+              echo "VERSION_CHANGED=true" >> $GITHUB_ENV
             else
-              echo "::set-output name=version_changed::false"
+              echo "VERSION_CHANGED=false" >> $GITHUB_ENV
             fi
           env:
             CURRENT_VERSION: ${{ env.CURRENT_VERSION }}
             NEXT_VERSION: ${{ env.NEXT_VERSION }}
 
+        - name: another null step
+          id: another_null_step
+          run: echo "i ensure that CURRENT_VERSION, NEXT_VERSION and VERSION_CHANGED are set."
+
+
         - name: Update __version__
-          if: steps.check_versions.outputs.version_changed == 'true'
+          if: env.VERSION_CHANGED == 'true'
           id: update_version
           run: |
             echo "__version__ = '${{ env.NEXT_VERSION }}'" > __version__.py
@@ -67,5 +76,5 @@
             git push https://${{ secrets.PAT }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref }}
           env:
             GITHUB_TOKEN: ${{ secrets.PAT }}
-            CURRENT_VERSION: ${{ env.CURRENT_VERSION }}
             NEXT_VERSION: ${{ env.NEXT_VERSION }}
+            VERSION_CHANGED: ${{ env.VERSION_CHANGED }}
