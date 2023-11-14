@@ -1,3 +1,11 @@
+## [0.1.17](https://github.com/lpm0073/secure-logger/compare/v0.1.16...v0.1.17) (2023-11-14)
+
+
+### Bug Fixes
+
+* add regex expressions to correctly evaluate all possible values of __version__.py ([1ac6246](https://github.com/lpm0073/secure-logger/commit/1ac6246f4840457a62d6a7a6ccf03065c28643c7))
+* restore npx semantic-release logic in next branch ([e8e4b1d](https://github.com/lpm0073/secure-logger/commit/e8e4b1db87d3e04e8e263080ca8adc4fda989d86))
+
 ## [0.1.16](https://github.com/lpm0073/secure-logger/compare/v0.1.15...v0.1.16) (2023-11-14)
 
 
