@@ -65,7 +65,7 @@ def load_readme() -> str:
 
 
 def load_about() -> Dict[str, str]:
-    """Stringify the __about__ mobule."""
+    """Stringify the __about__ module."""
     about: Dict[str, str] = {}
     with io.open(os.path.join(HERE, "__about__.py"), "rt", encoding="utf-8") as f:
         exec(f.read(), about)  # pylint: disable=exec-used
@@ -73,7 +73,7 @@ def load_about() -> Dict[str, str]:
 
 
 def load_version() -> Dict[str, str]:
-    """Stringify the __about__ mobule."""
+    """Stringify the __about__ module."""
     version: Dict[str, str] = {}
     with io.open(os.path.join(HERE, "__version__.py"), "rt", encoding="utf-8") as f:
         exec(f.read(), version)  # pylint: disable=exec-used
@@ -84,9 +84,10 @@ def get_semantic_version() -> str:
     """
     Return the semantic version number.
 
-    Note that pypi does not allow semantic version numbers to contain a dash.
-    Also note that pypi does not allow semantic version numbers to contain a 'v' prefix.
-    and also that pypi does not allow semantic version numbers to contain a 'next' suffix.
+    Note:
+    - pypi does not allow semantic version numbers to contain a dash.
+    - pypi does not allow semantic version numbers to contain a 'v' prefix.
+    - pypi does not allow semantic version numbers to contain a 'next' suffix.
     """
     return VERSION["__version__"].replace("-next.", "a")
 

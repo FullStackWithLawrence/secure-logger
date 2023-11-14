@@ -3,11 +3,11 @@ default_language_version:
   python: python3.11
 repos:
   -   repo: https://github.com/ambv/black
-      rev: 23.3.0
+      rev: 23.11.0
       hooks:
       - id: black
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v4.5.0
     hooks:
       # See https://pre-commit.com/hooks.html for more hooks
       - id: check-added-large-files
@@ -43,7 +43,7 @@ repos:
       - id: trailing-whitespace
         files: \.(py|sh|rst|yml|yaml)$
   - repo: https://github.com/PyCQA/flake8
-    rev: 6.0.0
+    rev: 6.1.0
     hooks:
       - id: flake8
         args: [--ignore=D100]
@@ -64,14 +64,14 @@ repos:
         ]
         exclude: ^tests/test_cases/no_closing_bracket\.py$
   - repo: https://github.com/rstcheck/rstcheck
-    rev: v6.1.2
+    rev: v6.2.0
     hooks:
       - id: rstcheck
         args: [
             --report-level=warning,
         ]
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.2.4
+    rev: v2.2.6
     hooks:
       - id: codespell
         files: \.(py|sh|rst|yml|yaml)$
