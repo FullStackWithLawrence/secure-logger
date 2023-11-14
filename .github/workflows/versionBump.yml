@@ -39,7 +39,7 @@
         - name: Get next version
           id: next_version
           run: |
-            echo "NEXT_VERSION=$(npx semantic-release --dry-run  | awk '/The next release version is/{print $NF}')" >> $GITHUB_ENV
+            echo "NEXT_VERSION=$(npx semantic-release --dry-run --no-ci  | awk '/The next release version is/{print $NF}')" >> $GITHUB_ENV
           env:
             GITHUB_TOKEN: ${{ secrets.PAT }}
 
