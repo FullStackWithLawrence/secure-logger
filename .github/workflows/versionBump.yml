@@ -17,14 +17,18 @@ on:
       - next-major
 
 jobs:
-  build:
+  bump-version-next:
     runs-on: ubuntu-latest
 
     steps:
-      # required antecedent
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.11'
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
@@ -35,24 +39,39 @@ jobs:
         run: npm install
 
       - name: Get current version
+        #  step 1
+        # the current version persisted to __version__.py
         id: current_version
         run: |
           echo "CURRENT_VERSION=$(python -c 'from __version__ import __version__; print(__version__)')" >> $GITHUB_ENV
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
+      - name: null step
+        id: null_step1
+        run: echo "i ensure that CURRENT_VERSION is set."
+
       - name: Get next version
+        # step 2
+        # calculate the next version based on semantic-release rules
+        # this will return a null string is there in fact is no version bump.
+        # so set NEXT_VERSION to CURRENT_VERSION if there is no version bump.
         id: next_version
         run: |
-          echo "NEXT_VERSION=$(npx semantic-release --dry-run --no-ci  | awk '/The next release version is/{print $NF}')" >> $GITHUB_ENV
+          NEXT_VERSION=$(python -c 'from setup_utils import get_semantic_version; print(get_semantic_version())')
+          echo "NEXT_VERSION=${NEXT_VERSION:-${{ env.CURRENT_VERSION }}}" >> $GITHUB_ENV
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
+          CURRENT_VERSION: ${{ env.CURRENT_VERSION }}
 
       - name: null step
-        id: null_step
+        id: null_step2
         run: echo "i ensure that NEXT_VERSION is set."
 
       - name: Check versions
+        # step 3
+        # compare the current version to the next version.
+        # if they are different, set VERSION_CHANGED to true
         id: check_versions
         run: |
           if [ "$CURRENT_VERSION" != "$NEXT_VERSION" ]; then
@@ -65,11 +84,14 @@ jobs:
           NEXT_VERSION: ${{ env.NEXT_VERSION }}
 
       - name: another null step
-        id: another_null_step
+        id: null_step3
         run: echo "i ensure that CURRENT_VERSION, NEXT_VERSION and VERSION_CHANGED are set."
 
 
       - name: Update __version__.py
+        # step 4
+        # if VERSION_CHANGED is true, update __version__.py and push the changes to the
+        # branch that triggered this workflow.
         if: env.VERSION_CHANGED == 'true'
         id: update_version
         run: |

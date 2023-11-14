@@ -1,3 +1,6 @@
 {
-    "cornflakes.linter.executablePath": "./venv/bin/flake8"
+    "cornflakes.linter.executablePath": "./venv/bin/flake8",
+    "[yaml]": {
+        "editor.autoIndent": "none"
+    }
 }

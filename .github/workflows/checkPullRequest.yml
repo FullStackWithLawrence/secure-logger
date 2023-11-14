@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  release:
+  check-pull-request:
     name: release
     runs-on: ubuntu-latest
     steps:
