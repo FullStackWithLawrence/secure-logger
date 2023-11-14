@@ -1,3 +1,10 @@
+## [0.1.12](https://github.com/lpm0073/secure-logger/compare/v0.1.11...v0.1.12) (2023-11-14)
+
+
+### Bug Fixes
+
+* refactor python code blocks using readme_renderer compliant directives ([49a3423](https://github.com/lpm0073/secure-logger/commit/49a34234bb95ed37676f0620eb481a221302b73a))
+
 ## [0.1.11](https://github.com/lpm0073/secure-logger/compare/v0.1.10...v0.1.11) (2023-11-14)
 
 
