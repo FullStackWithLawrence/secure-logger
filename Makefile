@@ -18,7 +18,8 @@ init:
 	rm -rf .tox && \
 	$(PIP) install  --upgrade pip wheel && \
 	$(PIP) install  --upgrade -r requirements/local.txt -e . && \
-	python -m pip check
+	python -m pip check && \
+	npm install
 
 clean:
 	rm -rf build dist secure_logger.egg-info
