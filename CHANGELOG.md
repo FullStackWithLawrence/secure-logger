@@ -1,3 +1,14 @@
+## [0.1.10](https://github.com/lpm0073/secure-logger/compare/v0.1.9...v0.1.10) (2023-11-14)
+
+
+### Bug Fixes
+
+* add a dedicated version bump workflow ([8c59680](https://github.com/lpm0073/secure-logger/commit/8c596807fda14a7d1ec927267d68db776ef1d822))
+* need to git pull ([24f177d](https://github.com/lpm0073/secure-logger/commit/24f177da2ef4b70ba73c69b9c1c51133a6d29c3c))
+* need to git pull ([2e60dbb](https://github.com/lpm0073/secure-logger/commit/2e60dbbd5922649e0dc5b0177f145d49f7b476dd))
+* need to git pull ([e173922](https://github.com/lpm0073/secure-logger/commit/e173922d290eba66addda88f408aa0d576382214))
+* remove version bump ([7b71ae9](https://github.com/lpm0073/secure-logger/commit/7b71ae9c484486cd124b751bc201f16cc2d627bf))
+
 ## [0.1.9](https://github.com/lpm0073/secure-logger/compare/v0.1.8...v0.1.9) (2023-11-13)
 
 
