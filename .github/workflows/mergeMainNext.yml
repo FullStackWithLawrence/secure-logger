@@ -34,7 +34,6 @@ jobs:
           git pull
           git checkout next
           git merge main
-          git push origin next
-          git push https://${{ secrets.PAT }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref }}
+          git push https://${{ secrets.PAT }}@github.com/${{ github.repository }}.git HEAD:next
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
