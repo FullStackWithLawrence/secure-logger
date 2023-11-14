@@ -7,21 +7,17 @@ pre-commit:
 	pre-commit run --all-files
 
 requirements:
-	pre-commit autoupdate
+	rm -rf venv .tox .pytest_cache node_modules __pycache__ .pytest_cache
 	$(PIP)  install --upgrade pip wheel
-	python -m piptools compile --extra local --upgrade --resolver backtracking -o ./requirements/local.txt pyproject.toml
-	$(PIP)  -r requirements/local.txt
+	$(PIP)  install -r requirements/local.txt && \
+	npm install && \
+	pre-commit install && \
+	pre-commit autoupdate
 
 init:
 	python3.11 -m venv venv && \
 	. venv/bin/activate && \
-	rm -rf .tox && \
-	$(PIP) install  --upgrade pip wheel && \
-	$(PIP) install  --upgrade -r requirements/local.txt -e . && \
-	python -m pip check && \
-	npm install && \
-	pre-commit install && \
-	pre-commit autoupdate
+	make requirements
 
 
 clean:
@@ -51,7 +47,7 @@ build:
 # https://test.pypi.org/project/secure-logger/
 # -------------------------------------------------------------------------
 release-test:
-    git rev-parse --abbrev-ref HEAD | grep '^main$' || (echo 'Not on main branch, aborting' && exit 1)
+	git rev-parse --abbrev-ref HEAD | grep '^main$' || (echo 'Not on main branch, aborting' && exit 1)
 	make build
 	twine upload --verbose --skip-existing --repository testpypi dist/*
 
@@ -60,6 +56,6 @@ release-test:
 # https://pypi.org/project/secure-logger/
 # -------------------------------------------------------------------------
 release-prod:
-    git rev-parse --abbrev-ref HEAD | grep '^main$' || (echo 'Not on main branch, aborting' && exit 1)
+	git rev-parse --abbrev-ref HEAD | grep '^main$' || (echo 'Not on main branch, aborting' && exit 1)
 	make build
 	twine upload --verbose --skip-existing dist/*
