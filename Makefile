@@ -21,6 +21,7 @@ init:
 	python -m pip check && \
 	npm install
 
+
 clean:
 	rm -rf build dist secure_logger.egg-info
 
@@ -29,6 +30,8 @@ report:
 
 
 build:
+	npx semantic-release --doctor --dry-run
+
 	$(PIP) install  --upgrade setuptools wheel twine
 	$(PIP) install  --upgrade build
 
