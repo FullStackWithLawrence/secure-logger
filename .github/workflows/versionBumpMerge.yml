@@ -27,6 +27,8 @@ jobs:
           python-version: '3.11'
 
       - name: Get current version
+        #  step 1
+        # the current version persisted to __version__.py
         id: current_version
         run: |
           echo "CURRENT_VERSION=$(python -c 'from __version__ import __version__; print(__version__)')" >> $GITHUB_ENV
@@ -34,6 +36,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
       - name: Get next version
+        # step 2
+        # retrieve the the next version based on the logic in setup.py, which
+        # strips the pre-release tag from the current version.
         id: next_version
         run: |
           echo "NEXT_VERSION=$(python -c 'from setup_utils import get_semantic_version; print(get_semantic_version())')" >> $GITHUB_ENV
@@ -45,6 +50,10 @@ jobs:
         run: echo "i ensure that NEXT_VERSION is set."
 
       - name: Check versions
+        # step 3
+        # calculate the next version based on a comparison of the current version
+        # to the version calucalated in setup.py. If they are different, then
+        # the version used in setup.py takes precedence.
         id: check_versions
         run: |
           if [ "$CURRENT_VERSION" != "$NEXT_VERSION" ]; then
@@ -62,6 +71,9 @@ jobs:
 
 
       - name: Update __version__.py
+        # step 4
+        # if VERSION_CHANGED is true, update __version__.py and push the changes to the
+        # main branch.
         if: env.VERSION_CHANGED == 'true'
         id: update_version
         run: |

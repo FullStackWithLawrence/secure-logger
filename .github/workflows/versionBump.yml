@@ -58,7 +58,7 @@ jobs:
         # so set NEXT_VERSION to CURRENT_VERSION if there is no version bump.
         id: next_version
         run: |
-          NEXT_VERSION=$(python -c 'from setup_utils import get_semantic_version; print(get_semantic_version())')
+          NEXT_VERSION=$(npx semantic-release --dry-run --no-ci  | awk '/The next release version is/{print $NF}')
           echo "NEXT_VERSION=${NEXT_VERSION:-${{ env.CURRENT_VERSION }}}" >> $GITHUB_ENV
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
