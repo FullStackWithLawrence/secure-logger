@@ -10,14 +10,15 @@ pre-commit:
 	pre-commit run --all-files
 
 requirements:
-	rm -rf venv .tox .pytest_cache node_modules __pycache__ .pytest_cache
-	$(PIP)  install --upgrade pip wheel
-	$(PIP)  install -r requirements/local.txt && \
+	rm -rf venv .tox node_modules
+	$(PIP) install --upgrade pip wheel
+	$(PIP) install -r requirements/local.txt && \
 	npm install && \
 	pre-commit install && \
 	pre-commit autoupdate
 
 init:
+	rm -rf .pytest_cache __pycache__ .pytest_cache
 	python3.11 -m venv venv && \
 	. venv/bin/activate && \
 	make requirements
@@ -33,8 +34,8 @@ report:
 build:
 	npx semantic-release --doctor --dry-run
 
-	$(PIP) install  --upgrade setuptools wheel twine
-	$(PIP) install  --upgrade build
+	$(PIP) install --upgrade setuptools wheel twine
+	$(PIP) install --upgrade build
 
 	make clean
 
@@ -75,5 +76,5 @@ help:
 	@echo 'clean			- destroy all build artifacts'
 	@echo 'repository		- runs cloc report'
 	@echo 'build			- build the project'
-	@echo 'release-Test		- test deployment to PyPi'
+	@echo 'release-test		- test deployment to PyPi'
 	@echo 'release-prod		- production deployment to PyPi'
