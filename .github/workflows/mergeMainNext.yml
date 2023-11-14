@@ -25,15 +25,10 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Configure Git
-        run: |
-          git config --global user.name 'GitHub Actions'
-          git config --global user.email 'actions@github.com'
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
-
       - name: Merge main into next
         run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
           git checkout main
           git pull
           git checkout next
