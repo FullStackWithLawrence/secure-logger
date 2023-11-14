@@ -17,8 +17,7 @@ module.exports = {
             "CHANGELOG.md",
             "client/package.json",
             "client/package-lock.json",
-            "requirements.txt",
-            "api/terraform/python/layer_genai/requirements.txt",
+            "requirements/local.txt",
           ],
           "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
         }
