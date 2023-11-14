@@ -1,38 +1,25 @@
 #------------------------------------------------------------------------------
 # Lawrence McDaniel - https://lawrencemcdaniel.com
-# Version Bump Workflow
+# Version Bump and Merge Workflow
 #
-# Calculate the version of the 'next' branch based on semantic-release rules.
-# Compares the existing value of __version__.py to the calculated value.
-# If they are different, it will update __version__.py and push the changes
-# to the main branch.
+# Calculate the next version in the main branch. Compares the raw value of
+# __version__.py to the calculated value in setup.py. If they are different,
+# it will update __version__.py and push the changes to the main branch.
 #------------------------------------------------------------------------------
-name: Bump version
+name: Bump version in main branch
 
 on:
-  workflow_dispatch:
   push:
     branches:
-      - next
-      - next-major
+      - main
 
 jobs:
-  build:
+  SetVersion:
     runs-on: ubuntu-latest
-
     steps:
-      # required antecedent
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20.9.0'
-
-      - name: Install npm dev dependencies
-        run: npm install
 
       - name: Get current version
         id: current_version
@@ -44,7 +31,7 @@ jobs:
       - name: Get next version
         id: next_version
         run: |
-          echo "NEXT_VERSION=$(npx semantic-release --dry-run --no-ci  | awk '/The next release version is/{print $NF}')" >> $GITHUB_ENV
+          echo "NEXT_VERSION=$(python -c 'from setup_utils import get_semantic_version; print(get_semantic_version())')" >> $GITHUB_ENV
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
