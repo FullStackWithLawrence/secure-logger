@@ -117,7 +117,7 @@ setup(
     install_requires=[],
     extras_require={},
     classifiers=[  # https://pypi.org/classifiers/
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Environment :: Web Environment",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
@@ -133,10 +133,13 @@ setup(
         "Programming Language :: Python :: Implementation :: PyPy",
         "Topic :: Utilities",
     ],
+    keywords="logging, security, redaction",
     project_urls={
+        "Source": "https://github.com/lpm0073/secure-logger",
         "Documentation": "https://pypi.org/project/secure-logger/",
         "Changelog": "https://github.com/lpm0073/secure-logger/blob/main/CHANGELOG.md",
-        "Source": "https://github.com/lpm0073/secure-logger",
+        "Security": "https://github.com/lpm0073/secure-logger/blob/main/SECURITY.md",
+        "Code of Conduct": "https://github.com/lpm0073/secure-logger/blob/main/CODE_OF_CONDUCT.md",
         "Tracker": "https://github.com/lpm0073/secure-logger/issues",
     },
 )
