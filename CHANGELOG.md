@@ -1,3 +1,11 @@
+## [0.1.14](https://github.com/lpm0073/secure-logger/compare/v0.1.13...v0.1.14) (2023-11-14)
+
+
+### Bug Fixes
+
+* fix requirements path for semantic release ([f2ad049](https://github.com/lpm0073/secure-logger/commit/f2ad049e7a146a3eadc75606db87651c0e89e59a))
+* must add next and next-major ([7434ecf](https://github.com/lpm0073/secure-logger/commit/7434ecfc7e82cf3c6c9b2e771ea410883a722343))
+
 ## [0.1.13](https://github.com/lpm0073/secure-logger/compare/v0.1.12...v0.1.13) (2023-11-14)
 
 
