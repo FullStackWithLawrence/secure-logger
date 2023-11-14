@@ -17,7 +17,7 @@ Usage
 As a decorator
 ~~~~~~~~~~~~~~
 
-.. code:: python
+.. code-block:: python
 
    from secure_logger.decorators import secure_logger
 
@@ -56,7 +56,7 @@ Log output:
 As library functions
 ~~~~~~~~~~~~~~~~~~~~
 
-.. code:: python
+.. code-block:: python
 
    from secure_logger.masked_dict import masked_dict, masked_dict2str
 
@@ -94,7 +94,7 @@ secure_logger accepts optional parameters.
 -  indent: number of characters to indent JSON string output when
    logging output
 
-.. code:: python
+.. code-block:: python
 
    class MyClass():
 
@@ -105,7 +105,7 @@ secure_logger accepts optional parameters.
 Configuration Defaults
 ----------------------
 
-.. code:: python
+.. code-block:: python
 
    DEFAULT_REDACTION_MESSAGE = "*** -- secure_logger() -- ***"
    DEFAULT_INDENT = 4
