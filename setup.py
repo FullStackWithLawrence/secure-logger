@@ -65,7 +65,7 @@ def load_readme() -> str:
 
 
 def load_about() -> Dict[str, str]:
-    """Stringify the __about__ mobule."""
+    """Stringify the __about__ module."""
     about: Dict[str, str] = {}
     with io.open(os.path.join(HERE, "__about__.py"), "rt", encoding="utf-8") as f:
         exec(f.read(), about)  # pylint: disable=exec-used
@@ -73,11 +73,23 @@ def load_about() -> Dict[str, str]:
 
 
 def load_version() -> Dict[str, str]:
-    """Stringify the __about__ mobule."""
+    """Stringify the __about__ module."""
     version: Dict[str, str] = {}
     with io.open(os.path.join(HERE, "__version__.py"), "rt", encoding="utf-8") as f:
         exec(f.read(), version)  # pylint: disable=exec-used
     return version
+
+
+def get_semantic_version() -> str:
+    """
+    Return the semantic version number.
+
+    Note:
+    - pypi does not allow semantic version numbers to contain a dash.
+    - pypi does not allow semantic version numbers to contain a 'v' prefix.
+    - pypi does not allow semantic version numbers to contain a 'next' suffix.
+    """
+    return VERSION["__version__"].replace("-next.", "a")
 
 
 CHANGELOG = open(os.path.join(os.path.dirname(__file__), "CHANGELOG.md")).read()
@@ -86,7 +98,7 @@ VERSION = load_version()
 
 setup(
     name="secure-logger",
-    version=VERSION["__version__"],
+    version=get_semantic_version(),
     description="A decorator to generate redacted and nicely formatted log entries",
     long_description=load_readme(),
     long_description_content_type="text/x-rst",
@@ -106,7 +118,7 @@ setup(
     install_requires=[],
     extras_require={},
     classifiers=[  # https://pypi.org/classifiers/
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Environment :: Web Environment",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
@@ -122,10 +134,13 @@ setup(
         "Programming Language :: Python :: Implementation :: PyPy",
         "Topic :: Utilities",
     ],
+    keywords="logging, security, redaction",
     project_urls={
+        "Source": "https://github.com/lpm0073/secure-logger",
         "Documentation": "https://pypi.org/project/secure-logger/",
         "Changelog": "https://github.com/lpm0073/secure-logger/blob/main/CHANGELOG.md",
-        "Source": "https://github.com/lpm0073/secure-logger",
+        "Security": "https://github.com/lpm0073/secure-logger/blob/main/SECURITY.md",
+        "Code of Conduct": "https://github.com/lpm0073/secure-logger/blob/main/CODE_OF_CONDUCT.md",
         "Tracker": "https://github.com/lpm0073/secure-logger/issues",
     },
 )

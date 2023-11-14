@@ -19,7 +19,10 @@ init:
 	$(PIP) install  --upgrade pip wheel && \
 	$(PIP) install  --upgrade -r requirements/local.txt -e . && \
 	python -m pip check && \
-	npm install
+	npm install && \
+	pre-commit install && \
+	pre-commit autoupdate
+
 
 clean:
 	rm -rf build dist secure_logger.egg-info
@@ -29,6 +32,8 @@ report:
 
 
 build:
+	npx semantic-release --doctor --dry-run
+
 	$(PIP) install  --upgrade setuptools wheel twine
 	$(PIP) install  --upgrade build
 
