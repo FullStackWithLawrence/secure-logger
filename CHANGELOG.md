@@ -1,3 +1,10 @@
+## [0.1.13](https://github.com/lpm0073/secure-logger/compare/v0.1.12...v0.1.13) (2023-11-14)
+
+
+### Bug Fixes
+
+* long_description_content_type='text/x-rst' ([d551597](https://github.com/lpm0073/secure-logger/commit/d551597c208b3de6d635947ae2247c755928816e))
+
 ## [0.1.12](https://github.com/lpm0073/secure-logger/compare/v0.1.11...v0.1.12) (2023-11-14)
 
 
