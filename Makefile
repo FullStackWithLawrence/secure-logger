@@ -2,6 +2,9 @@ PYTHON = python3
 PIP = $(PYTHON) -m pip
 .PHONY: pre-commit requirements init clean report build release-test release-prod help
 
+# Default target executed when no arguments are given to make.
+all: help
+
 pre-commit:
 	pre-commit install
 	pre-commit run --all-files
