@@ -45,7 +45,7 @@
 
         - name: null step
           id: null_step
-          run: echo "i do not do anything"
+          run: echo "i ensure that NEXT_VERSION is set."
 
         - name: Check versions
           id: check_versions
@@ -61,7 +61,7 @@
 
         - name: another null step
           id: another_null_step
-          run: echo "i do not do anything either."
+          run: echo "i ensure that CURRENT_VERSION, NEXT_VERSION and VERSION_CHANGED are set."
 
 
         - name: Update __version__
@@ -77,3 +77,4 @@
           env:
             GITHUB_TOKEN: ${{ secrets.PAT }}
             NEXT_VERSION: ${{ env.NEXT_VERSION }}
+            VERSION_CHANGED: ${{ env.VERSION_CHANGED }}
