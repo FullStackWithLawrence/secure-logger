@@ -80,13 +80,24 @@ def load_version() -> Dict[str, str]:
     return version
 
 
+def get_semantic_version() -> str:
+    """
+    Return the semantic version number.
+
+    Note that pypi does not allow semantic version numbers to contain a dash.
+    Also note that pypi does not allow semantic version numbers to contain a 'v' prefix.
+    and also that pypi does not allow semantic version numbers to contain a 'next' suffix.
+    """
+    return VERSION["__version__"].replace("-next.", "a")
+
+
 CHANGELOG = open(os.path.join(os.path.dirname(__file__), "CHANGELOG.md")).read()
 ABOUT = load_about()
 VERSION = load_version()
 
 setup(
     name="secure-logger",
-    version=VERSION["__version__"],
+    version=get_semantic_version(),
     description="A decorator to generate redacted and nicely formatted log entries",
     long_description=load_readme(),
     long_description_content_type="text/x-rst",
