@@ -87,7 +87,7 @@ dist
 *.bak
 
 # Visual Studio Code
-.vscode
+# .vscode
 
 # Locally generated PII reports
 pii_report
