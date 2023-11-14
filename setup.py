@@ -89,7 +89,7 @@ setup(
     version=VERSION["__version__"],
     description="A decorator to generate redacted and nicely formatted log entries",
     long_description=load_readme(),
-    long_description_content_type="text/markdown",
+    long_description_content_type="text/x-rst",
     author="Lawrence McDaniel",
     author_email="lpm0073@gmail.com",
     maintainer="Lawrence McDaniel",
