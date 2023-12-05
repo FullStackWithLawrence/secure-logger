@@ -38,7 +38,7 @@ report:
 	cloc . --exclude-ext=svg,json,zip --vcs=git
 
 test:
-	cd secure_logger && python -m unittest tests/tests.py
+	python -m unittest discover -s secure_logger/tests/ && \
 	python -m setup_test
 
 build:
