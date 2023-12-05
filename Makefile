@@ -1,9 +1,18 @@
 PYTHON = python3
 PIP = $(PYTHON) -m pip
-.PHONY: pre-commit requirements init clean report build release-test release-prod help
+.PHONY: pre-commit requirements init clean report test build release-test release-prod help
 
 # Default target executed when no arguments are given to make.
 all: help
+
+init:
+	make clean && \
+	npm install && \
+	python3.11 -m venv venv && \
+	source venv/bin/activate && \
+	pip install --upgrade pip && \
+	make requirements && \
+	pre-commit install
 
 pre-commit:
 	pre-commit install
@@ -17,19 +26,20 @@ requirements:
 	pre-commit install && \
 	pre-commit autoupdate
 
-init:
-	rm -rf venv .pytest_cache __pycache__ .pytest_cache node_modules
-	python3.11 -m venv venv && \
-	. venv/bin/activate && \
-	make requirements
-
+lint:
+	pre-commit run --all-files && \
+	black .
 
 clean:
+	rm -rf venv .pytest_cache __pycache__ .pytest_cache node_modules && \
 	rm -rf build dist secure_logger.egg-info
 
 report:
 	cloc . --exclude-ext=svg,json,zip --vcs=git
 
+test:
+	cd secure_logger && pytest -v -s tests/
+	python -m setup_test
 
 build:
 	npx semantic-release --doctor --dry-run
@@ -72,6 +82,7 @@ help:
 	@echo '===================================================================='
 	@echo 'pre-commit		- install and configure pre-commit hooks'
 	@echo 'requirements		- install Python, npm and pre-commit requirements'
+	@echo 'lint			- run black and pre-commit hooks'
 	@echo 'init			- build virtual environment and install requirements'
 	@echo 'clean			- destroy all build artifacts'
 	@echo 'repository		- runs cloc report'

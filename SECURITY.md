@@ -11,7 +11,7 @@ Only the latest version of this project is currently being supported with securi
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability within this project, please send an email to [lpm0073@gmail.com](mailto:lpm0073@gmail.com). All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability within this project, please send an email to [FullStackWithLawrence@gmail.com](mailto:FullStackWithLawrence@gmail.com). All security vulnerabilities will be promptly addressed.
 
 Please do not publicly disclose the issue until it has been addressed by the team.
 

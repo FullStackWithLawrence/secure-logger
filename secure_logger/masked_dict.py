@@ -5,6 +5,7 @@
 import json
 from unittest.mock import MagicMock
 
+
 # our stuff
 DEFAULT_SENSITIVE_KEYS = [
     "password",
@@ -29,16 +30,16 @@ DEFAULT_INDENT = 4
 class _JSONEncoder(json.JSONEncoder):
     """encode json object for serialization."""
 
-    def default(self, obj):
+    def default(self, o):
         """Handle unit test, unicode, and anything else that might throw a wrench in things."""
-        if isinstance(obj, bytes):
-            return str(obj, encoding="utf-8")
-        if isinstance(obj, MagicMock):
+        if isinstance(o, bytes):
+            return str(o, encoding="utf-8")
+        if isinstance(o, MagicMock):
             return ""
         try:
-            return json.JSONEncoder.default(self, obj)
-        except Exception:  # noqa: B902
-            # obj probably is not json serializable.
+            return json.JSONEncoder.default(self, o)
+        except Exception:  # pylint: disable=broad-except
+            # o probably is not json serializable.
             return ""
 
 
@@ -51,21 +52,21 @@ def masked_dict(
     Masks the value of specified key.
     obj: a dict or a string representation of a dict, or None
     """
-    if type(source_dict) == str:
+    if isinstance(source_dict, str):
         source_dict = json.loads(source_dict)
 
-    if type(source_dict) != dict:
+    if not isinstance(source_dict, dict):
         raise TypeError("source_dict must be a dict or a json serializable string")
 
     recursed_dict = {}
     for key in source_dict:
         value = source_dict[key]
-        if type(value) == dict:
+        if isinstance(value, dict):
             value = masked_dict(source_dict=value, sensitive_keys=sensitive_keys, message=message)
         recursed_dict[key] = value
 
     for lower_case_sensitive_key in [x.lower() for x in sensitive_keys]:
-        if lower_case_sensitive_key in [x.lower() for x in recursed_dict.keys()]:
+        if lower_case_sensitive_key in [x.lower() for x in recursed_dict]:
             for original_key in recursed_dict:
                 if original_key.lower() == lower_case_sensitive_key:
                     recursed_dict[original_key] = message

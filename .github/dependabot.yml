@@ -3,30 +3,30 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "monthly"
+      interval: "weekly"
     assignees:
-      - "lpm0073"
+      - "FullStackWithLawrence"
     reviewers:
-      - "lpm0073"
+      - "FullStackWithLawrence"
   - package-ecosystem: "pip"
     directory: "/requirements/"
     schedule:
-      interval: "monthly"
+      interval: "weekly"
     labels:
       - "dependencies"
       - "python"
     assignees:
-      - "lpm0073"
+      - "FullStackWithLawrence"
     reviewers:
-      - "lpm0073"
+      - "FullStackWithLawrence"
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "monthly"
+      interval: "weekly"
     labels:
       - "dependencies"
       - "javascript"
     assignees:
-      - "lpm0073"
+      - "FullStackWithLawrence"
     reviewers:
-      - "lpm0073"
+      - "FullStackWithLawrence"

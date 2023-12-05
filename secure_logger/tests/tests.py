@@ -1,19 +1,15 @@
 # -*- coding: utf-8 -*-
-# flake8: noqa
-"""
-Simple test bank.
-
-Test the three use cases that we care about.
-"""
-import unittest
-import logging
+# pylint: disable=too-few-public-methods
+"""Simple test bank."""
 import json
+import logging
+import unittest
 
 from secure_logger.decorators import secure_logger
 from secure_logger.masked_dict import (
+    DEFAULT_REDACTION_MESSAGE,
     masked_dict,
     masked_dict2str,
-    DEFAULT_REDACTION_MESSAGE,
 )
 
 
@@ -21,6 +17,8 @@ from secure_logger.masked_dict import (
 #                                 TEST BANK
 ###############################################################################
 class TestMaskedDict(unittest.TestCase):
+    """Test the masked_dict function."""
+
     test_dict = {
         "insensitive_key": "you-can-see-me",
         "aws_access_key_id": "i-am-hidden",
@@ -33,16 +31,20 @@ class TestMaskedDict(unittest.TestCase):
     }
 
     def test_masked_dict(self):
+        """Test the masked_dict function."""
         md = masked_dict(self.test_dict)
         self.assertDictEqual(md, self.expected_dict)
 
     def test_masked_dict2str(self):
+        """Test the masked_dict2str function."""
         md2s = masked_dict2str(self.test_dict)
         md2s_to_json = json.loads(md2s)
         self.assertDictEqual(md2s_to_json, self.expected_dict)
 
 
 class TestMaskedDictCaseSensitivity(unittest.TestCase):
+    """Test the masked_dict function with case sensitivity."""
+
     test_dict = {
         "insensitive_key": "you-can-see-me",
         "AWs_AcCEss_KeY_iD": "i-am-very-hidden",
@@ -55,22 +57,27 @@ class TestMaskedDictCaseSensitivity(unittest.TestCase):
     }
 
     def test_masked_dict(self):
+        """Test the masked_dict function."""
         md = masked_dict(self.test_dict)
         self.assertDictEqual(md, self.expected_dict)
 
     def test_masked_dict2str(self):
+        """Test the masked_dict2str function."""
         md2s = masked_dict2str(self.test_dict)
         md2s_to_json = json.loads(md2s)
         self.assertDictEqual(md2s_to_json, self.expected_dict)
 
 
 class TestCustomParams(unittest.TestCase):
+    """Test the masked_dict function with custom parameters."""
+
     visible_value = "i should be visible"
     custom_keys = ["foo", "bar"]
     custom_message = "--REDACTED--"
     test_dict = {"foo": "i should be hidden", "bar": "me too", "visible_key": visible_value}
 
     def test_custom_keys(self):
+        """Test the masked_dict function with custom keys."""
         expected_result = {
             "foo": DEFAULT_REDACTION_MESSAGE,
             "bar": DEFAULT_REDACTION_MESSAGE,
@@ -80,24 +87,28 @@ class TestCustomParams(unittest.TestCase):
         self.assertDictEqual(masked_test_dict, expected_result)
 
     def test_custom_keys_and_message(self):
+        """Test the masked_dict function with custom keys and message."""
         expected_result = {"foo": self.custom_message, "bar": self.custom_message, "visible_key": self.visible_value}
         masked_test_dict = masked_dict(self.test_dict, self.custom_keys, self.custom_message)
         self.assertDictEqual(masked_test_dict, expected_result)
 
 
 class TestModuleDefDecorator(unittest.TestCase):
+    """Test module function logging."""
+
     @secure_logger()
     def mock_decorated_def(self, msg):
         """Test 1: a simple module function."""
-        pass
 
     def test_decorator_output(self):
+        """Test 1: a simple module function."""
         hello_world = json.dumps(["'hello world'"])
         hello_world = "'hello world'"
 
+        # noqa: C0301
         expected_output = (
-            "INFO:secure_logger.decorators:secure_logger: tests.mock_decorated_def() ['<tests.TestModuleDefDecorator testMethod=test_decorator_output>', "
-            + hello_world
+            "INFO:secure_logger.decorators:secure_logger: tests.mock_decorated_def() "
+            "['<tests.TestModuleDefDecorator testMethod=test_decorator_output>', " + hello_world
         )
         with self.assertLogs(level=logging.DEBUG) as cm:
             self.mock_decorated_def("hello world")
@@ -106,18 +117,18 @@ class TestModuleDefDecorator(unittest.TestCase):
 
 
 class TestClassMethodDecorator(unittest.TestCase):
-    class MockClass(object):
+    """Test class method logging."""
+
+    class MockClass:
         """Test class method logging."""
 
         @secure_logger()
         def decorator_with_defaults(self, test_dict, test_list):
             """Test class input parameter as objects."""
-            pass
 
         @secure_logger(sensitive_keys=["aws_secret_access_key"], indent=10, message="-- Forbidden! --")
         def decorator_with_custom_params(self, test_dict, test_list):
             """Test class input parameter as objects."""
-            pass
 
     test_dict = {
         "insensitive_key": "you-can-see-me",
@@ -128,7 +139,11 @@ class TestClassMethodDecorator(unittest.TestCase):
     mock_class = MockClass()
 
     def test_class_method_with_default_params(self):
-        expected_output = "INFO:secure_logger.decorators:secure_logger: tests.decorator_with_defaults() ['<tests.TestClassMethodDecorator.MockClass"
+        """Test class method with default parameters."""
+        expected_output = (
+            "INFO:secure_logger.decorators:secure_logger: tests.decorator_with_defaults() "
+            "['<tests.TestClassMethodDecorator.MockClass"
+        )
 
         with self.assertLogs(level=logging.DEBUG) as cm:
             self.mock_class.decorator_with_defaults(self.test_dict, self.test_list)
@@ -137,17 +152,19 @@ class TestClassMethodDecorator(unittest.TestCase):
 
 
 class TestClassDecorator(unittest.TestCase):
-    def test_class_with_default_params(self):
-        @secure_logger()
-        class MockDecoratedClass(object):
-            """Test 3: decorate a class."""
+    """Test class logging."""
 
-            pass
+    def test_class_with_default_params(self):
+        """Test class with default parameters."""
+
+        @secure_logger()
+        class MockDecoratedClass:
+            """Test 3: decorate a class."""
 
         expected_output = "INFO:secure_logger.decorators:secure_logger: tests.MockDecoratedClass.  "
 
         with self.assertLogs(level=logging.DEBUG) as cm:
-            mock_decoratorated_class = MockDecoratedClass()
+            MockDecoratedClass()
 
         self.assertEqual(cm.output[0][0:100], expected_output[0:100])
 

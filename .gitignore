@@ -1,93 +1,44 @@
+# Jupyter Notebook
+.ipynb_checkpoints
+data
+
+.DS_Store
+#  Local .terraform directories
+.terraform/
 .env
+lambda_dist_pkg
+*.zip
+__pycache__
+.pytest_cache
+
+# Python
 venv
-package-lock.json
-# .gitignore for edx-platform.
-# There's a lot here, please try to keep it organized.
-
-### Files private to developers
-
-# Files that should be git-ignored, but are hand-edited or otherwise valued,
-# and so should not be destroyed by "make clean".
-# start-noclean
-requirements/private.txt
-# end-noclean
-
-### Python artifacts
+.venv
+.pytest_cache
 *.pyc
-__pycache__/
-
-### Editor and IDE artifacts
-*~
+*.pyo
+*.pyd
 *.swp
-*.orig
-/nbproject
-.idea/
-.redcar/
-codekit-config.json
-.pycharm_helpers/
-/_mac/*
-/IntelliLang.xml
-/conda_packages.xml
-/databaseSettings.xml
-/diff.xml
-/debugger.xml
-/editor.xml
-/ide.general.xml
-/inspection/Default.xml
-/other.xml
-/packages.xml
-/web-browsers.xml
+*.log
 
-### OS X artifacts
-*.DS_Store
-.AppleDouble
-:2e_*
-:2e#
+# .tfstate files
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
 
-### Testing artifacts
-.testids/
-.noseids
-nosetests.xml
-.cache/
-.coverage
-.coverage.*
-coverage.xml
-.pytest_cache/
-pytest_task*.txt
-.tddium*
-test_root/
-django-pyfs
-.tox/
 
-### Installation artifacts
-*.egg-info
-.pip_download_cache/
-.prereqs_cache
-.vagrant/
+# ignore this file
+!tfmodule-template.tf
+
+# tardigrade-ci
+tardigrade-ci/
+.tardigrade-ci
+
+# go tests
+tests/go.*
+
+# ReactJS
+client/node_modules/
 node_modules
-bin/
 
-### Logging artifacts
-log/
-logs
-chromedriver.log
-ghostdriver.log
-
-### Unknown artifacts
-database.sqlite
-courseware/static/js/mathjax/*
-flushdb.sh
-build
-/src/
-\#*\#
-.env/
-autodeploy.properties
-.ws_migrations_complete
-dist
-*.bak
-
-# Visual Studio Code
-# .vscode
-
-# Locally generated PII reports
-pii_report
+package-lock.json
