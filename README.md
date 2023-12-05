@@ -1,11 +1,12 @@
 # Secure Logger
 
-[![FullStackWithLawrence](https://a11ybadges.com/badge?text=FullStackWithLawrence&badgeColor=orange&logo=youtube&logoColor=282828)](https://www.youtube.com/@FullStackWithLawrence)<br>
+[![FullStackWithLawrence](https://a11ybadges.com/badge?text=FullStackWithLawrence&badgeColor=orange&logo=youtube&logoColor=282828)](https://www.youtube.com/@FullStackWithLawrence)
+[![Python](https://a11ybadges.com/badge?logo=python)](https://www.python.org/)<br>
 [![Tests](https://github.com/FullStackWithLawrence/secure-logger/actions/workflows/tests.yml/badge.svg)](https://github.com/FullStackWithLawrence/secure-logger/actions)
-[![Release Notes](https://img.shields.io/github/release/FullStackWithLawrence/secure-logger)](https://github.com/FullStackWithLawrence/secure-logger/releases)
 ![GHA pushMain Status](https://img.shields.io/github/actions/workflow/status/FullStackWithLawrence/secure-logger/pushMain.yml?branch=main)
 [![Source
 code](https://img.shields.io/static/v1?logo=github&label=Git&style=flat-square&color=brightgreen&message=Source%20code)](https://github.com/FullStackWithLawrence/secure-logger)
+[![Release Notes](https://img.shields.io/github/release/FullStackWithLawrence/secure-logger)](https://github.com/FullStackWithLawrence/secure-logger/releases)
 [![PyPI
 releases](https://img.shields.io/pypi/v/secure-logger?logo=python&logoColor=white)](https://pypi.org/project/secure-logger)
 [![License: AGPL
