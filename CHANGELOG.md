@@ -1,3 +1,10 @@
+## [0.1.18](https://github.com/FullStackWithLawrence/secure-logger/compare/v0.1.17...v0.1.18) (2023-12-05)
+
+
+### Bug Fixes
+
+* add missing actions ([d2ea137](https://github.com/FullStackWithLawrence/secure-logger/commit/d2ea1376034fcd33b47a53da9cb15ad893448314))
+
 ## [0.1.17](https://github.com/FullStackWithLawrence/secure-logger/compare/v0.1.16...v0.1.17) (2023-11-14)
 
 
