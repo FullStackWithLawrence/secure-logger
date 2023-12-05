@@ -9,7 +9,7 @@ import re
 from typing import Dict
 
 
-MODULE_NAME = "models"
+MODULE_NAME = "secure_logger"
 HERE = os.path.abspath(os.path.dirname(__file__))
 PROJECT_ROOT = os.path.abspath(os.path.join(HERE, MODULE_NAME))
 
@@ -54,7 +54,7 @@ def get_semantic_version() -> str:
 
 def load_readme() -> str:
     """Stringify the README."""
-    with io.open(os.path.join(HERE, "README.rst"), "rt", encoding="utf8") as f:
+    with io.open(os.path.join(HERE, "README.md"), "rt", encoding="utf8") as f:
         readme = f.read()
     # Replace img src for publication on pypi
     return readme.replace(
@@ -66,7 +66,7 @@ def load_readme() -> str:
 def load_about() -> Dict[str, str]:
     """Stringify the __about__ module."""
     about: Dict[str, str] = {}
-    about_path = os.path.join(HERE, "__about__.py")
+    about_path = os.path.join(PROJECT_ROOT, "__about__.py")
     spec = importlib.util.spec_from_file_location("__about__", about_path)
     about_module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(about_module)

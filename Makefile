@@ -38,7 +38,7 @@ report:
 	cloc . --exclude-ext=svg,json,zip --vcs=git
 
 test:
-	cd secure_logger && pytest -v -s tests/
+	cd secure_logger && python -m unittest tests/tests.py
 	python -m setup_test
 
 build:
@@ -55,6 +55,8 @@ build:
 	$(PYTHON) -m pip install --upgrade twine
 	twine check dist/*
 
+release:
+	git commit -m "fix: force a new release" --allow-empty && git push
 
 # -------------------------------------------------------------------------
 # upload to PyPi Test

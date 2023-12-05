@@ -3,10 +3,16 @@
 """Simple test bank."""
 import json
 import logging
+import sys
 import unittest
 
-from secure_logger.decorators import secure_logger
-from secure_logger.masked_dict import (
+
+sys.path.append("../")  # noqa: E402
+
+from secure_logger.decorators import (  # noqa: E402, pylint: disable=wrong-import-position
+    secure_logger,
+)
+from secure_logger.masked_dict import (  # noqa: E402, pylint: disable=wrong-import-position
     DEFAULT_REDACTION_MESSAGE,
     masked_dict,
     masked_dict2str,
@@ -107,8 +113,8 @@ class TestModuleDefDecorator(unittest.TestCase):
 
         # noqa: C0301
         expected_output = (
-            "INFO:secure_logger.decorators:secure_logger: tests.mock_decorated_def() "
-            "['<tests.TestModuleDefDecorator testMethod=test_decorator_output>', " + hello_world
+            "INFO:secure_logger.decorators:secure_logger: tests.tests.mock_decorated_def() "
+            "['<tests.tests.TestModuleDefDecorator testMethod=test_decorator_output>', " + hello_world
         )
         with self.assertLogs(level=logging.DEBUG) as cm:
             self.mock_decorated_def("hello world")
@@ -141,8 +147,8 @@ class TestClassMethodDecorator(unittest.TestCase):
     def test_class_method_with_default_params(self):
         """Test class method with default parameters."""
         expected_output = (
-            "INFO:secure_logger.decorators:secure_logger: tests.decorator_with_defaults() "
-            "['<tests.TestClassMethodDecorator.MockClass"
+            "INFO:secure_logger.decorators:secure_logger: tests.tests.decorator_with_defaults() "
+            "['<tests.tests.TestClassMethodDecorator.MockClass"
         )
 
         with self.assertLogs(level=logging.DEBUG) as cm:
@@ -161,7 +167,7 @@ class TestClassDecorator(unittest.TestCase):
         class MockDecoratedClass:
             """Test 3: decorate a class."""
 
-        expected_output = "INFO:secure_logger.decorators:secure_logger: tests.MockDecoratedClass.  "
+        expected_output = "INFO:secure_logger.decorators:secure_logger: tests.tests.MockDecoratedClass.  "
 
         with self.assertLogs(level=logging.DEBUG) as cm:
             MockDecoratedClass()
