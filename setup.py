@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Setup for openai_embeddings package."""
+"""Setup for secure_logger package."""
 from setuptools import find_packages, setup
 
 from setup_utils import get_semantic_version  # pylint: disable=import-error
@@ -11,11 +11,11 @@ setup(
     version=get_semantic_version(),
     description="A decorator to generate redacted and nicely formatted log entries",
     long_description=load_readme(),
-    long_description_content_type="text/x-rst",
+    long_description_content_type="text/markdown",
     author="Lawrence McDaniel",
-    author_email="FullStackWithLawrence@gmail.com",
+    author_email="lpm0073@gmail.com",
     maintainer="Lawrence McDaniel",
-    maintainer_email="FullStackWithLawrence@gmail.com",
+    maintainer_email="lpm0073@gmail.com",
     url="https://github.com/FullStackWithLawrence/secure-logger",
     license="AGPLv3",
     license_files=("LICENSE.txt",),
