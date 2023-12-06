@@ -5,7 +5,7 @@
 [![Tests](https://github.com/FullStackWithLawrence/secure-logger/actions/workflows/tests.yml/badge.svg)](https://github.com/FullStackWithLawrence/secure-logger/actions)
 ![GHA pushMain Status](https://img.shields.io/github/actions/workflow/status/FullStackWithLawrence/secure-logger/pushMain.yml?branch=main)
 [![Source
-code](https://img.shields.io/static/v1?logo=github&label=Git&style=flat-square&color=brightgreen&message=Source%20code)](https://github.com/FullStackWithLawrence/secure-logger)
+code](https://img.shields.io/static/v1?logo=github&label=Git&style=flat-square&color=orange&message=Source%20code)](https://github.com/FullStackWithLawrence/secure-logger)
 [![Release Notes](https://img.shields.io/github/release/FullStackWithLawrence/secure-logger)](https://github.com/FullStackWithLawrence/secure-logger/releases)
 [![PyPI
 releases](https://img.shields.io/pypi/v/secure-logger?logo=python&logoColor=white)](https://pypi.org/project/secure-logger)
@@ -135,31 +135,3 @@ DEFAULT_SENSITIVE_KEYS = [
 
 Pull requests are welcome, and you can also contact [Lawrence
 McDaniel](https://lawrencemcdaniel.com/contact) directly.
-
-### Getting Started With Local development
-
--   Use the same virtual environment that you use for edx-platform
--   Ensure that your Python interpreter to 3.11
--   install black: <https://pypi.org/project/black/>
--   install flake8: <https://flake8.pycqa.org/en/latest/>
--   install flake8-coding: <https://pypi.org/project/flake8-coding/>
-
-``` bash
-# Run these from within your edx-platform virtual environment
-python3 -m venv venv
-source venv/bin/activate
-
-pip install -r requirements/local.txt
-pip install pre-commit black flake8
-pre-commit install
-```
-
-#### Local development good practices
-
--   run `black` on modified code before committing.
--   run
-    `flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics`
--   run
-    `flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics`
--   run `pre-commit run --all-files` before pushing. see:
-    <https://pre-commit.com/>
