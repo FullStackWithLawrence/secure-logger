@@ -97,6 +97,7 @@ secure_logger accepts optional parameters which you can configure as either bash
 - **SECURE_LOGGER_SENSITIVE_KEYS**: a Python list of dictionary keys. Not case sensitive.
 - **SECURE_LOGGER_REDACTION_MESSAGE**: a string value that will replace the sensitive key values
 - **SECURE_LOGGER_INDENT**: number of characters to indent JSON string output when logging output
+- **SECURE_LOGGER_LOG_LEVEL**: the level at which secure_logger generates log entries. One of: 'CRITICAL', 'FATAL', 'ERROR', 'WARN', 'WARNING', 'INFO', 'DEBUG'
 
 Additionally, you can override individual invocations of the decorator by passing *sensitive_keys*, *message* and *indent*:
 
@@ -129,6 +130,7 @@ SECURE_LOGGER_SENSITIVE_KEYS = [
     "aws-access-key-id",
     "aws-secret-access-key",
 ]
+SECURE_LOGGER_LOG_LEVEL = 'DEBUG'
 ```
 
 ### Contributing

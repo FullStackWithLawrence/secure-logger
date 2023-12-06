@@ -2,7 +2,6 @@
 """Python Secure Logger."""
 # python stuff
 import inspect
-import logging
 from functools import wraps
 
 # our stuff
@@ -11,7 +10,7 @@ from secure_logger.masked_dict import masked_dict2str
 
 
 # module initializations
-logger = logging.getLogger(__name__)
+logger = settings.logger
 
 
 def secure_logger(
@@ -72,7 +71,7 @@ def secure_logger(
                     kwargs, sensitive_keys=sensitive_keys, indent=indent, message=message
                 )
 
-            logger.info(
+            logger(
                 "secure_logger: %s %s %s",
                 name_spec,
                 positional_args if positional_args else "",
