@@ -1,9 +1,18 @@
+SHELL := /bin/bash
 PYTHON = python3
 PIP = $(PYTHON) -m pip
+
+ifneq ("$(wildcard .env)","")
+    include .env
+endif
+
 .PHONY: pre-commit requirements init clean report test build release-test release-prod help
 
 # Default target executed when no arguments are given to make.
 all: help
+
+analyze:
+	cloc . --exclude-ext=svg,json,zip --vcs=git
 
 init:
 	make clean && \

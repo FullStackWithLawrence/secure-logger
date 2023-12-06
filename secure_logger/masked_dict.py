@@ -5,26 +5,11 @@
 import json
 from unittest.mock import MagicMock
 
-
-# our stuff
-DEFAULT_SENSITIVE_KEYS = [
-    "password",
-    "token",
-    "client_id",
-    "client_secret",
-    "Authorization",
-    "secret",
-    "access_key_id",
-    "secret_access_key",
-    "access-key-id",
-    "secret-access-key",
-    "aws_access_key_id",
-    "aws_secret_access_key",
-    "aws-access-key-id",
-    "aws-secret-access-key",
-]
-DEFAULT_REDACTION_MESSAGE = "*** -- secure_logger() -- ***"
-DEFAULT_INDENT = 4
+from secure_logger.conf import (
+    DEFAULT_INDENT,
+    DEFAULT_REDACTION_MESSAGE,
+    DEFAULT_SENSITIVE_KEYS,
+)
 
 
 class _JSONEncoder(json.JSONEncoder):
