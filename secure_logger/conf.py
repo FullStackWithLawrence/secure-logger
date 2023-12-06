@@ -8,7 +8,7 @@ from decouple import config
 from secure_logger.exceptions import ConfigurationError
 
 
-_DEFAULT_SENSITIVE_KEYS = [
+_SECURE_LOGGER_SENSITIVE_KEYS = [
     "password",
     "token",
     "client_id",
@@ -24,20 +24,20 @@ _DEFAULT_SENSITIVE_KEYS = [
     "aws-access-key-id",
     "aws-secret-access-key",
 ]
-_DEFAULT_REDACTION_MESSAGE = "*** -- secure_logger() -- ***"
-_DEFAULT_INDENT = 4
+_SECURE_LOGGER_REDACTION_MESSAGE = "*** -- secure_logger() -- ***"
+_SECURE_LOGGER_INDENT = 4
 
-DEFAULT_SENSITIVE_KEYS = config("DEFAULT_SENSITIVE_KEYS", default=_DEFAULT_SENSITIVE_KEYS, cast=list)
-DEFAULT_REDACTION_MESSAGE = config("DEFAULT_REDACTION_MESSAGE", default=_DEFAULT_REDACTION_MESSAGE)
-DEFAULT_INDENT = config("DEFAULT_INDENT", default=_DEFAULT_INDENT, cast=int)
+SECURE_LOGGER_SENSITIVE_KEYS = config("SECURE_LOGGER_SENSITIVE_KEYS", default=_SECURE_LOGGER_SENSITIVE_KEYS, cast=list)
+SECURE_LOGGER_REDACTION_MESSAGE = config("SECURE_LOGGER_REDACTION_MESSAGE", default=_SECURE_LOGGER_REDACTION_MESSAGE)
+SECURE_LOGGER_INDENT = config("SECURE_LOGGER_INDENT", default=_SECURE_LOGGER_INDENT, cast=int)
 
-if not isinstance(DEFAULT_SENSITIVE_KEYS, list):
-    raise ConfigurationError("DEFAULT_SENSITIVE_KEYS must be a list")
-if not isinstance(DEFAULT_REDACTION_MESSAGE, str):
-    raise ConfigurationError("DEFAULT_REDACTION_MESSAGE must be a string")
-if not isinstance(DEFAULT_INDENT, int):
-    raise ConfigurationError("DEFAULT_INDENT must be an integer")
+if not isinstance(SECURE_LOGGER_SENSITIVE_KEYS, list):
+    raise ConfigurationError("SECURE_LOGGER_SENSITIVE_KEYS must be a list")
+if not isinstance(SECURE_LOGGER_REDACTION_MESSAGE, str):
+    raise ConfigurationError("SECURE_LOGGER_REDACTION_MESSAGE must be a string")
+if not isinstance(SECURE_LOGGER_INDENT, int):
+    raise ConfigurationError("SECURE_LOGGER_INDENT must be an integer")
 
-logging.debug("DEFAULT_SENSITIVE_KEYS: %s", DEFAULT_SENSITIVE_KEYS)
-logging.debug("DEFAULT_REDACTION_MESSAGE: %s", DEFAULT_REDACTION_MESSAGE)
-logging.debug("DEFAULT_INDENT: %s", DEFAULT_INDENT)
+logging.debug("SECURE_LOGGER_SENSITIVE_KEYS: %s", SECURE_LOGGER_SENSITIVE_KEYS)
+logging.debug("SECURE_LOGGER_REDACTION_MESSAGE: %s", SECURE_LOGGER_REDACTION_MESSAGE)
+logging.debug("SECURE_LOGGER_INDENT: %s", SECURE_LOGGER_INDENT)

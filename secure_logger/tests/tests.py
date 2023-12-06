@@ -13,7 +13,7 @@ from secure_logger.decorators import (  # noqa: E402, pylint: disable=wrong-impo
     secure_logger,
 )
 from secure_logger.masked_dict import (  # noqa: E402, pylint: disable=wrong-import-position
-    DEFAULT_REDACTION_MESSAGE,
+    SECURE_LOGGER_REDACTION_MESSAGE,
     masked_dict,
     masked_dict2str,
 )
@@ -32,8 +32,8 @@ class TestMaskedDict(unittest.TestCase):
     }
     expected_dict = {
         "insensitive_key": "you-can-see-me",
-        "aws_access_key_id": DEFAULT_REDACTION_MESSAGE,
-        "aws_secret_access_key": DEFAULT_REDACTION_MESSAGE,
+        "aws_access_key_id": SECURE_LOGGER_REDACTION_MESSAGE,
+        "aws_secret_access_key": SECURE_LOGGER_REDACTION_MESSAGE,
     }
 
     def test_masked_dict(self):
@@ -58,8 +58,8 @@ class TestMaskedDictCaseSensitivity(unittest.TestCase):
     }
     expected_dict = {
         "insensitive_key": "you-can-see-me",
-        "AWs_AcCEss_KeY_iD": DEFAULT_REDACTION_MESSAGE,
-        "AWS_SECRET_ACCESS_KEY": DEFAULT_REDACTION_MESSAGE,
+        "AWs_AcCEss_KeY_iD": SECURE_LOGGER_REDACTION_MESSAGE,
+        "AWS_SECRET_ACCESS_KEY": SECURE_LOGGER_REDACTION_MESSAGE,
     }
 
     def test_masked_dict(self):
@@ -85,8 +85,8 @@ class TestCustomParams(unittest.TestCase):
     def test_custom_keys(self):
         """Test the masked_dict function with custom keys."""
         expected_result = {
-            "foo": DEFAULT_REDACTION_MESSAGE,
-            "bar": DEFAULT_REDACTION_MESSAGE,
+            "foo": SECURE_LOGGER_REDACTION_MESSAGE,
+            "bar": SECURE_LOGGER_REDACTION_MESSAGE,
             "visible_key": self.visible_value,
         }
         masked_test_dict = masked_dict(self.test_dict, self.custom_keys)

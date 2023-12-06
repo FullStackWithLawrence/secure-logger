@@ -92,13 +92,11 @@ Output:
 
 ## Configuration
 
-secure_logger accepts optional parameters.
+secure_logger accepts optional parameters which you can configure as either bash environment variables or with a .env file placed in the root of your project
 
--   sensitive_keys: a Python list of dictionary keys. Not case
-    sensitive.
--   message: a string value that will replace the sensitive key values
--   indent: number of characters to indent JSON string output when
-    logging output
+- **SECURE_LOGGER_SENSITIVE_KEYS**: a Python list of dictionary keys. Not case sensitive.
+- **SECURE_LOGGER_REDACTION_MESSAGE**: a string value that will replace the sensitive key values
+- **SECURE_LOGGER_INDENT**: number of characters to indent JSON string output when logging output
 
 ``` python
 class MyClass():
@@ -111,9 +109,9 @@ class MyClass():
 ## Configuration Defaults
 
 ``` python
-DEFAULT_REDACTION_MESSAGE = "*** -- secure_logger() -- ***"
-DEFAULT_INDENT = 4
-DEFAULT_SENSITIVE_KEYS = [
+SECURE_LOGGER_REDACTION_MESSAGE = "*** -- secure_logger() -- ***"
+SECURE_LOGGER_INDENT = 4
+SECURE_LOGGER_SENSITIVE_KEYS = [
     "password",
     "token",
     "client_id",

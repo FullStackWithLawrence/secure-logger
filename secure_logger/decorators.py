@@ -7,9 +7,9 @@ from functools import wraps
 
 # our stuff
 from .masked_dict import (
-    DEFAULT_INDENT,
-    DEFAULT_REDACTION_MESSAGE,
-    DEFAULT_SENSITIVE_KEYS,
+    SECURE_LOGGER_INDENT,
+    SECURE_LOGGER_REDACTION_MESSAGE,
+    SECURE_LOGGER_SENSITIVE_KEYS,
     masked_dict2str,
 )
 
@@ -19,9 +19,9 @@ logger = logging.getLogger(__name__)
 
 
 def secure_logger(
-    sensitive_keys: list = DEFAULT_SENSITIVE_KEYS,
-    indent: int = DEFAULT_INDENT,
-    message: str = DEFAULT_REDACTION_MESSAGE,
+    sensitive_keys: list = SECURE_LOGGER_SENSITIVE_KEYS,
+    indent: int = SECURE_LOGGER_INDENT,
+    message: str = SECURE_LOGGER_REDACTION_MESSAGE,
 ):
     """Top level decorator, for defining input parameters."""
 
