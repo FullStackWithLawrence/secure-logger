@@ -31,7 +31,7 @@ _SECURE_LOGGER_SENSITIVE_KEYS = [
 ]
 _SECURE_LOGGER_REDACTION_MESSAGE = "*** -- secure_logger() -- ***"
 _SECURE_LOGGER_INDENT = 4
-_SECURE_LOGGER_LOG_LEVEL = "INFO"
+_SECURE_LOGGER_LOG_LEVEL = "DEBUG"
 
 # pylint: disable=protected-access
 _SECURE_LOGGER_LOG_LEVELS = [level for level in logging._nameToLevel if level != "NOTSET"]
