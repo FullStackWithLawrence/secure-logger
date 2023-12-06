@@ -2,7 +2,7 @@
 """Module exceptions.py"""
 
 
-class ConfigurationError(Exception):
+class SecureLoggerConfigurationError(Exception):
     """Exception raised for errors in the configuration."""
 
     def __init__(self, message):

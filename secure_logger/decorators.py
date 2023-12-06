@@ -6,12 +6,8 @@ import logging
 from functools import wraps
 
 # our stuff
-from .masked_dict import (
-    SECURE_LOGGER_INDENT,
-    SECURE_LOGGER_REDACTION_MESSAGE,
-    SECURE_LOGGER_SENSITIVE_KEYS,
-    masked_dict2str,
-)
+from secure_logger.conf import settings
+from secure_logger.masked_dict import masked_dict2str
 
 
 # module initializations
@@ -19,9 +15,9 @@ logger = logging.getLogger(__name__)
 
 
 def secure_logger(
-    sensitive_keys: list = SECURE_LOGGER_SENSITIVE_KEYS,
-    indent: int = SECURE_LOGGER_INDENT,
-    message: str = SECURE_LOGGER_REDACTION_MESSAGE,
+    sensitive_keys: list = settings.secure_logger_sensitive_keys,
+    indent: int = settings.secure_logger_indent,
+    message: str = settings.secure_logger_redaction_message,
 ):
     """Top level decorator, for defining input parameters."""
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=too-few-public-methods
+# pylint: disable=too-few-public-methods,C0413
 """Simple test bank."""
 import json
 import logging
@@ -9,14 +9,9 @@ import unittest
 
 sys.path.append("../")  # noqa: E402
 
-from secure_logger.decorators import (  # noqa: E402, pylint: disable=wrong-import-position
-    secure_logger,
-)
-from secure_logger.masked_dict import (  # noqa: E402, pylint: disable=wrong-import-position
-    SECURE_LOGGER_REDACTION_MESSAGE,
-    masked_dict,
-    masked_dict2str,
-)
+from secure_logger.conf import settings
+from secure_logger.decorators import secure_logger
+from secure_logger.masked_dict import masked_dict, masked_dict2str
 
 
 ###############################################################################
@@ -32,8 +27,8 @@ class TestMaskedDict(unittest.TestCase):
     }
     expected_dict = {
         "insensitive_key": "you-can-see-me",
-        "aws_access_key_id": SECURE_LOGGER_REDACTION_MESSAGE,
-        "aws_secret_access_key": SECURE_LOGGER_REDACTION_MESSAGE,
+        "aws_access_key_id": settings.secure_logger_redaction_message,
+        "aws_secret_access_key": settings.secure_logger_redaction_message,
     }
 
     def test_masked_dict(self):
@@ -58,8 +53,8 @@ class TestMaskedDictCaseSensitivity(unittest.TestCase):
     }
     expected_dict = {
         "insensitive_key": "you-can-see-me",
-        "AWs_AcCEss_KeY_iD": SECURE_LOGGER_REDACTION_MESSAGE,
-        "AWS_SECRET_ACCESS_KEY": SECURE_LOGGER_REDACTION_MESSAGE,
+        "AWs_AcCEss_KeY_iD": settings.secure_logger_redaction_message,
+        "AWS_SECRET_ACCESS_KEY": settings.secure_logger_redaction_message,
     }
 
     def test_masked_dict(self):
@@ -85,8 +80,8 @@ class TestCustomParams(unittest.TestCase):
     def test_custom_keys(self):
         """Test the masked_dict function with custom keys."""
         expected_result = {
-            "foo": SECURE_LOGGER_REDACTION_MESSAGE,
-            "bar": SECURE_LOGGER_REDACTION_MESSAGE,
+            "foo": settings.secure_logger_redaction_message,
+            "bar": settings.secure_logger_redaction_message,
             "visible_key": self.visible_value,
         }
         masked_test_dict = masked_dict(self.test_dict, self.custom_keys)

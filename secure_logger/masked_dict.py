@@ -5,11 +5,7 @@
 import json
 from unittest.mock import MagicMock
 
-from secure_logger.conf import (
-    SECURE_LOGGER_INDENT,
-    SECURE_LOGGER_REDACTION_MESSAGE,
-    SECURE_LOGGER_SENSITIVE_KEYS,
-)
+from secure_logger.conf import settings
 
 
 class _JSONEncoder(json.JSONEncoder):
@@ -29,7 +25,9 @@ class _JSONEncoder(json.JSONEncoder):
 
 
 def masked_dict(
-    source_dict, sensitive_keys: list = SECURE_LOGGER_SENSITIVE_KEYS, message: str = SECURE_LOGGER_REDACTION_MESSAGE
+    source_dict,
+    sensitive_keys: list = settings.secure_logger_sensitive_keys,
+    message: str = settings.secure_logger_redaction_message,
 ) -> dict:
     """
     Mask sensitive key / value in log entries.
@@ -60,16 +58,16 @@ def masked_dict(
 
 def masked_dict2str(
     obj: dict,
-    sensitive_keys: list = SECURE_LOGGER_SENSITIVE_KEYS,
-    indent: int = SECURE_LOGGER_INDENT,
-    message: str = SECURE_LOGGER_REDACTION_MESSAGE,
+    sensitive_keys: list = settings.secure_logger_sensitive_keys,
+    indent: int = settings.secure_logger_indent,
+    message: str = settings.secure_logger_redaction_message,
 ) -> str:
     """Return a JSON encoded string representation of a masked dict."""
     return json.dumps(masked_dict(obj, sensitive_keys, message=message), cls=_JSONEncoder, indent=indent)
 
 
 def serialized_masked_dict(
-    obj: dict, sensitive_keys: list = SECURE_LOGGER_SENSITIVE_KEYS, indent: int = SECURE_LOGGER_INDENT
+    obj: dict, sensitive_keys: list = settings.secure_logger_sensitive_keys, indent: int = settings.secure_logger_indent
 ) -> str:
     """Backwards compatibility to 0.1.2 and prior."""
     return masked_dict2str(obj, sensitive_keys=sensitive_keys, indent=indent)

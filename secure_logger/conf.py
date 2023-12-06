@@ -3,9 +3,9 @@
 
 import logging
 
-from decouple import config
+from pydantic import BaseModel, Field, ValidationError
 
-from secure_logger.exceptions import ConfigurationError
+from secure_logger.exceptions import SecureLoggerConfigurationError
 
 
 _SECURE_LOGGER_SENSITIVE_KEYS = [
@@ -27,17 +27,23 @@ _SECURE_LOGGER_SENSITIVE_KEYS = [
 _SECURE_LOGGER_REDACTION_MESSAGE = "*** -- secure_logger() -- ***"
 _SECURE_LOGGER_INDENT = 4
 
-SECURE_LOGGER_SENSITIVE_KEYS = config("SECURE_LOGGER_SENSITIVE_KEYS", default=_SECURE_LOGGER_SENSITIVE_KEYS, cast=list)
-SECURE_LOGGER_REDACTION_MESSAGE = config("SECURE_LOGGER_REDACTION_MESSAGE", default=_SECURE_LOGGER_REDACTION_MESSAGE)
-SECURE_LOGGER_INDENT = config("SECURE_LOGGER_INDENT", default=_SECURE_LOGGER_INDENT, cast=int)
 
-if not isinstance(SECURE_LOGGER_SENSITIVE_KEYS, list):
-    raise ConfigurationError("SECURE_LOGGER_SENSITIVE_KEYS must be a list")
-if not isinstance(SECURE_LOGGER_REDACTION_MESSAGE, str):
-    raise ConfigurationError("SECURE_LOGGER_REDACTION_MESSAGE must be a string")
-if not isinstance(SECURE_LOGGER_INDENT, int):
-    raise ConfigurationError("SECURE_LOGGER_INDENT must be an integer")
+class Settings(BaseModel):
+    """Settings for secure_logger"""
 
-logging.debug("SECURE_LOGGER_SENSITIVE_KEYS: %s", SECURE_LOGGER_SENSITIVE_KEYS)
-logging.debug("SECURE_LOGGER_REDACTION_MESSAGE: %s", SECURE_LOGGER_REDACTION_MESSAGE)
-logging.debug("SECURE_LOGGER_INDENT: %s", SECURE_LOGGER_INDENT)
+    secure_logger_sensitive_keys: list = Field(_SECURE_LOGGER_SENSITIVE_KEYS, env="SECURE_LOGGER_SENSITIVE_KEYS")
+    secure_logger_redaction_message: str = Field(
+        _SECURE_LOGGER_REDACTION_MESSAGE, env="SECURE_LOGGER_REDACTION_MESSAGE"
+    )
+    secure_logger_indent: int = Field(_SECURE_LOGGER_INDENT, env="SECURE_LOGGER_INDENT")
+
+
+settings = None
+try:
+    settings = Settings()
+except ValidationError as e:
+    raise SecureLoggerConfigurationError("Invalid configuration: " + str(e)) from e
+
+logging.debug("SECURE_LOGGER_SENSITIVE_KEYS: %s", settings.secure_logger_sensitive_keys)
+logging.debug("SECURE_LOGGER_REDACTION_MESSAGE: %s", settings.secure_logger_redaction_message)
+logging.debug("SECURE_LOGGER_INDENT: %s", settings.secure_logger_indent)
