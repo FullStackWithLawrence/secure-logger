@@ -4,7 +4,7 @@
 [![Python](https://a11ybadges.com/badge?logo=python)](https://www.python.org/)<br>
 [![Tests](https://github.com/FullStackWithLawrence/secure-logger/actions/workflows/tests.yml/badge.svg)](https://github.com/FullStackWithLawrence/secure-logger/actions)
 ![GHA pushMain Status](https://img.shields.io/github/actions/workflow/status/FullStackWithLawrence/secure-logger/pushMain.yml?branch=main)
-![Auto Assign](https://github.com/FullStackwithLawrence/demo-repository/actions/workflows/auto-assign.yml/badge.svg)[![Source
+![Auto Assign](https://github.com/FullStackwithLawrence/secure-logger/actions/workflows/auto-assign.yml/badge.svg)[![Source
 code](https://img.shields.io/static/v1?logo=github&label=Git&style=flat-square&color=orange&message=Source%20code)](https://github.com/FullStackWithLawrence/secure-logger)
 [![Release Notes](https://img.shields.io/github/release/FullStackWithLawrence/secure-logger)](https://github.com/FullStackWithLawrence/secure-logger/releases)
 [![PyPI
