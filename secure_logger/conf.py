@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# pylint: disable=no-member
 """Module conf.py"""
 
 import logging
@@ -9,10 +10,6 @@ from secure_logger.exceptions import SecureLoggerConfigurationError
 
 
 LOGGER_NAME = "decorator_logger"
-
-_logger = logging.getLogger(LOGGER_NAME)
-
-
 _SECURE_LOGGER_SENSITIVE_KEYS = [
     "password",
     "token",
@@ -40,6 +37,12 @@ _SECURE_LOGGER_LOG_LEVELS = [level for level in logging._nameToLevel if level !=
 class Settings(BaseModel):
     """Settings for secure_logger"""
 
+    class Config:
+        """Pydantic configuration"""
+
+        arbitrary_types_allowed = True
+
+    logging_logger: logging.Logger = Field(default_factory=lambda: logging.getLogger(LOGGER_NAME))
     logger_name: str = Field(LOGGER_NAME)
     secure_logger_sensitive_keys: list = Field(_SECURE_LOGGER_SENSITIVE_KEYS, env="SECURE_LOGGER_SENSITIVE_KEYS")
     secure_logger_redaction_message: str = Field(
@@ -62,22 +65,22 @@ class Settings(BaseModel):
     def logger(self):
         """Returns the logger function for the specified logging level"""
         log_levels = {
-            "DEBUG": _logger.debug,
-            "INFO": _logger.info,
-            "WARNING": _logger.warning,
-            "ERROR": _logger.error,
-            "CRITICAL": _logger.critical,
+            "DEBUG": self.logging_logger.debug,
+            "INFO": self.logging_logger.info,
+            "WARNING": self.logging_logger.warning,
+            "ERROR": self.logging_logger.error,
+            "CRITICAL": self.logging_logger.critical,
         }
         return log_levels.get(self.secure_logger_logging_level, logging.debug)
 
     def get_logger(self, log_level):
         """Returns the logger function for the specified logging level"""
         log_levels = {
-            "DEBUG": _logger.debug,
-            "INFO": _logger.info,
-            "WARNING": _logger.warning,
-            "ERROR": _logger.error,
-            "CRITICAL": _logger.critical,
+            "DEBUG": self.logging_logger.debug,
+            "INFO": self.logging_logger.info,
+            "WARNING": self.logging_logger.warning,
+            "ERROR": self.logging_logger.error,
+            "CRITICAL": self.logging_logger.critical,
         }
         return log_levels.get(log_level, logging.debug)
 
@@ -94,7 +97,8 @@ try:
 except ValidationError as e:
     raise SecureLoggerConfigurationError("Invalid configuration: " + str(e)) from e
 
-_logger.debug("SECURE_LOGGER_SENSITIVE_KEYS: %s", settings.secure_logger_sensitive_keys)
-_logger.debug("SECURE_LOGGER_REDACTION_MESSAGE: %s", settings.secure_logger_redaction_message)
-_logger.debug("SECURE_LOGGER_INDENT: %s", settings.secure_logger_indent)
-_logger.debug("SECURE_LOGGER_LOG_LEVEL: %s", settings.secure_logger_logging_level)
+logger = logging.getLogger(LOGGER_NAME)
+logger.debug("SECURE_LOGGER_SENSITIVE_KEYS: %s", settings.secure_logger_sensitive_keys)
+logger.debug("SECURE_LOGGER_REDACTION_MESSAGE: %s", settings.secure_logger_redaction_message)
+logger.debug("SECURE_LOGGER_INDENT: %s", settings.secure_logger_indent)
+logger.debug("SECURE_LOGGER_LOG_LEVEL: %s", settings.secure_logger_logging_level)
