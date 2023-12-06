@@ -24,8 +24,7 @@ def secure_logger(
         Adds a log entry with the module name, class name and method/function name,
         its positional arguments, and keyword pairs presented as a formatted dict.
 
-        Sample output:
-            2022-07-08 19:40:51,085 INFO secure_logger: courses.views.CourseListingView().get_queryset()
+        Sample output: see README.md
         """
 
         @wraps(func)
@@ -72,7 +71,6 @@ def secure_logger(
             else:
                 logger = settings.get_logger(log_level)
 
-            print(logger.__name__)
             logger(
                 "secure_logger: %s %s %s",
                 name_spec,
