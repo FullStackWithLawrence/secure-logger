@@ -21,6 +21,12 @@ customizable list of case-insensitive keys. Prevents your sensitive
 application data like cloud provider key-pairs from leaking into your
 application logs.
 
+## Installation
+
+``` bash
+pip install secure-logger
+```
+
 ## Usage
 
 ### As a decorator
@@ -82,12 +88,6 @@ Output:
     "aws-access-key-id": "*** -- secure_logger() -- ***",
     "aws-secret-access-key": "*** -- secure_logger() -- ***"
 }
-```
-
-## Installation
-
-``` bash
-pip install secure-logger
 ```
 
 ## Configuration
