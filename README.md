@@ -31,30 +31,33 @@ pip install secure-logger
 
 ### As a decorator
 
-``` python
+```python
 from secure_logger.decorators import secure_logger
+import logging
+
+logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 class Foo(object):
-
-    @secure_logger()
+    @secure_logger(log_level='INFO')
     def bar(self, dict_data, list_data):
         pass
 
 # call your method, passing some sensitive data
 dict_data = {
-    'not_a_sensitive_key': 'you-can-see-me',
-    'aws-access-key_id': conf.AWS_ACCESS_KEY_ID,
-    'aws-secret-access-key': conf.AWS_SECRET_ACCESS_KEY
+    "not_a_sensitive_key": "you-can-see-me",
+    "aws-access-key-id": "i-am-hidden",
+    "aws-secret-access-key": "so-am-i",
 }
-list_data = ['foo', 'bar']
+list_data = ["foo", "bar"]
 foo = Foo()
 foo.bar(dict_data=dict_data, list_data=list_data)
 ```
 
 Log output:
 
-``` log
-INFO:secure_logger: __main__.Foo().bar()  keyword args: {
+```console
+INFO:secure_logger: __main__.bar() ['<__main__.Foo object at 0x103474ac0>'] keyword args: {
     "dict_data": {
         "not_a_sensitive_key": "you-can-see-me",
         "aws-access-key-id": "*** -- secure_logger() -- ***",
@@ -64,7 +67,6 @@ INFO:secure_logger: __main__.Foo().bar()  keyword args: {
         "foo",
         "bar"
     ]
-}
 ```
 
 ### As library functions

@@ -2,6 +2,12 @@ SHELL := /bin/bash
 PYTHON = python3
 PIP = $(PYTHON) -m pip
 
+ifeq ($(OS),Windows_NT)
+    ACTIVATE_VENV = venv\Scripts\activate
+else
+    ACTIVATE_VENV = source venv/bin/activate
+endif
+
 ifneq ("$(wildcard .env)","")
     include .env
 endif
@@ -18,7 +24,7 @@ init:
 	make clean && \
 	npm install && \
 	python3.11 -m venv venv && \
-	source venv/bin/activate && \
+	$(ACTIVATE_VENV) && \
 	pip install --upgrade pip && \
 	make requirements && \
 	pre-commit install

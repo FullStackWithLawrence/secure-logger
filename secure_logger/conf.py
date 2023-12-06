@@ -31,7 +31,7 @@ _SECURE_LOGGER_SENSITIVE_KEYS = [
 ]
 _SECURE_LOGGER_REDACTION_MESSAGE = "*** -- secure_logger() -- ***"
 _SECURE_LOGGER_INDENT = 4
-_SECURE_LOGGER_LOG_LEVEL = "DEBUG"
+_SECURE_LOGGER_LOG_LEVEL = "INFO"
 
 # pylint: disable=protected-access
 _SECURE_LOGGER_LOG_LEVELS = [level for level in logging._nameToLevel if level != "NOTSET"]
@@ -40,6 +40,7 @@ _SECURE_LOGGER_LOG_LEVELS = [level for level in logging._nameToLevel if level !=
 class Settings(BaseModel):
     """Settings for secure_logger"""
 
+    logger_name: str = Field(LOGGER_NAME)
     secure_logger_sensitive_keys: list = Field(_SECURE_LOGGER_SENSITIVE_KEYS, env="SECURE_LOGGER_SENSITIVE_KEYS")
     secure_logger_redaction_message: str = Field(
         _SECURE_LOGGER_REDACTION_MESSAGE, env="SECURE_LOGGER_REDACTION_MESSAGE"
@@ -68,6 +69,17 @@ class Settings(BaseModel):
             "CRITICAL": _logger.critical,
         }
         return log_levels.get(self.secure_logger_logging_level, logging.debug)
+
+    def get_logger(self, log_level):
+        """Returns the logger function for the specified logging level"""
+        log_levels = {
+            "DEBUG": _logger.debug,
+            "INFO": _logger.info,
+            "WARNING": _logger.warning,
+            "ERROR": _logger.error,
+            "CRITICAL": _logger.critical,
+        }
+        return log_levels.get(log_level, logging.debug)
 
     @property
     def logger_level(self) -> int:

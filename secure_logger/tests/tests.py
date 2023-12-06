@@ -110,7 +110,7 @@ class TestModuleDefDecorator(unittest.TestCase):
             settings.secure_logger_logging_level + ":decorator_logger:secure_logger: tests.mock_decorated_def() "
             "['<tests.TestModuleDefDecorator testMethod=test_decorator_output>', " + hello_world
         )
-        with self.assertLogs(level=settings.logger_level) as cm:
+        with self.assertLogs(logger=settings.logger_name, level=settings.logger_level) as cm:
             self.mock_decorated_def("hello world")
 
         self.assertEqual(cm.output[0][0:100], expected_output[0:100])
@@ -126,7 +126,12 @@ class TestClassMethodDecorator(unittest.TestCase):
         def decorator_with_defaults(self, test_dict, test_list):
             """Test class input parameter as objects."""
 
-        @secure_logger(sensitive_keys=["aws_secret_access_key"], indent=10, message="-- Forbidden! --")
+        @secure_logger(
+            log_level="INFO",
+            sensitive_keys=["aws_secret_access_key"],
+            indent=10,
+            message="-- Forbidden! --",
+        )
         def decorator_with_custom_params(self, test_dict, test_list):
             """Test class input parameter as objects."""
 
@@ -145,8 +150,19 @@ class TestClassMethodDecorator(unittest.TestCase):
             "['<tests.TestClassMethodDecorator.MockClass"
         )
 
-        with self.assertLogs(level=settings.logger_level) as cm:
+        with self.assertLogs(logger=settings.logger_name, level=settings.logger_level) as cm:
             self.mock_class.decorator_with_defaults(self.test_dict, self.test_list)
+
+        self.assertEqual(cm.output[0][0:100], expected_output[0:100])
+
+    def test_class_method_with_custom_params(self):
+        """Test class method with default parameters."""
+        expected_output = (
+            "INFO:decorator_logger:secure_logger: tests.decorator_with_custom_params() "
+            "['<tests.TestClassMethodDecorator.MockClass"
+        )
+        with self.assertLogs(logger=settings.logger_name) as cm:
+            self.mock_class.decorator_with_custom_params(self.test_dict, self.test_list)
 
         self.assertEqual(cm.output[0][0:100], expected_output[0:100])
 
