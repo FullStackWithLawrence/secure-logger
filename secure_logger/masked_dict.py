@@ -26,8 +26,8 @@ class _JSONEncoder(json.JSONEncoder):
 
 def masked_dict(
     source_dict,
-    sensitive_keys: list = settings.secure_logger_sensitive_keys,
-    message: str = settings.secure_logger_redaction_message,
+    sensitive_keys: list = settings.sensitive_keys,
+    message: str = settings.redaction_message,
 ) -> dict:
     """
     Mask sensitive key / value in log entries.
@@ -58,16 +58,16 @@ def masked_dict(
 
 def masked_dict2str(
     obj: dict,
-    sensitive_keys: list = settings.secure_logger_sensitive_keys,
-    indent: int = settings.secure_logger_indent,
-    message: str = settings.secure_logger_redaction_message,
+    sensitive_keys: list = settings.sensitive_keys,
+    indent: int = settings.indentation,
+    message: str = settings.redaction_message,
 ) -> str:
     """Return a JSON encoded string representation of a masked dict."""
     return json.dumps(masked_dict(obj, sensitive_keys, message=message), cls=_JSONEncoder, indent=indent)
 
 
 def serialized_masked_dict(
-    obj: dict, sensitive_keys: list = settings.secure_logger_sensitive_keys, indent: int = settings.secure_logger_indent
+    obj: dict, sensitive_keys: list = settings.sensitive_keys, indent: int = settings.indentation
 ) -> str:
     """Backwards compatibility to 0.1.2 and prior."""
     return masked_dict2str(obj, sensitive_keys=sensitive_keys, indent=indent)

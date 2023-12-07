@@ -26,8 +26,8 @@ class TestMaskedDict(unittest.TestCase):
     }
     expected_dict = {
         "insensitive_key": "you-can-see-me",
-        "aws_access_key_id": settings.secure_logger_redaction_message,
-        "aws_secret_access_key": settings.secure_logger_redaction_message,
+        "aws_access_key_id": settings.redaction_message,
+        "aws_secret_access_key": settings.redaction_message,
     }
 
     def test_masked_dict(self):
@@ -52,8 +52,8 @@ class TestMaskedDictCaseSensitivity(unittest.TestCase):
     }
     expected_dict = {
         "insensitive_key": "you-can-see-me",
-        "AWs_AcCEss_KeY_iD": settings.secure_logger_redaction_message,
-        "AWS_SECRET_ACCESS_KEY": settings.secure_logger_redaction_message,
+        "AWs_AcCEss_KeY_iD": settings.redaction_message,
+        "AWS_SECRET_ACCESS_KEY": settings.redaction_message,
     }
 
     def test_masked_dict(self):
@@ -79,8 +79,8 @@ class TestCustomParams(unittest.TestCase):
     def test_custom_keys(self):
         """Test the masked_dict function with custom keys."""
         expected_result = {
-            "foo": settings.secure_logger_redaction_message,
-            "bar": settings.secure_logger_redaction_message,
+            "foo": settings.redaction_message,
+            "bar": settings.redaction_message,
             "visible_key": self.visible_value,
         }
         masked_test_dict = masked_dict(self.test_dict, self.custom_keys)
@@ -107,10 +107,10 @@ class TestModuleDefDecorator(unittest.TestCase):
 
         # noqa: C0301
         expected_output = (
-            settings.secure_logger_logging_level + ":decorator_logger:secure_logger: tests.mock_decorated_def() "
+            settings.logging_level + ":decorator_logger:secure_logger: tests.mock_decorated_def() "
             "['<tests.TestModuleDefDecorator testMethod=test_decorator_output>', " + hello_world
         )
-        with self.assertLogs(logger=settings.logger_name, level=settings.logger_level) as cm:
+        with self.assertLogs(logger=settings.logger_name, level=settings.logger_level_int) as cm:
             self.mock_decorated_def("hello world")
 
         self.assertEqual(cm.output[0][0:100], expected_output[0:100])
@@ -146,11 +146,11 @@ class TestClassMethodDecorator(unittest.TestCase):
     def test_class_method_with_default_params(self):
         """Test class method with default parameters."""
         expected_output = (
-            settings.secure_logger_logging_level + ":decorator_logger:secure_logger: tests.decorator_with_defaults() "
+            settings.logging_level + ":decorator_logger:secure_logger: tests.decorator_with_defaults() "
             "['<tests.TestClassMethodDecorator.MockClass"
         )
 
-        with self.assertLogs(logger=settings.logger_name, level=settings.logger_level) as cm:
+        with self.assertLogs(logger=settings.logger_name, level=settings.logger_level_int) as cm:
             self.mock_class.decorator_with_defaults(self.test_dict, self.test_list)
 
         self.assertEqual(cm.output[0][0:100], expected_output[0:100])
@@ -177,11 +177,9 @@ class TestClassDecorator(unittest.TestCase):
         class MockDecoratedClass:
             """Test 3: decorate a class."""
 
-        expected_output = (
-            settings.secure_logger_logging_level + ":decorator_logger:secure_logger: tests.MockDecoratedClass.  "
-        )
+        expected_output = settings.logging_level + ":decorator_logger:secure_logger: tests.MockDecoratedClass.  "
 
-        with self.assertLogs(level=settings.logger_level) as cm:
+        with self.assertLogs(level=settings.logger_level_int) as cm:
             MockDecoratedClass()
 
         self.assertEqual(cm.output[0][0:100], expected_output[0:100])

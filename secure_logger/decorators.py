@@ -10,10 +10,10 @@ from secure_logger.masked_dict import masked_dict2str
 
 
 def secure_logger(
-    log_level: str = settings.secure_logger_logging_level,
-    sensitive_keys: list = settings.secure_logger_sensitive_keys,
-    indent: int = settings.secure_logger_indent,
-    message: str = settings.secure_logger_redaction_message,
+    log_level: str = settings.logging_level,
+    sensitive_keys: list = settings.sensitive_keys,
+    indent: int = settings.indentation,
+    message: str = settings.redaction_message,
 ):
     """Top level decorator, for defining input parameters."""
 
@@ -66,10 +66,9 @@ def secure_logger(
                     kwargs, sensitive_keys=sensitive_keys, indent=indent, message=message
                 )
 
-            if log_level == settings.secure_logger_logging_level:
-                logger = settings.logger
-            else:
-                logger = settings.get_logger(log_level)
+            # get the logger for the specified logging level taking into consideration
+            # that the user may have changed the logging level in the decorator parameters
+            logger = settings.logger if log_level == settings.logging_level else settings.get_logger(log_level)
 
             logger(
                 "secure_logger: %s %s %s",
