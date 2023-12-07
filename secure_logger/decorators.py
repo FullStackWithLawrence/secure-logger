@@ -6,6 +6,7 @@ from functools import wraps
 
 # our stuff
 from secure_logger.conf import settings
+from secure_logger.exceptions import SecureLoggerConfigurationError
 from secure_logger.masked_dict import masked_dict2str
 
 
@@ -16,6 +17,14 @@ def secure_logger(
     message: str = settings.redaction_message,
 ):
     """Top level decorator, for defining input parameters."""
+
+    logging_levels = list(settings.logging_levels)
+    if log_level not in logging_levels:
+        raise SecureLoggerConfigurationError(f"Invalid logging level: {log_level}. Valid values are: {logging_levels}")
+    if indent < 0:
+        raise SecureLoggerConfigurationError(f"Invalid indentation value: {indent}. Valid values are: 0 or greater.")
+    if message == "":
+        raise SecureLoggerConfigurationError(f"Invalid redaction message: {message}. Must be a non-empty string.")
 
     def decorate(func):
         """

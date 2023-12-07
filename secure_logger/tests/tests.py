@@ -10,6 +10,7 @@ sys.path.append("../")  # noqa: E402
 
 from secure_logger.conf import settings
 from secure_logger.decorators import secure_logger
+from secure_logger.exceptions import SecureLoggerConfigurationError
 from secure_logger.masked_dict import masked_dict, masked_dict2str
 
 
@@ -165,6 +166,26 @@ class TestClassMethodDecorator(unittest.TestCase):
             self.mock_class.decorator_with_custom_params(self.test_dict, self.test_list)
 
         self.assertEqual(cm.output[0][0:100], expected_output[0:100])
+
+    def test_method_with_illegal_decorator_input(self):
+        """Test class method with illegal decorator input."""
+
+        def create_mock_class():
+            """Create a mock class with illegal decorator input."""
+
+            class MockClass:
+                """Mock class with illegal decorator input."""
+
+                @secure_logger(indent=-1)
+                def decorator_with_invalid_params(self):
+                    """Test class input parameter as objects."""
+
+            return MockClass()
+
+        self.assertRaises(
+            SecureLoggerConfigurationError,
+            create_mock_class,
+        )
 
 
 class TestClassDecorator(unittest.TestCase):
