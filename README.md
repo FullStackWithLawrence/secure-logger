@@ -23,7 +23,7 @@ application logs.
 
 ## Installation
 
-``` bash
+```bash
 pip install secure-logger
 ```
 
@@ -71,7 +71,7 @@ INFO:secure_logger: __main__.bar() ['<__main__.Foo object at 0x103474ac0>'] keyw
 
 ### As library functions
 
-``` python
+```python
 from secure_logger.masked_dict import masked_dict, masked_dict2str
 
 dict_data = {
@@ -84,7 +84,7 @@ print(masked_dict2str(dict_data))
 
 Output:
 
-``` bash
+```bash
 {
     "not_a_sensitive_key": "you-can-see-me",
     "aws-access-key-id": "*** -- secure_logger() -- ***",
@@ -101,9 +101,9 @@ secure_logger accepts optional parameters which you can configure as either bash
 - **SECURE_LOGGER_INDENTATION**: number of characters to indent JSON string output when logging output
 - **SECURE_LOGGER_LOG_LEVEL**: the level at which secure_logger generates log entries. One of: 'CRITICAL', 'FATAL', 'ERROR', 'WARN', 'WARNING', 'INFO', 'DEBUG'
 
-Additionally, you can override individual invocations of the decorator by passing *sensitive_keys*, *message* and *indent*:
+Additionally, you can override individual invocations of the decorator by passing _sensitive_keys_, _message_ and _indent_:
 
-``` python
+```python
 class MyClass():
 
     @secure_logger(sensitive_keys=["password", "apikey", "crown_jewels"], message="*** -- TOP SECRET -- ***", indent=4)
@@ -113,7 +113,7 @@ class MyClass():
 
 ## Configuration Defaults
 
-``` python
+```python
 SECURE_LOGGER_REDACTION_MESSAGE = "*** -- secure_logger() -- ***"
 SECURE_LOGGER_INDENTATION = 4
 SECURE_LOGGER_SENSITIVE_KEYS = [
