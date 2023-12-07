@@ -49,9 +49,6 @@ clean:
 	rm -rf venv .pytest_cache __pycache__ .pytest_cache node_modules && \
 	rm -rf build dist secure_logger.egg-info
 
-report:
-	cloc . --exclude-ext=svg,json,zip --vcs=git
-
 test:
 	python -m unittest discover -s secure_logger/tests/ && \
 	python -m setup_test
