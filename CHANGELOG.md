@@ -21,26 +21,26 @@ Secondarily, we took steps to make this project conform to [12-factor methodolog
 - 11. **Logs**: [✅] Treat logs as event streams. Obviously 😉
 - 12. **Admin processes**: [✅] Run admin/management tasks as one-off processes. All admin processes are implemented with GitHub Actions and other GitHub management features.
 
-### Details
+### Commit and Release Details
 
-- Add a config.Settings class with Pydantic validations and ability to configure at run-time via bash environment variable and/or a .env file.
-- Add SecureLoggerConfigurationError exception class to raise exception in the event of any Pydantic and/or package data validation errors during configuration.
-- add log_level input parameter to decorator to allow customization of the log level on individual log entries.
-- Refactored setup.py to remove deprecated macOS functions.
-- Add a security policy
-- Add a contributor policy
+- Add a [config.Settings](./secure_logger/conf.py) class with Pydantic validations and ability to configure at run-time via bash environment variable and/or a .env file.
+- Add [SecureLoggerConfigurationError](./secure_logger/exceptions.py) exception class to raise exception in the event of any Pydantic and/or package data validation errors during configuration.
+- add [log_level](./secure_logger/decorators.py) input parameter to decorator to allow customization of the log level on individual log entries.
+- Refactored [setup.py](./setup.py) to remove deprecated macOS functions.
+- Add a [security policy](./SECURITY.md)
+- Add a [contributor policy](.github/CONTRIBUTING.md)
 - Added README badges to report live status of unit tests and CI/CD. Converted README to markdown.
-- Add dependabot and mergify to periodically monitor and update PyPi and NPM requirements
-- Add pre-commit with codespell, black, flake8, isort, pylint, bandit, tox, prettier. Add built-in pre-commit hooks for code style and security.
+- Add [Dependabot](.github/dependabot.yml) and [Mergify](./.mergify.yml) to periodically monitor and update PyPi and NPM requirements
+- Add [pre-commit](./.pre-commit-config.yml) with codespell, black, flake8, isort, pylint, bandit, tox, prettier. Add built-in pre-commit hooks for code style and security.
 - Added the following Github Actions:
-  - Auomated unit testing on push
+  - Automated unit testing on push
   - Auto-assign new Issues
   - Periodic automated patch releases after Dependabot runs
   - Pull request automation
   - Semantic release
   - Automated merge of main to dev branches
-- Add GitHub templates for Issue, Contributing, Funding, Pull Request
-- Add the following to the Makefile
+- Add GitHub templates for [Issue](./.github/ISSUE_TEMPLATE/), [Contributing](./.github/CONTRIBUTING.md), [Funding](./.github/FUNDING.yml), [Pull Request](./.github/PULL_REQUEST_TEMPLATE.md)
+- Add the following to the [Makefile](./Makefile)
   - Recognition of .env file
   - Scaffold multi platform support
   - Make lint
