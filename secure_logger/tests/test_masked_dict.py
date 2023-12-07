@@ -7,9 +7,6 @@ from secure_logger.conf import settings
 from secure_logger.masked_dict import masked_dict, masked_dict2str
 
 
-###############################################################################
-#                                 TEST BANK
-###############################################################################
 class TestMaskedDict(unittest.TestCase):
     """Test the masked_dict function."""
 

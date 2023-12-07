@@ -7,11 +7,6 @@ from secure_logger.conf import settings
 from secure_logger.decorators import secure_logger
 
 
-###############################################################################
-#                                 TEST BANK
-###############################################################################
-
-
 class TestModuleDefDecorator(unittest.TestCase):
     """Test module function logging."""
 

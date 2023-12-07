@@ -7,11 +7,6 @@ from secure_logger.decorators import secure_logger
 from secure_logger.exceptions import SecureLoggerConfigurationError
 
 
-###############################################################################
-#                                 TEST BANK
-###############################################################################
-
-
 class TestClassMethodDecorator(unittest.TestCase):
     """Test class method logging."""
 

@@ -7,11 +7,6 @@ from secure_logger.conf import settings
 from secure_logger.masked_dict import masked_dict, masked_dict2str
 
 
-###############################################################################
-#                                 TEST BANK
-###############################################################################
-
-
 class TestMaskedDictCaseSensitivity(unittest.TestCase):
     """Test the masked_dict function with case sensitivity."""
 

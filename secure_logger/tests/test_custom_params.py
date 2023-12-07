@@ -6,11 +6,6 @@ from secure_logger.conf import settings
 from secure_logger.masked_dict import masked_dict
 
 
-###############################################################################
-#                                 TEST BANK
-###############################################################################
-
-
 class TestCustomParams(unittest.TestCase):
     """Test the masked_dict function with custom parameters."""
 
