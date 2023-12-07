@@ -10,7 +10,7 @@
 - Add a contributor policy
 - Added README badges to report live status of unit tests and CI/CD. Converted README to markdown.
 - Add dependabot and mergify to periodically monitor and update PyPi and NPM requirements
-- Add pre-commit with codespell, black, flake8, isort, pylint, bandit, tox, plus built-in pre-commit hooks for code style and security.
+- Add pre-commit with codespell, black, flake8, isort, pylint, bandit, tox, prettier. Add built-in pre-commit hooks for code style and security.
 - Added the following Github Actions:
   - Auomated unit testing on push
   - Auto-assign new Issues
