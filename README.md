@@ -102,12 +102,12 @@ secure_logger accepts optional parameters which you can configure as either bash
 - **SECURE_LOGGER_INDENTATION**: number of characters to indent JSON string output when logging output
 - **SECURE_LOGGER_LOG_LEVEL**: the level at which secure_logger generates log entries. One of: 'CRITICAL', 'FATAL', 'ERROR', 'WARN', 'WARNING', 'INFO', 'DEBUG'
 
-Additionally, you can override individual invocations of the decorator by passing _sensitive_keys_, _message_ and _indent_:
+Additionally, you can override individual invocations of the decorator with custom parameters:
 
 ```python
 class MyClass():
 
-    @secure_logger(sensitive_keys=["password", "apikey", "crown_jewels"], message="*** -- TOP SECRET -- ***", indent=4)
+    @secure_logger(log_level='DEBUG', sensitive_keys=["password", "apikey", "crown_jewels"], message="*** -- TOP SECRET -- ***", indent=4)
     def another_function(self, password: str, apikey: str, crown_jewels: List(dict)):
          pass
 ```
