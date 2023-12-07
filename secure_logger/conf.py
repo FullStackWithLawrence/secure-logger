@@ -49,6 +49,7 @@ class Settings(BaseModel):
     redaction_message: str = Field(DEFAULT_SECURE_LOGGER_REDACTION_MESSAGE, env="SECURE_LOGGER_REDACTION_MESSAGE")
     indentation: int = Field(DEFAULT_SECURE_LOGGER_INDENTATION, gt=0, env="SECURE_LOGGER_INDENTATION")
     logging_level: str = Field(DEFAULT_SECURE_LOGGER_LOG_LEVEL, env="SECURE_LOGGER_LOG_LEVEL")
+    logging_levels: list = Field(DEFAULT_SECURE_LOGGER_LOG_LEVELS)
 
     @validator("logging_level")
     @classmethod
@@ -59,17 +60,17 @@ class Settings(BaseModel):
         return v
 
     @property
-    def logger(self):
+    def logger_function(self):
         """Returns the logger function for the specified logging level"""
-        return self.get_logger(self.logging_level)
+        return self.get_logger_function(self.logging_level)
 
     @property
-    def logger_level_int(self) -> int:
+    def logging_level_int(self) -> int:
         """Returns the logger level for the specified logging level"""
         # pylint: disable=protected-access
         return logging._nameToLevel.get(self.logging_level, logging.DEBUG)
 
-    def get_logger(self, log_level):
+    def get_logger_function(self, log_level):
         """Returns the logger function for the specified logging level"""
         log_levels = {
             "DEBUG": self.logging_logger.debug,

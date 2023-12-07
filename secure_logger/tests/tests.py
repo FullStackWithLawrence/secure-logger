@@ -110,7 +110,7 @@ class TestModuleDefDecorator(unittest.TestCase):
             settings.logging_level + ":decorator_logger:secure_logger: tests.mock_decorated_def() "
             "['<tests.TestModuleDefDecorator testMethod=test_decorator_output>', " + hello_world
         )
-        with self.assertLogs(logger=settings.logger_name, level=settings.logger_level_int) as cm:
+        with self.assertLogs(logger=settings.logger_name, level=settings.logging_level_int) as cm:
             self.mock_decorated_def("hello world")
 
         self.assertEqual(cm.output[0][0:100], expected_output[0:100])
@@ -150,7 +150,7 @@ class TestClassMethodDecorator(unittest.TestCase):
             "['<tests.TestClassMethodDecorator.MockClass"
         )
 
-        with self.assertLogs(logger=settings.logger_name, level=settings.logger_level_int) as cm:
+        with self.assertLogs(logger=settings.logger_name, level=settings.logging_level_int) as cm:
             self.mock_class.decorator_with_defaults(self.test_dict, self.test_list)
 
         self.assertEqual(cm.output[0][0:100], expected_output[0:100])
@@ -179,7 +179,7 @@ class TestClassDecorator(unittest.TestCase):
 
         expected_output = settings.logging_level + ":decorator_logger:secure_logger: tests.MockDecoratedClass.  "
 
-        with self.assertLogs(level=settings.logger_level_int) as cm:
+        with self.assertLogs(level=settings.logging_level_int) as cm:
             MockDecoratedClass()
 
         self.assertEqual(cm.output[0][0:100], expected_output[0:100])

@@ -68,7 +68,11 @@ def secure_logger(
 
             # get the logger for the specified logging level taking into consideration
             # that the user may have changed the logging level in the decorator parameters
-            logger = settings.logger if log_level == settings.logging_level else settings.get_logger(log_level)
+            logger = (
+                settings.logger_function
+                if log_level == settings.logging_level
+                else settings.get_logger_function(log_level)
+            )
 
             logger(
                 "secure_logger: %s %s %s",
