@@ -6,7 +6,7 @@ This project conforms to [12-factor methodology](https://12factor.net/). We want
 - 2. **Dependencies**: [✅] Explicitly declare and isolate dependencies. We're using setup.py, requirements.txt, and package.json to identify dependencies.
 - 3. **Config**: [✅] Store config in the environment. This release implements config.Settings, which stores all configuration information for the package.
 - 4. **Backing services**: [-] Treat backing services as attached resources. Not applicable to this project.
-- 5. **Build, release, run**: [✅] Strictly separate build and run stages. `Build` is implemented in Makefile, `release` is implemented as a GitHub Action, and run is deferred to the projects that include this package.
+- 5. **Build, release, run**: [✅] Strictly separate build and run stages. `Build` is implemented in Makefile, `release` is implemented as a GitHub Action, and `run` is deferred to the projects that include this package.
 - 6. **Processes**: [✅] Execute the app as one or more stateless processes
 - 7. **Port binding**: [-] Export services via port binding. Not Applicable. This package does not implement any services.
 - 8. **Concurrency**: Scale out via the process model
