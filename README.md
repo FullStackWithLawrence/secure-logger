@@ -140,6 +140,7 @@ SECURE_LOGGER_LOG_LEVEL = 'DEBUG'
 
 Pull requests are welcomed and encouraged!
 
+- This project uses an automated [Pull Request](.github/workflows/pullRequestController.yml) CI/CD process.
 - This project conforms to [12-Factor Methodology](./doc/Twelve_Factor_Methodology.md).
 - This project uses [Semantic Versioning](./doc/SEMANTIC_VERSIONING.md) which requires that git commit messages follow strict (but easy to learn) formatting rules.
 
