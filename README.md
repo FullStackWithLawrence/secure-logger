@@ -138,5 +138,9 @@ SECURE_LOGGER_LOG_LEVEL = 'DEBUG'
 
 ### Contributing
 
-Pull requests are welcome, and you can also contact [Lawrence
-McDaniel](https://lawrencemcdaniel.com/contact) directly.
+Pull requests are welcomed and encouraged!
+
+- This project conforms to [12-Factor Methodology](./doc/Twelve_Factor_Methodology.md).
+- This project enforces [Semantic Versioning](./doc/SEMANTIC_VERSIONING.md), which requires that git commit messages follow strict (but easy to learn) formatting rules.
+
+Contact: [Lawrence McDaniel](https://lawrencemcdaniel.com/contact).
