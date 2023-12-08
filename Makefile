@@ -67,23 +67,23 @@ build:
 	$(PYTHON) -m pip install --upgrade twine
 	twine check dist/*
 
-release:
+force-release:
 	git commit -m "fix: force a new release" --allow-empty && git push
 
 # -------------------------------------------------------------------------
-# upload to PyPi Test
+# Publish to PyPi Test
 # https://test.pypi.org/project/secure-logger/
 # -------------------------------------------------------------------------
-release-test:
+publish-test:
 	git rev-parse --abbrev-ref HEAD | grep '^main$' || (echo 'Not on main branch, aborting' && exit 1)
 	make build
 	twine upload --verbose --skip-existing --repository testpypi dist/*
 
 # -------------------------------------------------------------------------
-# upload to PyPi
+# Publish to PyPi
 # https://pypi.org/project/secure-logger/
 # -------------------------------------------------------------------------
-release-prod:
+publish-prod:
 	git rev-parse --abbrev-ref HEAD | grep '^main$' || (echo 'Not on main branch, aborting' && exit 1)
 	make build
 	twine upload --verbose --skip-existing dist/*
@@ -91,15 +91,16 @@ release-prod:
 ######################
 # HELP
 ######################
-
 help:
 	@echo '===================================================================='
+	@echo 'init			- build virtual environment and install requirements'
+	@echo 'analyze			- runs cloc report'
 	@echo 'pre-commit		- install and configure pre-commit hooks'
 	@echo 'requirements		- install Python, npm and pre-commit requirements'
 	@echo 'lint			- run black and pre-commit hooks'
-	@echo 'init			- build virtual environment and install requirements'
 	@echo 'clean			- destroy all build artifacts'
-	@echo 'repository		- runs cloc report'
+	@echo 'test			- run Python unit tests'
 	@echo 'build			- build the project'
-	@echo 'release-test		- test deployment to PyPi'
-	@echo 'release-prod		- production deployment to PyPi'
+	@echo 'force-release		- force a new release to be created in GitHub'
+	@echo 'publish-test		- test deployment to PyPi'
+	@echo 'publish-prod		- production deployment to PyPi'
