@@ -29,8 +29,7 @@ init:
 	python3.11 -m venv venv && \
 	$(ACTIVATE_VENV) && \
 	pip install --upgrade pip && \
-	make requirements && \
-	pre-commit install
+	make requirements
 
 # -------------------------------------------------------------------------
 # Install and run pre-commit hooks
@@ -47,7 +46,7 @@ requirements:
 	$(PIP) install --upgrade pip wheel
 	$(PIP) install -r requirements/local.txt && \
 	npm install && \
-	pre-commit install && \
+	make pre-commit
 	pre-commit autoupdate
 
 # -------------------------------------------------------------------------
@@ -77,17 +76,20 @@ test:
 # -------------------------------------------------------------------------
 build:
 	npx semantic-release --doctor --dry-run
+	@echo "-------------------------------------------------------------------------"
+	@echo "                   Initializing the project"
+	@echo "-------------------------------------------------------------------------"
 	make init
 	. venv/bin/activate
 	$(PIP) install --upgrade setuptools wheel twine
 	$(PIP) install --upgrade build
+	@echo "-------------------------------------------------------------------------"
+	@echo "                   Building the project"
+	@echo "-------------------------------------------------------------------------"
 
-	which $(PYTHON)
-	$(PYTHON) --version
 	$(PYTHON) -m build --sdist ./
 	$(PYTHON) -m build --wheel ./
 
-	$(PYTHON) -m pip install --upgrade twine
 	twine check dist/*
 
 # -------------------------------------------------------------------------
