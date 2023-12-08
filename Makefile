@@ -12,7 +12,7 @@ ifneq ("$(wildcard .env)","")
     include .env
 endif
 
-.PHONY: pre-commit requirements init clean report test build release-test release-prod help
+.PHONY: analyze init pre-commit requirements lint clean test build force-release publish-test publish-prod help
 
 # Default target executed when no arguments are given to make.
 all: help
@@ -20,6 +20,9 @@ all: help
 analyze:
 	cloc . --exclude-ext=svg,json,zip --vcs=git
 
+# -------------------------------------------------------------------------
+# Initialize. create virtual environment and install requirements
+# -------------------------------------------------------------------------
 init:
 	make clean && \
 	npm install && \
@@ -29,10 +32,16 @@ init:
 	make requirements && \
 	pre-commit install
 
+# -------------------------------------------------------------------------
+# Install and run pre-commit hooks
+# -------------------------------------------------------------------------
 pre-commit:
 	pre-commit install
 	pre-commit run --all-files
 
+# -------------------------------------------------------------------------
+# Install requirements: Python, npm and pre-commit
+# -------------------------------------------------------------------------
 requirements:
 	rm -rf .tox
 	$(PIP) install --upgrade pip wheel
@@ -41,18 +50,31 @@ requirements:
 	pre-commit install && \
 	pre-commit autoupdate
 
+# -------------------------------------------------------------------------
+# Run black and pre-commit hooks.
+# includes prettier, isort, flake8, pylint, etc.
+# -------------------------------------------------------------------------
 lint:
 	pre-commit run --all-files && \
 	black .
 
+# -------------------------------------------------------------------------
+# Destroy all build artifacts and Python temporary files
+# -------------------------------------------------------------------------
 clean:
 	rm -rf venv .pytest_cache __pycache__ .pytest_cache node_modules && \
 	rm -rf build dist secure_logger.egg-info
 
+# -------------------------------------------------------------------------
+# Run Python unit tests
+# -------------------------------------------------------------------------
 test:
 	python -m unittest discover -s secure_logger/tests/ && \
 	python -m setup_test
 
+# -------------------------------------------------------------------------
+# Build the project
+# -------------------------------------------------------------------------
 build:
 	npx semantic-release --doctor --dry-run
 	make init
@@ -68,6 +90,9 @@ build:
 	$(PYTHON) -m pip install --upgrade twine
 	twine check dist/*
 
+# -------------------------------------------------------------------------
+# Force a new semantic release to be created in GitHub
+# -------------------------------------------------------------------------
 force-release:
 	git commit -m "fix: force a new release" --allow-empty && git push
 
@@ -89,9 +114,9 @@ publish-prod:
 	make build
 	twine upload --verbose --skip-existing dist/*
 
-######################
-# HELP
-######################
+# -------------------------------------------------------------------------
+# Generate help menu
+# -------------------------------------------------------------------------
 help:
 	@echo '===================================================================='
 	@echo 'init			- build virtual environment and install requirements'
