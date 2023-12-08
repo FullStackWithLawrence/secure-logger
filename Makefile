@@ -55,12 +55,13 @@ test:
 
 build:
 	npx semantic-release --doctor --dry-run
-
+	make init
+	. venv/bin/activate
 	$(PIP) install --upgrade setuptools wheel twine
 	$(PIP) install --upgrade build
 
-	make clean
-
+	which $(PYTHON)
+	$(PYTHON) --version
 	$(PYTHON) -m build --sdist ./
 	$(PYTHON) -m build --wheel ./
 
