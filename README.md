@@ -136,7 +136,7 @@ SECURE_LOGGER_SENSITIVE_KEYS = [
 SECURE_LOGGER_LOG_LEVEL = 'DEBUG'
 ```
 
-### Contributing
+## Contributing
 
 Pull requests are welcomed and encouraged!
 
