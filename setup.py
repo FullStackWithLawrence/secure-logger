@@ -25,7 +25,7 @@ setup(
         "secure_logger": ["*.md"],
     },
     python_requires=">=3.6",
-    install_requires=[],
+    install_requires=["pydantic>=2.5.0"],
     extras_require={},
     classifiers=[  # https://pypi.org/classifiers/
         "Development Status :: 4 - Beta",

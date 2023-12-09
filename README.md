@@ -2,7 +2,8 @@
 
 [![FullStackWithLawrence](https://a11ybadges.com/badge?text=FullStackWithLawrence&badgeColor=orange&logo=youtube&logoColor=282828)](https://www.youtube.com/@FullStackWithLawrence)
 [![Python](https://a11ybadges.com/badge?logo=python)](https://www.python.org/)<br>
-[![Tests](https://github.com/FullStackWithLawrence/secure-logger/actions/workflows/tests.yml/badge.svg)](https://github.com/FullStackWithLawrence/secure-logger/actions)
+[![12-Factor](https://img.shields.io/badge/12--Factor-Compliant-green.svg)](./doc/Twelve_Factor_Methodology.md)
+[![Unit Tests](https://github.com/FullStackWithLawrence/secure-logger/actions/workflows/tests.yml/badge.svg)](https://github.com/FullStackWithLawrence/secure-logger/actions)
 ![GHA pushMain Status](https://img.shields.io/github/actions/workflow/status/FullStackWithLawrence/secure-logger/pushMain.yml?branch=main)
 ![Auto Assign](https://github.com/FullStackwithLawrence/secure-logger/actions/workflows/auto-assign.yml/badge.svg)[![Source
 code](https://img.shields.io/static/v1?logo=github&label=Git&style=flat-square&color=orange&message=Source%20code)](https://github.com/FullStackWithLawrence/secure-logger)
@@ -23,7 +24,7 @@ application logs.
 
 ## Installation
 
-``` bash
+```bash
 pip install secure-logger
 ```
 
@@ -31,30 +32,33 @@ pip install secure-logger
 
 ### As a decorator
 
-``` python
+```python
 from secure_logger.decorators import secure_logger
+import logging
+
+logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 class Foo(object):
-
-    @secure_logger()
+    @secure_logger(log_level='INFO')
     def bar(self, dict_data, list_data):
         pass
 
 # call your method, passing some sensitive data
 dict_data = {
-    'not_a_sensitive_key': 'you-can-see-me',
-    'aws-access-key_id': conf.AWS_ACCESS_KEY_ID,
-    'aws-secret-access-key': conf.AWS_SECRET_ACCESS_KEY
+    "not_a_sensitive_key": "you-can-see-me",
+    "aws-access-key-id": "i-am-hidden",
+    "aws-secret-access-key": "so-am-i",
 }
-list_data = ['foo', 'bar']
+list_data = ["foo", "bar"]
 foo = Foo()
 foo.bar(dict_data=dict_data, list_data=list_data)
 ```
 
 Log output:
 
-``` log
-INFO:secure_logger: __main__.Foo().bar()  keyword args: {
+```console
+INFO:secure_logger: __main__.bar() ['<__main__.Foo object at 0x103474ac0>'] keyword args: {
     "dict_data": {
         "not_a_sensitive_key": "you-can-see-me",
         "aws-access-key-id": "*** -- secure_logger() -- ***",
@@ -64,12 +68,11 @@ INFO:secure_logger: __main__.Foo().bar()  keyword args: {
         "foo",
         "bar"
     ]
-}
 ```
 
 ### As library functions
 
-``` python
+```python
 from secure_logger.masked_dict import masked_dict, masked_dict2str
 
 dict_data = {
@@ -82,7 +85,7 @@ print(masked_dict2str(dict_data))
 
 Output:
 
-``` bash
+```bash
 {
     "not_a_sensitive_key": "you-can-see-me",
     "aws-access-key-id": "*** -- secure_logger() -- ***",
@@ -92,28 +95,29 @@ Output:
 
 ## Configuration
 
-secure_logger accepts optional parameters.
+secure_logger accepts optional parameters which you can configure as either bash environment variables or with a .env file placed in the root of your project
 
--   sensitive_keys: a Python list of dictionary keys. Not case
-    sensitive.
--   message: a string value that will replace the sensitive key values
--   indent: number of characters to indent JSON string output when
-    logging output
+- **SECURE_LOGGER_SENSITIVE_KEYS**: a Python list of dictionary keys. Not case sensitive.
+- **SECURE_LOGGER_REDACTION_MESSAGE**: a string value that will replace the sensitive key values
+- **SECURE_LOGGER_INDENTATION**: number of characters to indent JSON string output when logging output
+- **SECURE_LOGGER_LOG_LEVEL**: the level at which secure_logger generates log entries. One of: 'CRITICAL', 'FATAL', 'ERROR', 'WARN', 'WARNING', 'INFO', 'DEBUG'
 
-``` python
+Additionally, you can override individual invocations of the decorator with custom parameters:
+
+```python
 class MyClass():
 
-    @secure_logger(sensitive_keys=["password", "token", "crown_jewels"], message="***", indent=4)
-    def another_def(self):
+    @secure_logger(log_level='DEBUG', sensitive_keys=["password", "apikey", "crown_jewels"], message="*** -- TOP SECRET -- ***", indent=4)
+    def another_function(self, password: str, apikey: str, crown_jewels: List(dict)):
          pass
 ```
 
 ## Configuration Defaults
 
-``` python
-DEFAULT_REDACTION_MESSAGE = "*** -- secure_logger() -- ***"
-DEFAULT_INDENT = 4
-DEFAULT_SENSITIVE_KEYS = [
+```python
+SECURE_LOGGER_REDACTION_MESSAGE = "*** -- secure_logger() -- ***"
+SECURE_LOGGER_INDENTATION = 4
+SECURE_LOGGER_SENSITIVE_KEYS = [
     "password",
     "token",
     "client_id",
@@ -129,9 +133,15 @@ DEFAULT_SENSITIVE_KEYS = [
     "aws-access-key-id",
     "aws-secret-access-key",
 ]
+SECURE_LOGGER_LOG_LEVEL = 'DEBUG'
 ```
 
-### Contributing
+## Contributing
 
-Pull requests are welcome, and you can also contact [Lawrence
-McDaniel](https://lawrencemcdaniel.com/contact) directly.
+Pull requests are welcomed and encouraged!
+
+- This project uses an automated [Pull Request](.github/workflows/pullRequestController.yml) CI/CD process.
+- This project conforms to [12-Factor Methodology](./doc/Twelve_Factor_Methodology.md).
+- This project uses [Semantic Versioning](./doc/SEMANTIC_VERSIONING.md) which requires that git commit messages follow strict (but easy to learn) formatting rules.
+
+Contact: [Lawrence McDaniel](https://lawrencemcdaniel.com/contact).

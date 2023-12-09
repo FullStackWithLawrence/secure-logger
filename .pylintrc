@@ -8,4 +8,4 @@ ignore =
 max-line-length=120
 
 [MESSAGES CONTROL]
-disable=C0103,W0102,E0401
+disable=too-few-public-methods,invalid-name
