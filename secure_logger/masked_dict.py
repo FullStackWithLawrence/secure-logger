@@ -5,26 +5,7 @@
 import json
 from unittest.mock import MagicMock
 
-
-# our stuff
-DEFAULT_SENSITIVE_KEYS = [
-    "password",
-    "token",
-    "client_id",
-    "client_secret",
-    "Authorization",
-    "secret",
-    "access_key_id",
-    "secret_access_key",
-    "access-key-id",
-    "secret-access-key",
-    "aws_access_key_id",
-    "aws_secret_access_key",
-    "aws-access-key-id",
-    "aws-secret-access-key",
-]
-DEFAULT_REDACTION_MESSAGE = "*** -- secure_logger() -- ***"
-DEFAULT_INDENT = 4
+from secure_logger.conf import settings
 
 
 class _JSONEncoder(json.JSONEncoder):
@@ -44,7 +25,9 @@ class _JSONEncoder(json.JSONEncoder):
 
 
 def masked_dict(
-    source_dict, sensitive_keys: list = DEFAULT_SENSITIVE_KEYS, message: str = DEFAULT_REDACTION_MESSAGE
+    source_dict,
+    sensitive_keys: list = settings.sensitive_keys,
+    message: str = settings.redaction_message,
 ) -> dict:
     """
     Mask sensitive key / value in log entries.
@@ -75,16 +58,16 @@ def masked_dict(
 
 def masked_dict2str(
     obj: dict,
-    sensitive_keys: list = DEFAULT_SENSITIVE_KEYS,
-    indent: int = DEFAULT_INDENT,
-    message: str = DEFAULT_REDACTION_MESSAGE,
+    sensitive_keys: list = settings.sensitive_keys,
+    indent: int = settings.indentation,
+    message: str = settings.redaction_message,
 ) -> str:
     """Return a JSON encoded string representation of a masked dict."""
     return json.dumps(masked_dict(obj, sensitive_keys, message=message), cls=_JSONEncoder, indent=indent)
 
 
 def serialized_masked_dict(
-    obj: dict, sensitive_keys: list = DEFAULT_SENSITIVE_KEYS, indent: int = DEFAULT_INDENT
+    obj: dict, sensitive_keys: list = settings.sensitive_keys, indent: int = settings.indentation
 ) -> str:
     """Backwards compatibility to 0.1.2 and prior."""
     return masked_dict2str(obj, sensitive_keys=sensitive_keys, indent=indent)

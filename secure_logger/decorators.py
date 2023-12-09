@@ -2,28 +2,29 @@
 """Python Secure Logger."""
 # python stuff
 import inspect
-import logging
 from functools import wraps
 
 # our stuff
-from .masked_dict import (
-    DEFAULT_INDENT,
-    DEFAULT_REDACTION_MESSAGE,
-    DEFAULT_SENSITIVE_KEYS,
-    masked_dict2str,
-)
-
-
-# module initializations
-logger = logging.getLogger(__name__)
+from secure_logger.conf import settings
+from secure_logger.exceptions import SecureLoggerConfigurationError
+from secure_logger.masked_dict import masked_dict2str
 
 
 def secure_logger(
-    sensitive_keys: list = DEFAULT_SENSITIVE_KEYS,
-    indent: int = DEFAULT_INDENT,
-    message: str = DEFAULT_REDACTION_MESSAGE,
+    log_level: str = settings.logging_level,
+    sensitive_keys: list = settings.sensitive_keys,
+    indent: int = settings.indentation,
+    message: str = settings.redaction_message,
 ):
     """Top level decorator, for defining input parameters."""
+
+    logging_levels = list(settings.logging_levels)
+    if log_level not in logging_levels:
+        raise SecureLoggerConfigurationError(f"Invalid logging level: {log_level}. Valid values are: {logging_levels}")
+    if indent < 0:
+        raise SecureLoggerConfigurationError(f"Invalid indentation value: {indent}. Valid values are: 0 or greater.")
+    if message == "":
+        raise SecureLoggerConfigurationError(f"Invalid redaction message: {message}. Must be a non-empty string.")
 
     def decorate(func):
         """
@@ -32,8 +33,7 @@ def secure_logger(
         Adds a log entry with the module name, class name and method/function name,
         its positional arguments, and keyword pairs presented as a formatted dict.
 
-        Sample output:
-            2022-07-08 19:40:51,085 INFO secure_logger: courses.views.CourseListingView().get_queryset()
+        Sample output: see README.md
         """
 
         @wraps(func)
@@ -69,14 +69,21 @@ def secure_logger(
             name_spec = name_of_module + "." if name_of_module else ""
             name_spec += name_of_class + "." if name_of_class else ""
             name_spec += name_of_def + "()" if name_of_def else ""
-
             if len(kwargs.keys()) > 0:
                 kwargs_dict_repr = "keyword args: "
                 kwargs_dict_repr += masked_dict2str(
                     kwargs, sensitive_keys=sensitive_keys, indent=indent, message=message
                 )
 
-            logger.info(
+            # get the logger for the specified logging level taking into consideration
+            # that the user may have changed the logging level in the decorator parameters
+            logger = (
+                settings.logger_function
+                if log_level == settings.logging_level
+                else settings.get_logger_function(log_level)
+            )
+
+            logger(
                 "secure_logger: %s %s %s",
                 name_spec,
                 positional_args if positional_args else "",

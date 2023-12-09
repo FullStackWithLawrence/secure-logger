@@ -12,7 +12,6 @@ inputs:
     required: true
     type: string
 
-
 env:
   REQUIREMENTS_PATH: "requirements/local.txt"
 
