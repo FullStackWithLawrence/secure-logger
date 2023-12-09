@@ -1,3 +1,14 @@
+# [0.2.0](https://github.com/FullStackWithLawrence/secure-logger/compare/v0.1.18...v0.2.0) (2023-12-09)
+
+
+### Features
+
+* add a conf module that reads .env and environment variable overrides ([fa66f75](https://github.com/FullStackWithLawrence/secure-logger/commit/fa66f75750ecac77fdfe89eed8b21f2279218bbf))
+* add a configurable SECURE_LOGGER_LOG_LEVEL defaulted to logging.default() ([448f56b](https://github.com/FullStackWithLawrence/secure-logger/commit/448f56bbbaf4089be2df2e18d5398950fab02bf6))
+* add decorator parameter log_level ([411de9d](https://github.com/FullStackWithLawrence/secure-logger/commit/411de9dfe86c7c8e9cd805265e349f03e1beffa9))
+* add parameter validations to decorator. add a unit test ([b33c98a](https://github.com/FullStackWithLawrence/secure-logger/commit/b33c98afa430c63e572de21672d8af93ac21416b))
+* add pydantic strong type checking to parameters ([71c3a2c](https://github.com/FullStackWithLawrence/secure-logger/commit/71c3a2c3fa7fd5b7f767cdf6e8de3150a51e2787))
+
 # Change Log
 
 ## 0.2.0 Draft Release Notes
