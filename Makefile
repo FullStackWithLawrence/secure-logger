@@ -114,7 +114,7 @@ force-release:
 # https://test.pypi.org/project/secure-logger/
 # -------------------------------------------------------------------------
 publish-test:
-	git rev-parse --abbrev-ref HEAD | grep '^main$' || (echo 'Not on main branch, aborting' && exit 1)
+	git rev-parse --abbrev-ref HEAD | grep '^main$$' || (echo 'Not on main branch, aborting' && exit 1)
 	make build
 	twine upload --verbose --skip-existing --repository testpypi dist/*
 
@@ -123,7 +123,7 @@ publish-test:
 # https://pypi.org/project/secure-logger/
 # -------------------------------------------------------------------------
 publish-prod:
-	git rev-parse --abbrev-ref HEAD | grep '^main$' || (echo 'Not on main branch, aborting' && exit 1)
+	git rev-parse --abbrev-ref HEAD | grep '^main$$' || (echo 'Not on main branch, aborting' && exit 1)
 	make build
 	twine upload --verbose --skip-existing dist/*
 
