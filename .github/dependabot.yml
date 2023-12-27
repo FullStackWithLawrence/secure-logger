@@ -5,9 +5,9 @@ updates:
     schedule:
       interval: "weekly"
     assignees:
-      - "FullStackWithLawrence"
+      - "lpm0073"
     reviewers:
-      - "FullStackWithLawrence"
+      - "lpm0073"
   - package-ecosystem: "pip"
     directory: "/requirements/"
     schedule:
@@ -16,9 +16,9 @@ updates:
       - "dependencies"
       - "python"
     assignees:
-      - "FullStackWithLawrence"
+      - "lpm0073"
     reviewers:
-      - "FullStackWithLawrence"
+      - "lpm0073"
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
@@ -27,6 +27,6 @@ updates:
       - "dependencies"
       - "javascript"
     assignees:
-      - "FullStackWithLawrence"
+      - "lpm0073"
     reviewers:
-      - "FullStackWithLawrence"
+      - "lpm0073"
