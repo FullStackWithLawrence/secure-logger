@@ -1,7 +1,7 @@
 # dev and test
 # ------------
+pytest_mock==3.14.0
 pytest==8.2.0
-pytest_mock==3.12.0
 
 # Code linters, formatters, and security scanners
 # ------------
