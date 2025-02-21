@@ -51,7 +51,7 @@ def secure_logger(
                 name_of_class = func.__name__
             else:
                 # case 2: a class method
-                if inspect.isclass(args[0]):
+                if len(args) > 0 and inspect.isclass(args[0]):
                     cls = args[0].__class__
                     name_of_module = cls.__module__
                     name_of_class = cls.__name__ + "()"
