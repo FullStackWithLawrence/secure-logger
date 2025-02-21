@@ -1,9 +1,8 @@
 ## [0.2.2](https://github.com/FullStackWithLawrence/secure-logger/compare/v0.2.1...v0.2.2) (2025-02-21)
 
-
 ### Bug Fixes
 
-* ensure args is not empty before trying to read it. ([9a38369](https://github.com/FullStackWithLawrence/secure-logger/commit/9a38369a682538259cc5967518cce2305d583652))
+- ensure args is not empty before trying to read it. ([9a38369](https://github.com/FullStackWithLawrence/secure-logger/commit/9a38369a682538259cc5967518cce2305d583652))
 
 # Change Log
 
