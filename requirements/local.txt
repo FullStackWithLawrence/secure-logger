@@ -14,7 +14,7 @@ isort==6.0.1
 pylint
 bandit==1.8.3
 pydocstringformatter==0.7.3
-tox==4.24.1
+tox==4.25.0
 codespell==2.4.1
 
 # project dependencies
