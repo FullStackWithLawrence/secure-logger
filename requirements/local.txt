@@ -19,4 +19,4 @@ codespell==2.4.1
 
 # project dependencies
 # ------------
-pydantic==2.11.7
+pydantic==2.11.9
