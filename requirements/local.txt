@@ -15,7 +15,7 @@ pylint
 bandit==1.9.4
 pydocstringformatter==0.7.5
 tox==4.52.0
-codespell==2.4.2
+codespell==2.4.3
 
 # project dependencies
 # ------------
